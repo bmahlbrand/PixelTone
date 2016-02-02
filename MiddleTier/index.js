@@ -7,8 +7,7 @@ var imageRoutes = require('./imageRoutes');
 var testUpload = require('./testUpload');
 
 //Testing working correctly
-app.get('/', function (request, response)
-{
+app.get('/', function (request, response) {
     response.send('Hello, deadbeef');
 });
 
@@ -16,7 +15,6 @@ app.get('/', function (request, response)
 app.use('/users' , userRoutes);
 app.use('/images' , imageRoutes);
 app.use('/test' , testUpload);
-
 
 
 app.listen(3000, function () {
