@@ -1,0 +1,17 @@
+{
+  "name": "middletier",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "config-node": "^1.2.2",
+    "express": "^4.13.4",
+    "multer": "^1.1.0",
+    "multiparty": "^4.1.2"
+  }
+}
