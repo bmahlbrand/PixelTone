@@ -21,7 +21,6 @@ var storage = multer.diskStorage({
 
 var upload = multer({ storage: storage }).single('image');
 
-
 //Post options for Microsoft Emotion API
 var options = {
         host: 'api.projectoxford.ai',

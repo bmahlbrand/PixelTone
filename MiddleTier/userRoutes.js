@@ -1,33 +1,13 @@
 var express = require('express');
 
-var userRoutes = express();
+var userRoutes = module.exports = express();
 
 //User Account Handling
-userRoutes.post('/login', function (request, response)
-{
-    response.send('Login');
-    //Hook into passport??
-     
-});
-
-userRoutes.post('/create', function (request, response)
-{
+userRoutes.post('/reset', function (request, response) {
     response.send('Hello World');
-     //Hook into passport??
 });
 
-
-userRoutes.post('/reset', function (request, response)
-{
-    response.send('Hello World');
-     //Hook into passport??
+userRoutes.post('/logout', function (request, response) {
+    request.logOut(); 
+    response.send(200);
 });
-
-
-userRoutes.post('/logout', function (request, response)
-{
-    response.send('Hello World');
-     //Hook into passport??
-});
-
-module.exports = userRoutes;
