@@ -1,5 +1,7 @@
 package MusicAPI.structure;
 
-class TimeSignature {
+import java.io.Serializable;
+
+class TimeSignature implements Serializable {
 
 }

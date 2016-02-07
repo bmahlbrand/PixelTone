@@ -1,6 +1,8 @@
 package MusicAPI.structure;
 
-public enum Accidental {
+import java.io.Serializable;
+
+public enum Accidental implements Serializable {
     Flat(-1),
     Natural(0),
     Sharp(1);

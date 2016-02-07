@@ -1,5 +1,7 @@
 package MusicAPI.structure;
 
-public enum Octave {
+import java.io.Serializable;
+
+public enum Octave implements Serializable {
 
 }

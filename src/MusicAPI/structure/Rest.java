@@ -1,6 +1,8 @@
 package MusicAPI.structure;
 
-class Rest {
+import java.io.Serializable;
+
+class Rest implements Serializable {
     int duration;
 
 }

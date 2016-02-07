@@ -1,9 +1,10 @@
 package MusicAPI.structure;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Dictionary;
 
-public class MetaData {
+public class MetaData implements Serializable {
     String author;
     Date created_at;
     Dictionary<String, String> params;

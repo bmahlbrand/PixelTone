@@ -1,6 +1,8 @@
 package MusicAPI.structure;
 
-public enum Tone {
+import java.io.Serializable;
+
+public enum Tone implements Serializable {
     A('A'),
     B('B'),
     C('C'),

@@ -1,6 +1,8 @@
 package MusicAPI.structure;
 
-public class Note {
+import java.io.Serializable;
+
+public class Note implements Serializable {
     Tone tone;
     int duration;
     Octave octave;
