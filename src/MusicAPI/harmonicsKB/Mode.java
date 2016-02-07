@@ -16,7 +16,7 @@ public enum Mode {
 
     private int index;
     private Interval [] steps = { Interval.Tone, Interval.Tone, Interval.Semitone, Interval.Tone, Interval.Tone,
-            Interval.Tone, Interval.Semitone };
+                                    Interval.Tone, Interval.Semitone };
 
     Mode(int index) {
         this.index = index;
