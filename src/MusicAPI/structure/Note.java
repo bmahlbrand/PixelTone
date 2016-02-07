@@ -2,7 +2,7 @@ package MusicAPI.structure;
 
 import java.io.Serializable;
 
-public class Note implements Serializable {
+public class Note extends VoiceElement implements Serializable {
     Tone tone;
     int duration;
     Octave octave;

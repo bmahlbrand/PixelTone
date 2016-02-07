@@ -2,7 +2,7 @@ package MusicAPI.structure;
 
 import java.io.Serializable;
 
-class Rest implements Serializable {
+class Rest extends VoiceElement implements Serializable {
     int duration;
 
 }

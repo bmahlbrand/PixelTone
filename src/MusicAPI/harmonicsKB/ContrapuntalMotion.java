@@ -3,7 +3,7 @@ package MusicAPI.harmonicsKB;
 /**
  * Created by ben on 4/26/2015.
  */
-public enum HarmonicMotion {
+public enum ContrapuntalMotion {
     Parallel(0),
     Similar(1),
     Contrary(2),
@@ -11,7 +11,7 @@ public enum HarmonicMotion {
 
     private int value;
 
-    HarmonicMotion(int value) {
+    ContrapuntalMotion(int value) {
         this.value = value;
     }
 

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 public class Beat implements Serializable {
-    Collection<Note> notes;
+    Collection<VoiceElement> notes;
 
     public ArrayList<? extends Note> getNotes() {
         return null;
