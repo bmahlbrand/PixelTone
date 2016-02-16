@@ -1,0 +1,10 @@
+apply pugin: 'java'
+
+repositories {
+    
+}
+
+dependencies {
+    compile group: 
+    testCompile group: 
+}
