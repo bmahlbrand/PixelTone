@@ -4,7 +4,7 @@ package MusicAPI.harmonicsKB;
  * Created by ben on 4/3/2015.
  */
 
-//scale degrees used by scale/chord building functions
+//scale degrees used by scale/triads building functions
 public enum Degree {
 //    NonScaleDegree(-1),
     Tonic(0),

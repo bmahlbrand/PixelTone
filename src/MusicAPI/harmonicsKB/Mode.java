@@ -1,6 +1,8 @@
 package MusicAPI.harmonicsKB;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Created by ben on 5/10/2015.
@@ -8,7 +10,7 @@ import java.util.*;
 public enum Mode {
     Ionian(0),
     Dorian(1),
-    Phygrian(2),
+    Phrygian(2),
     Lydian(3),
     Mixolydian(4),
     Aeolian(5),
@@ -27,10 +29,11 @@ public enum Mode {
         return index;
     }
 
-    public ArrayList<Interval> getSteps() {
+    public Interval [] getSteps() {
         ArrayList<Interval> values = new ArrayList(Arrays.asList(steps));
-        Collections.rotate(values, getIndex());
-        return values;
-    }
 
+        Collections.rotate(values, -getIndex());
+        steps = values.toArray(steps);
+        return steps;
+    }
 }

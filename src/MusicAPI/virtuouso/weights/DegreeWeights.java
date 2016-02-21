@@ -5,7 +5,7 @@ package MusicAPI.virtuouso.weights;
  */
 public class DegreeWeights {
 
-    private static int degreeWeight[][] = {
+    private static double degreeWeight[][] = {
             {3,  3,    3,    3,    3,   3,    3}, //tonic to ...
             {0,  3,    0,    0,    4,   0,    1}, //supertonic to ...
             {0,  0,    2,    4,    9,   4,    0}, //mediant to ...
@@ -15,7 +15,7 @@ public class DegreeWeights {
             {9,  0,    0,    0,    0,   0,    1}
     };
 
-    public static int getDegreeWeight(int i, int j) {
+    public static double getDegreeWeight(int i, int j) {
         return degreeWeight[i][j];
     }
 }

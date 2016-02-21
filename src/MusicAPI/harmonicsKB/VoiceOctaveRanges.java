@@ -1,6 +1,6 @@
 package MusicAPI.harmonicsKB;
 
-import java.util.Random;
+import MusicAPI.utils.MersenneTwisterFast;
 
 /**
  * Created by Ben on 4/27/2015.
@@ -18,7 +18,7 @@ public enum VoiceOctaveRanges {
     private Integer [] voiceRange;
 
     public Integer getOctave() {
-        Random rand = new Random();
+        MersenneTwisterFast rand = new MersenneTwisterFast();
         int rangeSize = voiceRange.length;
         return voiceRange[rand.nextInt(rangeSize)];
 //        return voiceRange;
