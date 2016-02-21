@@ -1,5 +1,7 @@
 package MusicAPI.virtuouso.analytics;
 
+import MusicAPI.structure.Note;
+
 import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
@@ -51,12 +53,12 @@ public class Analyzer {
     //for instance D C A A B == *UURD -- good for comparing the tonal similarity of phrases despite different keys or notes
     //use with levenshtein distance function, generate two parsons code strings and use that w/a max edit distance of
     //say 10, 25, depending on the lengths of the phrases could be much larger
-    public static String parsonsCode(List<String> phrase) {
+    public static String parsonsCode(List<Note> phrase) {
         boolean skip = true;
         StringBuilder str = new StringBuilder();
         int prevTone = -1;
-        for (String n : phrase) {
-            int curTone = noteIndex(n, true);
+        for (Note n : phrase) {
+            int curTone = n.getIndex();
 
             if(skip) {
 
