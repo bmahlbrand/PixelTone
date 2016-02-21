@@ -8,6 +8,7 @@ userRoutes.post('/reset', function (request, response) {
 });
 
 userRoutes.post('/logout', function (request, response) {
-    request.logOut(); 
+    request.logOut();
+    response.redirect('/'); 
     response.send(200);
 });

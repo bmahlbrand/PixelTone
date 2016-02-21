@@ -45,7 +45,8 @@ app.get('/', function (request, response) {
 var checkAuth = function(req, res, next) { 
     if (!req.isAuthenticated())  
     {
-                res.send(401); 
+        console.log('Not Authenticated');
+        res.sendStatus(401); 
     }
     else 
     {
@@ -69,11 +70,47 @@ app.get('/login', function(req, res) {
     );
 });
 
-app.post('/login', passport.authenticate('local-login', {
-        successRedirect : '/test/upload', // redirect to the secure profile section
-        failureRedirect : '/signup', // redirect back to the signup page if there is an error
-        failureFlash : true // allow flash messages
-}));
+
+//Login Route
+app.post('/login', function(req, res, next) {
+        passport.authenticate('local-login', function (err, user) {
+           
+           //Sucessfully logged in user
+           if(user)
+           {
+                req.logIn(user, function(err) 
+                {
+                    if (err) { return next(err); }
+                    console.log("Logged In User:" + user.local.email);
+                    return res.redirect('/test/upload');
+                });
+           }
+           else
+           {
+               switch(err.ID)
+               {
+                   case 2:          
+                            console.log(err.message);
+                            res.set({'error': 2});
+                            res.redirect('/signup');
+                           // res.sendStatus(400);
+                            break;
+                   case 3:
+                            console.log(err.message);
+                            res.set({'error': 3});
+                            res.redirect('/signup');
+                            //res.sendStatus(400);
+                            break;
+                  default:
+                            res.redirect('/signup');
+                            //res.sendStatus(400);
+                            break;         
+               }
+           }     
+  })(req, res, next);
+});
+// failureFlash : true // allow flash messages
+
 
 app.get('/signup', function(req, res) {   
     res.send(
@@ -85,11 +122,27 @@ app.get('/signup', function(req, res) {
     );
 });
 
-app.post('/signup', passport.authenticate('local-signup', {
-        successRedirect : '/test/upload', // redirect to the secure profile section
-        failureRedirect : '/signup', // redirect back to the signup page if there is an error
-        failureFlash : true // allow flash messages
-    }));
+app.post('/signup', function(req, res, next) {
+        passport.authenticate('local-signup', function (err, user) {
+         
+           //Sucessfully created user
+           if(user)
+           {
+               console.log("Created User:" + user);
+               res.redirect('/login')
+               //res.sendStatus(200); 
+           }
+           else
+           {
+               console.log(err.message);
+               res.set({'error': 1});
+               res.redirect('/signup')
+               //res.sendStatus(400);
+           }
+           
+  })(req, res, next);
+//failureFlash : true // allow flash messages
+});
 
 app.listen(3000, function () {
     console.log('Middle-Tier Listening on Port 3000');
