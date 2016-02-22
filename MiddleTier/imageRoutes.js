@@ -2,6 +2,7 @@ var express = require('express');
 var config = require('config-node')();
 var multer = require('multer');
 var https = require('https');
+var http = require('http');
 var fs = require ('fs');
 var ColorThief = require('color-thief');
 var color = new ColorThief();
@@ -56,15 +57,17 @@ var parseMSResponse = function(response) {
     response.on('end', function() {
         
         var parsed = JSON.parse(str);
-        console.log(parsed);
+        //console.log(parsed);
        
         var totalFaces = 0;
-       
-        console.log("Top 3 Facial Traits");
-        parsed.forEach( function(face) {
+        var faces = [];
+        //console.log("Top 3 Facial Traits");
+        parsed.forEach( function(face) 
+        {
+            totalFaces++;
             var scores = face.scores;
             var emotions = [];
-            console.log("Face " + totalFaces++ + ":");
+           // console.log("Face " + totalFaces++ + ":");
             for( var x in scores)
             {
                     var key = "emotion";
@@ -76,13 +79,25 @@ var parseMSResponse = function(response) {
             }
   
             emotions.sortOn("value");
-            console.log(emotions[7]);
-            console.log(emotions[6]);
-            console.log(emotions[5]);
+            //console.log(emotions[7]);
+            //console.log(emotions[6]);
+           // console.log(emotions[5]);
+            
+            var face = [];
+            
+            for(var i = 7; i > 4; i--)
+            {
+                var faceEntry = {};
+                faceEntry["emotion"] = emotions[i].emotion;
+                faceEntry["value"] = emotions[i].value;
+                face.push(faceEntry);
+            }
+            faces.push(face);
         });
+
         
        
-        console.log("Grabbing colors from image:" + image);
+       // console.log("Grabbing colors from image:" + image);
         
         //Get Dominant Color
         var colorThief = color.getColor(image);
@@ -98,16 +113,56 @@ var parseMSResponse = function(response) {
         //Convert DomColor   
         var domColor = getColor(r,g,b);
         
-        console.log("Dom Color:" + domColor);
-        console.log("Top 4 Colors:");
+       // console.log("Dom Color:" + domColor);
+        //console.log("Top 4 Colors:");
+        
+        var pals = [];
+ 
         
         for(var i = 0; i < 4; i++)
         {
             var r = colorPal[i][0];
             var g = colorPal[i][1];
             var b = colorPal[i][2];
-            console.log("Converted:" +  getColor(r, g, b));       
+            //console.log("Converted:" +  getColor(r, g, b));
+            var pal = getColor(r, g, b);
+            pals.push(pal);  
         }   
+        
+        
+        
+        //Create object to send to generator
+       /* var generationParameters = 
+        {
+            "numberOfFaces" : totalFaces,
+            "faces": [
+                    { 
+                    "face": [
+                            {"emotion" : anger, "value" : 1.0000},
+                            {"emotion" : anger, "value" : 1.0000},
+                            {"emotion" : anger, "value" : 1.0000}            
+                            ]
+                    }   
+            ],
+            "domColor" : color1,
+            "pal1" : color2,
+            "pal2" : color3,
+            "pal3" : color4       
+        }   */
+        var generationParameters =
+        {
+            "numberOfFaces" : totalFaces,
+            "faces": faces,
+            "domColor" : domColor,
+            "pal1" : pals[0],
+            "pal2" : pals[1],
+            "pal3" : pals[2]         
+        }
+        
+        //console.log(generationParameters);
+        //console.log(generationParameters.faces[0]);
+        //console.log(generationParameters.faces[1]);
+        return sendParameters(generationParameters);
     });
     
   
@@ -174,7 +229,7 @@ Array.prototype.sortOn = function(key){
 var getColor = function(R, G, B)
 {
     //Get prominant color
-    console.log("Converting:" + R + "," + G + "," + B);
+    //console.log("Converting:" + R + "," + G + "," + B);
     //White
     //All are above 240
     if(R >=240 && G >= 240 && B >= 240)
@@ -258,4 +313,40 @@ var getColor = function(R, G, B)
         return COLORS[4];
         
     }  
+};
+
+
+
+
+var sendParameters = function(params)
+{
+    var generateOptions = {
+        host: 'localhost',
+        path: '/generateSong',
+        port: 3001,
+        method: 'POST'
+    };
+    
+    var req = http.request(generateOptions, function(response)
+    {
+          var str = ''
+            response.on('data', function (chunk) {
+                str += chunk;
+            });
+
+            response.on('end', function () {
+                console.log(str);
+                //GET SONG CODE GOES HERE
+                
+            });
+            
+            response.on('error', function (err) {
+                console.log(err);
+            });
+   
+    });
+    
+    req.write(JSON.stringify(params));
+    req.end();
+
 };
