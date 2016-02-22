@@ -9,24 +9,24 @@
 		//home page
 		.when('/', {
 			templateUrl: 'views/home/home.html',
-			controller: 'controllers/homeController'
+			controller: 'homeController'
 		})
 
 		.when('/home', {
 			templateUrl: 'views/home/home.html',
-			controller: 'controllers/homeController'
+			controller: 'homeController'
 		})
 
 		// route for about
 		.when('/about', {
 			templateUrl: 'views/about/about.html',
-			controller: 'controllers/aboutController'
+			controller: 'aboutController'
 		})
 
 		//route for the login page
 		.when('/login', {
 			templateUrl: 'views/login/login.html',
-			controller: 'controllers/loginController'
+			controller: 'loginController'
 		});
 	});
 
