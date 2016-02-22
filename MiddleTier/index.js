@@ -37,7 +37,9 @@ var testUpload = require('./testUpload');
 app.get('/', function (request, response) {
     response.send('Hello, deadbeef<br>'
     + '<a href=/login>Login</a><br>'
-    + '<a href=/signup>signup</a>'
+    + '<a href=/signup>signup</a><br>'
+     + '<a href=/users/forgot>forgot</a><br>'
+     + '<a href=/users/logout>logout</a>'
     );
 });
 
@@ -57,7 +59,7 @@ var checkAuth = function(req, res, next) {
 
 
 //Load Route Handlers
-app.use('/users' , checkAuth, userRoutes);
+app.use('/users' , userRoutes);
 app.use('/images' , checkAuth, imageRoutes);
 app.use('/test' , checkAuth, testUpload);
 
