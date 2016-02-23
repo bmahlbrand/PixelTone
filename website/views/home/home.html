@@ -2,9 +2,91 @@
 <div class="jumbotron text-center">
     <h1>Welcome to PixelTone</h1>
     <h3>Upload a picture and get a tailored made song!</h3>
-    <button ng-click ="newPic === 1"type="button" class="btn btn-primary">Upload your picture!!</button>
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Upload your picture!!</button>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title text-center" id="myModalLabel">Upload your picture</h4>
+          </div>
+
+         
+            <div class="modal-body">
+            
+              <form id="form-signUp">
+              <div style="margin:0 auto; width: 200px;">
+                <img style="width: 200px; height: 150px;" id="output"/>
+                <input id="profilePhotoFileUpload" type="file" accept="image/*" onchange="refreshPicBeforeInput(event)">
+                </div>
+                <div class="form-group" style="margin:0 auto; width: 200px;">
+                  <label for="author">Your Name</label>
+                  <input type="text" class="form-control" id="author" placeholder="Type a name">
+                </div>
+                <div class="form-group" style="margin:0 auto; width: 200px;">
+                  <label for="songName">Song Name</label>
+                  <input type="text" class="form-control" id="nameOfSong" placeholder="Enter a name of the song">
+                </div>
+                <div class="form-group" style="margin:0 auto; width: 200px;">
+                  <label for="parameter1">Parameter1</label>
+                  <input type="number" class="form-control" id="parameter1" min="1" max="10" placeholder="Number 1 -10">
+                </div>
+                <div class="form-group" style="margin:0 auto; width: 200px;">
+                  <label for="parameter2">parameter2</label>
+                  <input type="number" class="form-control" id="parameter2" min="1" max="10" placeholder="Number 1 -10">
+                </div>
+                <div class="form-group" style="margin:0 auto; width: 200px;">
+                  <label for="parameter3">parameter3</label>
+                  <input type="number" class="form-control" id="parameter3" min="1" max="10" placeholder="Number 1 -10">
+                </div>
+                
+                <div class="modal-footer">
+                  <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                  <button ng-click="upLoadNewSong()" id="btnSubmit" type="submit" class="btn btn-primary">Upload</button>
+                </div>
+              </form>
+            
+            </div>
+           
+
+      </div>
+    </div>
+</div>
+
+<div class="container" ng-hide="songsCreated.length == 0">
+  <h2>Songs you created</h2>                                                                  
+  <div class="table-responsive">          
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Img</th>
+        <th>Author</th>
+        <th>Controls</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr ng-repeat="songCreated in songsCreated">
+      <td class="col-md-2" ><img ng-src="{{ songCreated.icon }}" height="75" width="75" > </td>
+      <td><h4>{{ songCreated.author }}</h4></td>
+      <td>
+        <button type="button" class="btn btn-default" aria-label="Left Align">
+            <span class="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="btn btn-default" aria-label="Left Align">
+            <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
+        </button>
+        <button type="button" class="btn btn-default" aria-label="Left Align">
+            <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+  </table>
+  </div>
+</div>
 
 <div class="container">
   <h2>Recent Songs created</h2>                                                                  
