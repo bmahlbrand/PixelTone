@@ -11,11 +11,9 @@ var imageRoutes = module.exports = express();
 
 var COLORS = [ "BLACK", "WHITE", "RED", "GREEN", "BLUE", "YELLOW", "ORANGE", "PURPLE", "GREY", "BROWN"];
 
-
-
 var key = config.MSEmotionPrimeKey;
-if(key == null)
-    throw err("No API KEY");
+if(key == null || key == "")
+    console.log("No API KEY (CANT CONNECT TO MS) - GET FROM JACOB/BEN");
 
 var image = "";
 
@@ -65,34 +63,34 @@ var parseMSResponse = function(response) {
         parsed.forEach( function(face) 
         {
             totalFaces++;
-            var scores = face.scores;
-            var emotions = [];
-           // console.log("Face " + totalFaces++ + ":");
-            for( var x in scores)
+            var tmpEmo = [];
+           
+            for( var x in face.scores)
             {
                     var key = "emotion";
                     var key2 = "value";
                     var entry = {};
                     entry[key] = x;
-                    entry[key2] = scores[x];
-                    emotions.push(entry);
+                    entry[key2] = face.scores[x];
+                    tmpEmo.push(entry);
             }
   
-            emotions.sortOn("value");
-            //console.log(emotions[7]);
-            //console.log(emotions[6]);
-           // console.log(emotions[5]);
+            tmpEmo.sortOn("value");
+                   
+            var face = {};
+            var emotionArray = [];
             
-            var face = [];
-            
+            //Get top 3 entries
             for(var i = 7; i > 4; i--)
             {
                 var faceEntry = {};
-                faceEntry["emotion"] = emotions[i].emotion;
-                faceEntry["value"] = emotions[i].value;
-                face.push(faceEntry);
+                
+                faceEntry["emotion"] = tmpEmo[i].emotion;
+                faceEntry["value"] = tmpEmo[i].value;
+                emotionArray.push(faceEntry);       
             }
-            faces.push(face);
+            var emotions = { 'emotions' : emotionArray};
+            faces.push(emotions);
         });
 
         
@@ -118,7 +116,6 @@ var parseMSResponse = function(response) {
         
         var pals = [];
  
-        
         for(var i = 0; i < 4; i++)
         {
             var r = colorPal[i][0];
@@ -129,26 +126,29 @@ var parseMSResponse = function(response) {
             pals.push(pal);  
         }   
         
+        //Object
+        /*
+        {
+            "numberOfFaces":3,
+            "faces":[
+                {"emotions"
+                [
+                    {"emotion":"neutral","value":0.8613265},
+                    {"emotion":"happiness","value":0.127864555},
+                    {"emotion":"contempt","value":0.007246431}
+                ]
+                },
+                {"emotions":[...]
+                }
+                ],
+             "domColor":"BLUE",
+             "pal1":"BLUE",
+             "pal2":"RED",
+             "pal3":"BLUE"}
+        */
         
         
         //Create object to send to generator
-       /* var generationParameters = 
-        {
-            "numberOfFaces" : totalFaces,
-            "faces": [
-                    { 
-                    "face": [
-                            {"emotion" : anger, "value" : 1.0000},
-                            {"emotion" : anger, "value" : 1.0000},
-                            {"emotion" : anger, "value" : 1.0000}            
-                            ]
-                    }   
-            ],
-            "domColor" : color1,
-            "pal1" : color2,
-            "pal2" : color3,
-            "pal3" : color4       
-        }   */
         var generationParameters =
         {
             "numberOfFaces" : totalFaces,
@@ -159,9 +159,6 @@ var parseMSResponse = function(response) {
             "pal3" : pals[2]         
         }
         
-        //console.log(generationParameters);
-        //console.log(generationParameters.faces[0]);
-        //console.log(generationParameters.faces[1]);
         return sendParameters(generationParameters);
     });
     
@@ -335,8 +332,9 @@ var sendParameters = function(params)
             });
 
             response.on('end', function () {
-                console.log(str);
+                console.log("Response from BackEnd:" + str);
                 //GET SONG CODE GOES HERE
+
                 
             });
             

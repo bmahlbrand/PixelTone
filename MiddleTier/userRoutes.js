@@ -28,8 +28,6 @@ userRoutes.get('/forgotUI', function(req, res) {
 });
 
 
-
-
 //Handle User Forgot Pass sent EMAIL 
 userRoutes.post('/forgot', function (req, res) {
     if (req.isAuthenticated()) {

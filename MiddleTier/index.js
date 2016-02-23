@@ -111,8 +111,6 @@ app.post('/login', function(req, res, next) {
            }     
   })(req, res, next);
 });
-// failureFlash : true // allow flash messages
-
 
 app.get('/signup', function(req, res) {   
     res.send(
@@ -143,7 +141,6 @@ app.post('/signup', function(req, res, next) {
            }
            
   })(req, res, next);
-//failureFlash : true // allow flash messages
 });
 
 app.listen(3000, function () {
