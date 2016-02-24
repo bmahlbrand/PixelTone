@@ -38,7 +38,7 @@ public class GeneticAlgorithm{
     	System.out.println(best); 
     }
 
-    public static ArrayList<Enum> IntegertoEnum(final Genotype<IntegerGene> gt, ArrayList<Enum> myEnum){
+    public static ArrayList<Enum> integertoEnum(final Genotype<IntegerGene> gt, ArrayList<Enum> myEnum){
         final int[] intSet = gt.getChromosome().toSeq().stream().mapToInt(IntegerGene:: getAllele).toArray();
         ArrayList<Enum> enumList = new ArrayList<Enum>();
         for (int count = 0; count < intSet.length; count++){
@@ -48,7 +48,7 @@ public class GeneticAlgorithm{
         return enumList;
     }
 
-    public static final int[] GenotypeToIntArray(final Genotype<IntegerGene> gt){
-        return gt.getChromosome().toSeq().stream().mapToInt(IntegerGene:: getAllele).toArray();
+    public static final int[] genotypeToIntArray(final Genotype<IntegerGene> gt){
+        return gt.getChromosome().toSeq().stream().mapToInt(IntegerGene:: intValue).toArray();
     }
 }
