@@ -3,12 +3,13 @@ package MusicAPI.GeneticAlgorithm;
 import org.jenetics.Genotype;
 import org.jenetics.IntegerGene;
 
-public class CommonChordProgFitFunc implements FitnessFunction{
+public class CommonChordProgFitFunc implements FitnessFunction {
 
 	public CommonChordProgFitFunc(){
 
 	}
 
+	@Override
 	public Integer fitnessFunction (final Genotype<IntegerGene> gt){
 
 		final int[] chordProg = GeneticAlgorithm.genotypeToIntArray(gt);

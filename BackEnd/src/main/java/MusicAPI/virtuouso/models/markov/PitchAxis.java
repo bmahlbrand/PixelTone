@@ -145,9 +145,9 @@ public class PitchAxis extends StateAxis {
 //                case 6:
 //                    return Degree.Leading;
 //        }
-//        return null;
+        return null;
 
-        return BlackMagicka.getDegreeIndex(tonic, mode, note.toString(), sharp);
+//        return BlackMagicka.getDegreeIndex(tonic, mode, note.toString(), sharp);
 //        return degree;
     }
 }

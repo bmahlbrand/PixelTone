@@ -84,7 +84,7 @@ public class ToneTransitionTable extends HiddenMarkovModel {
     }
 
     public void trainNote(Note note) {
-        trainNote(BlackMagicka.noteIndexToString(markov.getFirst().getPitchAxis().noteIndex(note), markov.get(0).getPitchAxis().sharp)); //ugliest evar
+//        trainNote(BlackMagicka.noteIndexToString(markov.getFirst().getPitchAxis().noteIndex(note), markov.get(0).getPitchAxis().sharp)); //ugliest evar
     }
 
     //adds note to model and updates state
@@ -105,12 +105,13 @@ public class ToneTransitionTable extends HiddenMarkovModel {
     private double getKthLikelihood(Note note, int k) { //k == index of order
         String lastNote = lastKBeats.get(k - 1).getNotes().get(0).toString();
 
-        int i = BlackMagicka.noteIndex(note.toString(), markov.get(0).getPitchAxis().sharp);
-        int j = BlackMagicka.noteIndex(lastNote, markov.get(0).getPitchAxis().sharp);
-        if (i < 0 || i > 11 || j < 0 || j > 11)
-            return -1.0;
+//        int i = BlackMagicka.noteIndex(note.toString(), markov.get(0).getPitchAxis().sharp);
+//        int j = BlackMagicka.noteIndex(lastNote, markov.get(0).getPitchAxis().sharp);
+//        if (i < 0 || i > 11 || j < 0 || j > 11)
+//            return -1.0;
 
-        return markov.get(k - 1).getIndexLikeliness(i, j);
+//        return markov.get(k - 1).getIndexLikeliness(i, j);
+        return 0.0;
     }
 
 
