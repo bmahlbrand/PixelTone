@@ -1,0 +1,17 @@
+apply plugin: 'java'
+apply plugin:'application'
+mainClassName = "MusicAPI.main"
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile (
+    	[group: 'com.sparkjava', name: 'spark-core', version: '2.3'],
+    	[group: 'org.bitbucket.fwilhelm', name: 'org.jenetics', version: '3.4.0'])
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '2.3'
+}
