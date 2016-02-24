@@ -5,11 +5,12 @@ package MusicAPI.harmonicsKB;
  */
 public enum Interval {
     Semitone(1),
-    Tone(2);
+    Tone(2),
+    Tritone(3);
 
     private int semitones;
 
-    private Interval(int semitones) {
+    Interval(int semitones) {
         this.semitones = semitones;
     }
 

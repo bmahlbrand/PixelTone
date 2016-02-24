@@ -35,4 +35,31 @@ public abstract class Scale {
 
 	protected abstract LimitedQueue<Note> buildScale();
 	protected abstract Interval [] buildIntervals();
+
+	public boolean noteInScale(Note root, Note check) {
+		for (Note n : scale) {
+			if (n == check)
+				return true;
+		}
+
+		return false;
+	}
+
+	public int noteIndex(Note root, Note check) {
+		for (int i = 0; i < scale.size(); i++) {
+			if (scale.get(i) == check)
+				return i;
+		}
+
+		return -1;
+	}
+
+	public Degree degreeIndex(Note root, Note check) {
+		for (int i = 0; i < scale.size(); i++) {
+			if (scale.get(i) == check)
+				return Degree.values()[i];
+		}
+
+		return Degree.NonScaleDegree;
+	}
 }

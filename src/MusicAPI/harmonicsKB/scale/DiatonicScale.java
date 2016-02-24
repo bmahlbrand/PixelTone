@@ -1,5 +1,6 @@
 package MusicAPI.harmonicsKB.scale;
 
+import MusicAPI.harmonicsKB.Degree;
 import MusicAPI.harmonicsKB.Interval;
 import MusicAPI.harmonicsKB.Mode;
 import MusicAPI.structure.Note;
@@ -23,7 +24,7 @@ public class DiatonicScale extends Scale {
 	@Override
 	protected LimitedQueue<Note> buildScale() {
         scale = new LimitedQueue<>(7);
-		int noteIndex = root.getIndex();
+        int noteIndex = root.getIndex();
 
 		for (int i = 0; i < 7; i++) {
 			if (i == 0) {
@@ -46,6 +47,66 @@ public class DiatonicScale extends Scale {
 
 		return scale;
 	}
+
+    //pick ith should be preferred as it calls these anyway
+    public Note pickTonic(Note root) {
+        return scale.get(Degree.Tonic.toInt());
+    }
+
+    public Note pickSuperTonic(Note root) {
+        return scale.get(Degree.Supertonic.toInt());
+    }
+
+    public Note pickMediant(Note root) {
+        return scale.get(Degree.Mediant.toInt());
+    }
+
+    public Note pickSubdominant(Note root) {
+        return scale.get(Degree.Subdominant.toInt());
+    }
+
+    public Note pickDominant(Note root) {
+        return scale.get(Degree.Dominant.toInt());
+    }
+
+    public Note pickSubmediant(Note root) {
+        return scale.get(Degree.Submediant.toInt());
+    }
+
+    public Note pickLeading(Note root) {
+        return scale.get(Degree.Leading.toInt());
+    }
+
+    //pick ith degree note based on root, ie root = C, index = 5, return the fifth -- G
+    public Note pickIthNote(Note root, int index) {
+        Note note = null;
+
+        switch(index) {
+            case 0:
+                note = pickTonic(root);
+                break;
+            case 1:
+                note = pickSuperTonic(root);
+                break;
+            case 2:
+                note = pickMediant(root);
+                break;
+            case 3:
+                note = pickSubdominant(root);
+                break;
+            case 4:
+                note = pickDominant(root);
+                break;
+            case 5:
+                note = pickSubmediant(root);
+                break;
+            case 6:
+                note = pickLeading(root);
+                break;
+        }
+
+        return note;
+    }
 
     static boolean equal(LimitedQueue<Note> scale1, LimitedQueue<Note> scale2) {
         for (int i = 0; i < 7; i++) {

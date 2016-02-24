@@ -16,4 +16,6 @@ public abstract class Triad {
     protected abstract LimitedQueue<Note> constructDegrees();
 
     protected abstract LimitedQueue<Note> constructChordTones(Note root);
+
+    protected abstract boolean noteInTriad(Note root, Note check);
 }

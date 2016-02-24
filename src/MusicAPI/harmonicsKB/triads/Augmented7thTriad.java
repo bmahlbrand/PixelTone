@@ -37,4 +37,16 @@ public class Augmented7thTriad extends Triad {
 
         return notes;
     }
+
+    @Override
+    public boolean noteInTriad(Note root, Note check) {
+        Augmented7thTriad triad = new Augmented7thTriad(root);
+
+        for (Note note : triad.notes) {
+            if (note == check)
+                return true;
+        }
+
+        return false;
+    }
 }

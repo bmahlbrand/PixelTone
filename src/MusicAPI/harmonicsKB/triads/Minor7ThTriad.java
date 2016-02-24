@@ -38,4 +38,16 @@ public class Minor7ThTriad extends Triad {
 
         return notes;
     }
+
+    @Override
+    public boolean noteInTriad(Note root, Note check) {
+        Minor7ThTriad triad = new Minor7ThTriad(root);
+
+        for (Note note : triad.notes) {
+            if (note == check)
+                return true;
+        }
+
+        return false;
+    }
 }

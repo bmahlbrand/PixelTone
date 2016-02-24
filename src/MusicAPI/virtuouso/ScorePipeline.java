@@ -13,7 +13,6 @@ import java.util.Map;
  * Created by ben on 4/26/2015.
  */
 public class ScorePipeline {
-    static DegreeWeights degreeWeights;
 
     //this should calculate the decision weighting for a degree with respect to the probable tones
     public static double calcScore(Degree degree, HashMap<Degree, Double> dist) {
@@ -26,7 +25,7 @@ public class ScorePipeline {
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
             Degree from = (Degree)pair.getKey();
-            double score = (double) pair.getValue() * degreeWeights.getDegreeWeight(from.toInt(), degree.toInt());
+            double score = (double) pair.getValue() * DegreeWeights.get(from.toInt(), degree.toInt());
 
             if (score > max)
                 max = score;
@@ -80,7 +79,7 @@ public class ScorePipeline {
 //        HashMap<Degree, Double> degreeDist = new HashMap<>();
         Iterator it = distribution.entrySet().iterator();
 
-        Double value = new Double(0);
+        Double value = 0.0;
         Pair<Degree, Double> max = null;
         while (it.hasNext()) {
             Map.Entry pair = (Map.Entry)it.next();
@@ -97,28 +96,5 @@ public class ScorePipeline {
     //just a wrapper for above
     public static Degree getMaxWeightDegree(HashMap<Degree, Double> distribution) {
         return getMaxWeight(distribution).t;
-    }
-
-    //    https://en.wikipedia.org/wiki/Nonchord_tone
-    private enum WeightType{Chord, StrongBeat, NeighborTone, PassingTone, Root, Inversion}
-
-    //this should be our generic hook for different weight schemes, different weighting for choosing likely chord progression than for picking phrase notes
-    int heuristicCompare(WeightType type) { //needs more parameters of course, just a sketch of using different comparisons for choosing notes
-        switch (type) {
-            case Chord:
-                break;
-            case StrongBeat:
-                break;
-            case NeighborTone:
-                break;
-            case PassingTone:
-                break;
-            case Root:
-                break;
-            case Inversion:
-                break;
-        }
-
-        return -1;
     }
 }

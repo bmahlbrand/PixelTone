@@ -37,4 +37,16 @@ public class Diminished7thTriad extends Triad {
 
         return notes;
     }
+
+    @Override
+    public boolean noteInTriad(Note root, Note check) {
+        Diminished7thTriad triad = new Diminished7thTriad(root);
+
+        for (Note note : triad.notes) {
+            if (note == check)
+                return true;
+        }
+
+        return false;
+    }
 }

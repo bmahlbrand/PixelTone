@@ -1,9 +1,8 @@
-package MusicAPI.virtuouso.models;
+package MusicAPI.virtuouso.models.markov;
 
 import MusicAPI.structure.Beat;
 import MusicAPI.structure.Note;
 import MusicAPI.utils.Pair;
-import MusicAPI.virtuouso.models.markov.PitchAxis;
 
 /**
  * Created by ben on 4/5/2015.

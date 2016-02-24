@@ -1,5 +1,9 @@
 package MusicAPI.harmonicsKB;
 
+import MusicAPI.harmonicsKB.scale.DiatonicScale;
+import MusicAPI.harmonicsKB.scale.Scale;
+import MusicAPI.structure.Note;
+
 /**
  * Created by ben on 4/3/2015.
  */
@@ -120,5 +124,35 @@ public enum Degree {
         }
 
         return Leading;
+    }
+
+    public static Degree numToDegree(int i){
+        switch (i){
+            default:
+            case 0:
+                return Degree.Tonic;
+            case 1:
+                return Degree.Supertonic;
+            case 2:
+                return Degree.Mediant;
+            case 3:
+                return Degree.Subdominant;
+            case 4:
+                return Degree.Dominant;
+            case 5:
+                return Degree.Submediant;
+            case 6:
+                return Degree.Leading;
+        }
+    }
+
+    public static Degree getDegreeIndex(Note root, Mode mode, Note check, boolean sharp) {
+        DiatonicScale ds = new DiatonicScale(root, mode);
+
+        int i = ds.noteIndex(root, check);
+        if (i == -1)
+            return NonScaleDegree;
+
+        return Degree.values()[i];
     }
 }

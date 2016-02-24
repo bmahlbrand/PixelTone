@@ -15,6 +15,11 @@ public class Note extends VoiceElement implements Serializable {
         this.tone = Tone.fromIndex(index);
     }
 
+    //    TODO REMOVE ME LATER AND DO THIS CLEANLY / CONSISTENTLY
+    public Note(char tone, int accidental, int duration, int octave) {
+
+    }
+
     public Accidental getAccidental() {
         return tone.accidental;
     }
