@@ -34,8 +34,19 @@ var userRoutes = require('./userRoutes');
 var imageRoutes = require('./imageRoutes');
 var testUpload = require('./testUpload');
 
+
+//Serve up FrontEnd Requests
+var dirname = config.staticContent;
+app.use(
+        "/", //the URL throught which you want to access to you static content
+        express.static(dirname) //where your static content is located in your filesystem
+    );
+
+
+
+
 //Simple Home Page to test without Angular
-app.get('/', function (request, response) {
+app.get('/test', function (request, response) {
     response.send('Hello, welcome to PixelTone<br><br><br>'
     + '<a href=/login>Login</a><br><br>'
     + '<a href=/signup>signup</a><br><br>'
