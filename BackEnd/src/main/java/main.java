@@ -1,8 +1,8 @@
-package PixelTone;
-
-import com.google.gson.Gson;
-
 import static spark.Spark.*;
+import com.google.gson.Gson;
+import MusicAPI.GeneticAlgorithm.*;
+
+import ImageAPI.*;
 
 public class main {
 	public static void main(String[] args) {
@@ -10,16 +10,16 @@ public class main {
 
         get("/", (request, response) -> "PixelTone BackEnd Works");
 
-        post("/generateSong", (request, response) ->
-        {
+        post("/generateSong", (request, response) -> {
             System.out.println("Generate Parameter Request Received");
+            CommonChordProgFitFunc fitnessfunction = new CommonChordProgFitFunc();
+            GeneticAlgorithm.geneticAlgorithm(1,7,100,fitnessfunction);
             return handleParameters(request.body());
         });
     }
 
-    public static String handleParameters(String params) throws Exception
-    {
-        try{
+    public static String handleParameters(String params) throws Exception {
+        try {
             Gson gson = new Gson();
             GenerationParams gp = gson.fromJson(params, GenerationParams.class);
             //System.out.println(params);
@@ -29,14 +29,15 @@ public class main {
             System.out.println("Facial Information");
             System.out.println("Number of Faces:" + gp.numberOfFaces);
             int i = 0;
-            for(Face f : gp.faces)
-            {
+            for(Face f : gp.faces) {
+                
                 System.out.println("Face #" + i++ + ":\n");
-                for( Emotion e : f.emotions)
-                {
+                
+                for (Emotion e : f.emotions) {
                     System.out.println("Facial Emotion:" + e.emotion);
                     System.out.println("Emotion Value:" + e.value);
                 }
+
                 System.out.println("------------------------------------");
             }
 
@@ -49,9 +50,7 @@ public class main {
             //Store song in database?
             //????? TBD
 
-        }
-        catch (Exception e)
-        {
+        } catch (Exception e) {
             throw new Exception("Invalid JSON", e);
         }
         //Ideally we want to return a status code based on processing status (200) for success
