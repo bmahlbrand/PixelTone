@@ -1,12 +1,10 @@
 package MusicAPI.harmonicsKB.scale;
 
-import MusicAPI.harmonicsKB.Degree;
-import MusicAPI.harmonicsKB.Interval;
-import MusicAPI.harmonicsKB.Mode;
+import MusicAPI.harmonicsKB.intervals.Degree;
+import MusicAPI.harmonicsKB.intervals.Interval;
+import MusicAPI.harmonicsKB.intervals.Mode;
 import MusicAPI.structure.Note;
 import MusicAPI.utils.LimitedQueue;
-
-import java.util.ArrayList;
 
 public abstract class Scale {
 	Note root;

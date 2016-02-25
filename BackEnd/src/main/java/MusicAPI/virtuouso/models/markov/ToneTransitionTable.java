@@ -1,12 +1,11 @@
 package MusicAPI.virtuouso.models.markov;
 
-import MusicAPI.harmonicsKB.Degree;
+import MusicAPI.harmonicsKB.intervals.Degree;
 import MusicAPI.structure.Beat;
 import MusicAPI.structure.Measure;
 import MusicAPI.structure.Note;
 import MusicAPI.utils.LimitedQueue;
 import MusicAPI.utils.Pair;
-import MusicAPI.virtuouso.analytics.BlackMagicka;
 
 import java.io.File;
 import java.util.*;

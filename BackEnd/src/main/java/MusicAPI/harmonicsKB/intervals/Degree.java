@@ -1,7 +1,6 @@
-package MusicAPI.harmonicsKB;
+package MusicAPI.harmonicsKB.intervals;
 
 import MusicAPI.harmonicsKB.scale.DiatonicScale;
-import MusicAPI.harmonicsKB.scale.Scale;
 import MusicAPI.structure.Note;
 
 /**

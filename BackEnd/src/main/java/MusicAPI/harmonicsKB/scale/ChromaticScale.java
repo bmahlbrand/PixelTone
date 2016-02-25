@@ -1,11 +1,9 @@
 package MusicAPI.harmonicsKB.scale;
 
-import MusicAPI.harmonicsKB.Mode;
+import MusicAPI.harmonicsKB.intervals.Mode;
 import MusicAPI.structure.Note;
-import MusicAPI.harmonicsKB.Interval;
+import MusicAPI.harmonicsKB.intervals.Interval;
 import MusicAPI.utils.LimitedQueue;
-
-import java.util.ArrayList;
 
 public class ChromaticScale<T> extends Scale {
 	public ChromaticScale(Note root, Mode mode) {

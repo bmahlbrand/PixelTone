@@ -1,6 +1,6 @@
 package MusicAPI.virtuouso;
 
-import MusicAPI.harmonicsKB.Degree;
+import MusicAPI.harmonicsKB.intervals.Degree;
 import MusicAPI.utils.Pair;
 import MusicAPI.virtuouso.weights.DegreeWeights;
 

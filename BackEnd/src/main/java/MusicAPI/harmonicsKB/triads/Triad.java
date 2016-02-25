@@ -2,8 +2,8 @@ package MusicAPI.harmonicsKB.triads;
 
 import MusicAPI.structure.Note;
 import MusicAPI.utils.LimitedQueue;
-import MusicAPI.harmonicsKB.Degree;
-import MusicAPI.harmonicsKB.Mode;
+import MusicAPI.harmonicsKB.intervals.Degree;
+import MusicAPI.harmonicsKB.intervals.Mode;
 
 /**
  * Created by ben on 5/9/2015.

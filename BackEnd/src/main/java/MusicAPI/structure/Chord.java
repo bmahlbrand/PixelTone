@@ -1,7 +1,7 @@
 package MusicAPI.structure;
 
-import MusicAPI.harmonicsKB.Mode;
-import MusicAPI.harmonicsKB.Triad;
+import MusicAPI.harmonicsKB.intervals.Mode;
+import MusicAPI.harmonicsKB.intervals.Triad;
 
 /**
  * Created by ben on 2/7/2016.

@@ -1,4 +1,6 @@
-package MusicAPI.harmonicsKB;
+package MusicAPI.harmonicsKB.intervals;
+
+import MusicAPI.harmonicsKB.intervals.Interval;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,7 +19,7 @@ public enum Mode {
     Locrian(6);
 
     private int index;
-    private Interval [] steps = { Interval.Tone, Interval.Tone, Interval.Semitone, Interval.Tone, Interval.Tone,
+    private Interval[] steps = { Interval.Tone, Interval.Tone, Interval.Semitone, Interval.Tone, Interval.Tone,
                                     Interval.Tone, Interval.Semitone };
 
     Mode(int index) {

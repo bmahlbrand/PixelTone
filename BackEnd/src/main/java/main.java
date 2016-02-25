@@ -10,10 +10,12 @@ public class main {
 
         get("/", (request, response) -> "PixelTone BackEnd Works");
 
+        CommonChordProgFitFunc fitnessfunction = new CommonChordProgFitFunc();
+        GeneticAlgorithm.geneticAlgorithm(1, 7, 100, fitnessfunction);
+
         post("/generateSong", (request, response) -> {
             System.out.println("Generate Parameter Request Received");
-            CommonChordProgFitFunc fitnessfunction = new CommonChordProgFitFunc();
-            GeneticAlgorithm.geneticAlgorithm(1,7,100,fitnessfunction);
+
             return handleParameters(request.body());
         });
     }

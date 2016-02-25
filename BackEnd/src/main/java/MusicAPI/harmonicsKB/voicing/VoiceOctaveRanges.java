@@ -1,4 +1,4 @@
-package MusicAPI.harmonicsKB;
+package MusicAPI.harmonicsKB.voicing;
 
 import MusicAPI.utils.MersenneTwisterFast;
 

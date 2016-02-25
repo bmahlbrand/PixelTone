@@ -1,4 +1,4 @@
-package MusicAPI.harmonicsKB;
+package MusicAPI.harmonicsKB.intervals;
 
 /**
  * Created by ben on 5/10/2015.

@@ -1,14 +1,10 @@
 package MusicAPI.harmonicsKB.scale;
 
-import MusicAPI.harmonicsKB.Degree;
-import MusicAPI.harmonicsKB.Interval;
-import MusicAPI.harmonicsKB.Mode;
+import MusicAPI.harmonicsKB.intervals.Degree;
+import MusicAPI.harmonicsKB.intervals.Interval;
+import MusicAPI.harmonicsKB.intervals.Mode;
 import MusicAPI.structure.Note;
 import MusicAPI.utils.LimitedQueue;
-import MusicAPI.utils.Pair;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DiatonicScale extends Scale {
 	

@@ -1,9 +1,8 @@
 package MusicAPI.virtuouso.models.markov;
 
-import MusicAPI.harmonicsKB.Degree;
+import MusicAPI.harmonicsKB.intervals.Degree;
 import MusicAPI.structure.Note;
 import MusicAPI.utils.Pair;
-import MusicAPI.virtuouso.analytics.BlackMagicka;
 
 /**
  * Created by ben on 4/3/2015.

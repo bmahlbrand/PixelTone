@@ -1,11 +1,8 @@
 package MusicAPI.harmonicsKB.scale;
 
-import MusicAPI.harmonicsKB.Interval;
-import MusicAPI.harmonicsKB.Mode;
+import MusicAPI.harmonicsKB.intervals.Mode;
 import MusicAPI.structure.Note;
 import MusicAPI.utils.LimitedQueue;
-
-import java.util.ArrayList;
 
 public class PentatonicScale extends DiatonicScale {
 	
