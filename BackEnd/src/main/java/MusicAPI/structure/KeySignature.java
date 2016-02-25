@@ -1,6 +1,6 @@
 package MusicAPI.structure;
 
-import MusicAPI.harmonicsKB.Mode;
+import MusicAPI.harmonicsKB.intervals.Mode;
 
 import java.io.Serializable;
 

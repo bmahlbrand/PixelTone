@@ -1,6 +1,6 @@
 package MusicAPI.structure;
 
-import MusicAPI.harmonicsKB.SectionType;
+import MusicAPI.harmonicsKB.phrasing.SectionType;
 
 import java.io.Serializable;
 import java.util.Collection;

@@ -43,7 +43,7 @@ public class Tone implements Serializable {
         char tone = '\0';
         Accidental accidental = Accidental.Natural;
 
-        switch(index) {
+        switch (index) {
             case 0:
                 tone = 'C';
                 accidental = Accidental.Natural;
@@ -98,7 +98,7 @@ public class Tone implements Serializable {
     }
 
     int index() {
-        switch(tone) {
+        switch (tone) {
             case 'C':
                 switch (accidental) {
                     case Flat:
@@ -189,10 +189,10 @@ public class Tone implements Serializable {
             return false;
         }
 
-        final Tone other = (Tone)obj;
+        final Tone other = (Tone) obj;
 
         if (this.tone == other.tone
-            && this.accidental == other.accidental) {
+                && this.accidental == other.accidental) {
             return true;
         }
 

@@ -1,65 +1,64 @@
 package MusicAPI.harmonicsKB.scale;
 
-import MusicAPI.harmonicsKB.Degree;
-import MusicAPI.harmonicsKB.Interval;
-import MusicAPI.harmonicsKB.Mode;
+import MusicAPI.harmonicsKB.intervals.Degree;
+import MusicAPI.harmonicsKB.intervals.Interval;
+import MusicAPI.harmonicsKB.intervals.Mode;
 import MusicAPI.structure.Note;
 import MusicAPI.utils.LimitedQueue;
 
-import java.util.ArrayList;
-
 public abstract class Scale {
-	Note root;
-	LimitedQueue<Note> scale;
-	Mode mode;
-	Interval intervals [] = null;
+    Note root;
+    LimitedQueue<Note> scale;
+    Mode mode;
+    Interval intervals[] = null;
 
-	Scale(Note root, Mode mode) {
-		this.root = root;
-		this.mode = mode;
-		this.intervals = buildIntervals();
-		this.scale = buildScale();
-	}
+    Scale(Note root, Mode mode) {
+        this.root = root;
+        this.mode = mode;
+        this.intervals = buildIntervals();
+        this.scale = buildScale();
+    }
 
-	public Note getNote(Degree degree) {
-		return this.scale.get(degree.toInt());
-	}
+    public Note getNote(Degree degree) {
+        return this.scale.get(degree.toInt());
+    }
 
-	public LimitedQueue<Note> getScaleAsString() {
-		if (this.scale == null) {
-			this.buildScale();
-		}
+    public LimitedQueue<Note> getScaleAsString() {
+        if (this.scale == null) {
+            this.buildScale();
+        }
 
-		return this.scale;
-	}
+        return this.scale;
+    }
 
-	protected abstract LimitedQueue<Note> buildScale();
-	protected abstract Interval [] buildIntervals();
+    protected abstract LimitedQueue<Note> buildScale();
 
-	public boolean noteInScale(Note root, Note check) {
-		for (Note n : scale) {
-			if (n == check)
-				return true;
-		}
+    protected abstract Interval[] buildIntervals();
 
-		return false;
-	}
+    public boolean noteInScale(Note root, Note check) {
+        for (Note n : scale) {
+            if (n == check)
+                return true;
+        }
 
-	public int noteIndex(Note root, Note check) {
-		for (int i = 0; i < scale.size(); i++) {
-			if (scale.get(i) == check)
-				return i;
-		}
+        return false;
+    }
 
-		return -1;
-	}
+    public int noteIndex(Note root, Note check) {
+        for (int i = 0; i < scale.size(); i++) {
+            if (scale.get(i) == check)
+                return i;
+        }
 
-	public Degree degreeIndex(Note root, Note check) {
-		for (int i = 0; i < scale.size(); i++) {
-			if (scale.get(i) == check)
-				return Degree.values()[i];
-		}
+        return -1;
+    }
 
-		return Degree.NonScaleDegree;
-	}
+    public Degree degreeIndex(Note root, Note check) {
+        for (int i = 0; i < scale.size(); i++) {
+            if (scale.get(i) == check)
+                return Degree.values()[i];
+        }
+
+        return Degree.NonScaleDegree;
+    }
 }

@@ -1,4 +1,4 @@
-package MusicAPI.harmonicsKB;
+package MusicAPI.harmonicsKB.voicing;
 
 public enum Inversion {
     Root(0),

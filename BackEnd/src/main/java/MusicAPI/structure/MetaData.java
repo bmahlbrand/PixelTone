@@ -20,5 +20,7 @@ public class MetaData implements Serializable {
         return 0;
     }
 
-    public boolean isMajor() { return true; }
+    public boolean isMajor() {
+        return true;
+    }
 }

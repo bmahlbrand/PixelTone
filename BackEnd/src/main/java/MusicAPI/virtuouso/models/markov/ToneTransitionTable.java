@@ -1,12 +1,11 @@
 package MusicAPI.virtuouso.models.markov;
 
-import MusicAPI.harmonicsKB.Degree;
+import MusicAPI.harmonicsKB.intervals.Degree;
 import MusicAPI.structure.Beat;
 import MusicAPI.structure.Measure;
 import MusicAPI.structure.Note;
 import MusicAPI.utils.LimitedQueue;
 import MusicAPI.utils.Pair;
-import MusicAPI.virtuouso.analytics.BlackMagicka;
 
 import java.io.File;
 import java.util.*;
@@ -121,8 +120,8 @@ public class ToneTransitionTable extends HiddenMarkovModel {
         Iterator it = toneDist.entrySet().iterator();
 
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            degreeDist.put(getDegree((Note)pair.getKey()), 1.0);
+            Map.Entry pair = (Map.Entry) it.next();
+            degreeDist.put(getDegree((Note) pair.getKey()), 1.0);
         }
 
         return degreeDist;

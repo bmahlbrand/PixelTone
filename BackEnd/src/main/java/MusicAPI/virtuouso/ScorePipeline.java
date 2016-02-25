@@ -1,6 +1,6 @@
 package MusicAPI.virtuouso;
 
-import MusicAPI.harmonicsKB.Degree;
+import MusicAPI.harmonicsKB.intervals.Degree;
 import MusicAPI.utils.Pair;
 import MusicAPI.virtuouso.weights.DegreeWeights;
 
@@ -23,8 +23,8 @@ public class ScorePipeline {
         Iterator it = dist.entrySet().iterator();
 
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            Degree from = (Degree)pair.getKey();
+            Map.Entry pair = (Map.Entry) it.next();
+            Degree from = (Degree) pair.getKey();
             double score = (double) pair.getValue() * DegreeWeights.get(from.toInt(), degree.toInt());
 
             if (score > max)
@@ -38,8 +38,8 @@ public class ScorePipeline {
         Iterator it = degrees.entrySet().iterator();
 
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            Degree d = (Degree)pair.getKey();
+            Map.Entry pair = (Map.Entry) it.next();
+            Degree d = (Degree) pair.getKey();
 //            degrees.put(d, (Double)pair.getValue() * degreeWeight[degree.toInt()][d.toInt()] * 2);
             degrees.put(d, calcScore(d, degrees));
         }
@@ -50,7 +50,7 @@ public class ScorePipeline {
     public static Pair<String, Integer> getMaxPair(List<Pair<String, Integer>> chords) {
 //        if (chords == null || chords.size() == 0) return null;
 
-        Pair <String, Integer> max = chords.get(0);
+        Pair<String, Integer> max = chords.get(0);
         for (Pair<String, Integer> p : chords)
             if (p.u > max.u)
                 max = p;
@@ -64,11 +64,11 @@ public class ScorePipeline {
         Integer value = 0;
         String max = null;
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
+            Map.Entry pair = (Map.Entry) it.next();
 
-            if (value < (Integer)pair.getValue()) {
-                max = (String)pair.getKey();
-                value = (Integer)pair.getValue();
+            if (value < (Integer) pair.getValue()) {
+                max = (String) pair.getKey();
+                value = (Integer) pair.getValue();
             }
         }
 
@@ -82,11 +82,11 @@ public class ScorePipeline {
         Double value = 0.0;
         Pair<Degree, Double> max = null;
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
+            Map.Entry pair = (Map.Entry) it.next();
 
-            if (Double.valueOf(value) < (Double)pair.getValue()) {
+            if (Double.valueOf(value) < (Double) pair.getValue()) {
                 max = new Pair(pair.getKey(), pair.getValue());
-                value = (Double)pair.getValue();
+                value = (Double) pair.getValue();
             }
         }
 

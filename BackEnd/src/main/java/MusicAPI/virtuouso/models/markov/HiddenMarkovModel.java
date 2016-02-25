@@ -30,7 +30,7 @@ public abstract class HiddenMarkovModel {
     public void printHistogram() {
         for (int k = 0; k < order; k++) {
             System.out.println("-----------------------------------------");
-            System.out.println("              order: "+ (k + 1) +"               ");
+            System.out.println("              order: " + (k + 1) + "               ");
             markov.get(k).printStateHistogram();
             System.out.println("-----------------------------------------");
         }
@@ -39,7 +39,7 @@ public abstract class HiddenMarkovModel {
     public void printProbMatrix() {
         for (int k = 0; k < order; k++) {
             System.out.println("-----------------------------------------");
-            System.out.println("              order: "+ (k + 1) +"               ");
+            System.out.println("              order: " + (k + 1) + "               ");
             markov.get(k).printStateProbMatrix();
             System.out.println("-----------------------------------------");
         }

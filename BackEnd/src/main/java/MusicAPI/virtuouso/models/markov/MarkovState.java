@@ -17,8 +17,8 @@ public class MarkovState {
 
     public MarkovState(Pair<String, String> keySig, char a) {
         System.out.println("MarkovState keysig: " + keySig.t + " " + keySig.u + " " + a);
-        this.histogram = new int [12][12];
-        this.probMatrix = new double [12][12];
+        this.histogram = new int[12][12];
+        this.probMatrix = new double[12][12];
         this.pitchAxis = new PitchAxis(keySig, a);
     }
 
@@ -26,7 +26,10 @@ public class MarkovState {
         histogram[i][j]++;
     }
 
-    public double getIndexLikeliness(int i, int j) { normalize(); return probMatrix[i][j]; }
+    public double getIndexLikeliness(int i, int j) {
+        normalize();
+        return probMatrix[i][j];
+    }
 
     //update THIS order of the model, transition tables build K of these
     public void updateLayer(Beat currentBeat, Beat lastBeat) {

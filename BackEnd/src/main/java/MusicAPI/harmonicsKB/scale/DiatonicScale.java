@@ -1,52 +1,48 @@
 package MusicAPI.harmonicsKB.scale;
 
-import MusicAPI.harmonicsKB.Degree;
-import MusicAPI.harmonicsKB.Interval;
-import MusicAPI.harmonicsKB.Mode;
+import MusicAPI.harmonicsKB.intervals.Degree;
+import MusicAPI.harmonicsKB.intervals.Interval;
+import MusicAPI.harmonicsKB.intervals.Mode;
 import MusicAPI.structure.Note;
 import MusicAPI.utils.LimitedQueue;
-import MusicAPI.utils.Pair;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DiatonicScale extends Scale {
-	
-	public DiatonicScale(Note root, Mode mode) {
-		super(root, mode);
-	}
 
-	@Override
-	protected Interval[] buildIntervals() {
-		return mode.getSteps();
-	}
+    public DiatonicScale(Note root, Mode mode) {
+        super(root, mode);
+    }
 
-	@Override
-	protected LimitedQueue<Note> buildScale() {
+    @Override
+    protected Interval[] buildIntervals() {
+        return mode.getSteps();
+    }
+
+    @Override
+    protected LimitedQueue<Note> buildScale() {
         scale = new LimitedQueue<>(7);
         int noteIndex = root.getIndex();
 
-		for (int i = 0; i < 7; i++) {
-			if (i == 0) {
+        for (int i = 0; i < 7; i++) {
+            if (i == 0) {
                 scale.add(root);
-				continue;
-			}
+                continue;
+            }
 
-			Note next = null;
-			switch (intervals[i-1]) {
-				case Semitone:
-					next = scale.getLast().getHalfStep();
-					break;
-				case Tone:
-					next = scale.getLast().getWholeStep();
-					break;
-			}
+            Note next = null;
+            switch (intervals[i - 1]) {
+                case Semitone:
+                    next = scale.getLast().getHalfStep();
+                    break;
+                case Tone:
+                    next = scale.getLast().getWholeStep();
+                    break;
+            }
 
             scale.add(next);
-		}
+        }
 
-		return scale;
-	}
+        return scale;
+    }
 
     //pick ith should be preferred as it calls these anyway
     public Note pickTonic(Note root) {
@@ -81,7 +77,7 @@ public class DiatonicScale extends Scale {
     public Note pickIthNote(Note root, int index) {
         Note note = null;
 
-        switch(index) {
+        switch (index) {
             case 0:
                 note = pickTonic(root);
                 break;
@@ -117,8 +113,8 @@ public class DiatonicScale extends Scale {
         return true;
     }
 
-	public static void main(String [] args) {
-		try {
+    public static void main(String[] args) {
+        try {
 
             LimitedQueue<Note> cmajor = new LimitedQueue<>(7);
             cmajor.add(new Note("C"));
@@ -183,10 +179,10 @@ public class DiatonicScale extends Scale {
                 System.out.println(n.toString());
             }
 
-		} catch (Exception e) {
+        } catch (Exception e) {
 
-			e.printStackTrace();
+            e.printStackTrace();
 
-		}
-	}
+        }
+    }
 }
