@@ -120,8 +120,8 @@ public class ToneTransitionTable extends HiddenMarkovModel {
         Iterator it = toneDist.entrySet().iterator();
 
         while (it.hasNext()) {
-            Map.Entry pair = (Map.Entry)it.next();
-            degreeDist.put(getDegree((Note)pair.getKey()), 1.0);
+            Map.Entry pair = (Map.Entry) it.next();
+            degreeDist.put(getDegree((Note) pair.getKey()), 1.0);
         }
 
         return degreeDist;

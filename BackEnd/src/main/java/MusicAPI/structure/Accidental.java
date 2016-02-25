@@ -25,6 +25,7 @@ public enum Accidental implements Serializable {
         }
 
     }
+
     public int toInt() {
         return this.accidental;
     }

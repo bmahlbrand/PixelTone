@@ -60,7 +60,7 @@ public class Analyzer {
         for (Note n : phrase) {
             int curTone = n.getIndex();
 
-            if(skip) {
+            if (skip) {
 
                 skip = false;
                 str.append("*");
@@ -70,9 +70,9 @@ public class Analyzer {
 
             } else {
 
-                if(curTone == prevTone)
+                if (curTone == prevTone)
                     str.append("R");
-                else if(curTone > prevTone)
+                else if (curTone > prevTone)
                     str.append("U");
                 else
                     str.append("D");
@@ -85,7 +85,7 @@ public class Analyzer {
     }
 
     //hamming weight or 'naive phrase similarity'
-    public static int levenshtein(String q, String db, int maxEdits){
+    public static int levenshtein(String q, String db, int maxEdits) {
         int n = db.length();
         int m = q.length();
 
@@ -101,19 +101,19 @@ public class Analyzer {
             prevRow = tmp;
 
             int min = currRow[0] = i;
-            for(int j = 1; j <= n; j++) {
-                if(q.charAt(i - 1) == (db.charAt(j - 1)))
+            for (int j = 1; j <= n; j++) {
+                if (q.charAt(i - 1) == (db.charAt(j - 1)))
                     ret = prevRow[j - 1];
                 else
-                    ret = min(currRow[j - 1], prevRow[j - 1], prevRow[j] ) + 1;
+                    ret = min(currRow[j - 1], prevRow[j - 1], prevRow[j]) + 1;
 
-                if(ret < min)
+                if (ret < min)
                     min = ret;
 
                 currRow[j] = ret;
             }
 
-            if(min > maxEdits)
+            if (min > maxEdits)
                 return -1;
         }
 

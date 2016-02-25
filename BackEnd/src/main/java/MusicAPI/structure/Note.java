@@ -24,7 +24,9 @@ public class Note extends VoiceElement implements Serializable {
         return tone.accidental;
     }
 
-    public int getIndex() { return tone.index(); }
+    public int getIndex() {
+        return tone.index();
+    }
 
     public Note getHalfStep() {
         return new Note(tone.halfStep().toString());
@@ -48,7 +50,7 @@ public class Note extends VoiceElement implements Serializable {
             return false;
         }
 
-        final Note other = (Note)obj;
+        final Note other = (Note) obj;
 
         if (this.tone == other.tone
                 && this.duration == other.duration

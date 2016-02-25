@@ -10,10 +10,15 @@ public class Pair<T, U> {
     public final U u;
 
     public Pair(T t, U u) {
-        this.t= t;
-        this.u= u;
+        this.t = t;
+        this.u = u;
     }
 
-    public T first(){ return t; }
-    public U second(){ return u; }
+    public T first() {
+        return t;
+    }
+
+    public U second() {
+        return u;
+    }
 }

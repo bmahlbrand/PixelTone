@@ -15,5 +15,7 @@ public enum ContrapuntalMotion {
         this.value = value;
     }
 
-    public int toInt() { return value; }
+    public int toInt() {
+        return value;
+    }
 }

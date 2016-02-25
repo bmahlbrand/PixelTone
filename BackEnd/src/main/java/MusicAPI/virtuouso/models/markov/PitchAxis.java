@@ -11,7 +11,7 @@ import MusicAPI.utils.Pair;
 //the notes plotted in markovian transition tables
 public class PitchAxis extends StateAxis {
 
-    String pitchAxis [];
+    String pitchAxis[];
     String tonic = null;
     String mode = null;
 
@@ -43,7 +43,7 @@ public class PitchAxis extends StateAxis {
         return -1; //failed
     }
 
-    public String [] getPitchAxis() {
+    public String[] getPitchAxis() {
         return pitchAxis;
     }
 
@@ -67,7 +67,7 @@ public class PitchAxis extends StateAxis {
         }
 
         if (sharp) {
-            switch(noteBuff) {
+            switch (noteBuff) {
                 case "C":
                     return 0;
                 case "C#":
@@ -94,7 +94,7 @@ public class PitchAxis extends StateAxis {
                     return 11;
             }
         } else {
-            switch(noteBuff) {
+            switch (noteBuff) {
                 case "C":
                     return 0;
                 case "Db":

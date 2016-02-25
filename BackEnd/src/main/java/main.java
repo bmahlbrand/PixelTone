@@ -1,11 +1,12 @@
 import static spark.Spark.*;
+
 import com.google.gson.Gson;
 import MusicAPI.GeneticAlgorithm.*;
 
 import ImageAPI.*;
 
 public class main {
-	public static void main(String[] args) {
+    public static void main(String[] args) {
         port(3001);
 
         get("/", (request, response) -> "PixelTone BackEnd Works");
@@ -31,10 +32,10 @@ public class main {
             System.out.println("Facial Information");
             System.out.println("Number of Faces:" + gp.numberOfFaces);
             int i = 0;
-            for(Face f : gp.faces) {
-                
+            for (Face f : gp.faces) {
+
                 System.out.println("Face #" + i++ + ":\n");
-                
+
                 for (Emotion e : f.emotions) {
                     System.out.println("Facial Emotion:" + e.emotion);
                     System.out.println("Emotion Value:" + e.value);
