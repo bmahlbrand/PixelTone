@@ -1,18 +1,34 @@
 angular.module("pixelTone")
-  .controller('loginController', ['$scope', function($scope){
-		$scope.loginFunction = function(){
-		  var password = $("#loginPassword").val();
-		  var usernameInput = $("#loginUsername").val();
-		  alert("Send "+usernameInput+" and "+password+" to server");
-		}
+    .controller('loginController', ['$scope', '$http', '$httpParamSerializerJQLike', function ($scope, $http, $httpParamSerializerJQLike) {
 
-		$scope.signUpFunction = function(){
+        $scope.user = {};
+        $scope.cuser = {};
 
-		  var emailInput = $("#signUpEmail").val();
-		  var usernameInput = $("#signUpUsername").val();
-		  var password = $("#signUpPassword").val();
-		  alert("Send "+usernameInput+" and "+password+" and "+emailInput+" to server");
-		}
+        $scope.loginFunction = function () {
 
+            $http({
+                method: 'POST',
+                url: '/login',
+                data: $httpParamSerializerJQLike({ 'email': $scope.user.email, 'password': $scope.user.password }),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            }).success(function () {
+                alert("Login Success");
+            }).error(function () {
+                alert("Login Failure");
+            });
+        }
 
-	}]);
+        $scope.signUpFunction = function () {
+
+            $http({
+                method: 'POST',
+                url: '/signup',
+                data: $httpParamSerializerJQLike({ 'email': $scope.cuser.email, 'password': $scope.cuser.password }),
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' }
+            }).success(function () {
+                alert("Create User Success");
+            }).error(function () {
+                alert("Create User Failure");
+            });
+        }
+    }]);

@@ -97,6 +97,11 @@ app.post('/login', function(req, res, next) {
             });
         }
         else {
+            if(err.ID == null){
+                 console.log("SOMETHING REALLY BAD");
+                 res.redirect('/login');
+            }
+              
             switch (err.ID) {
                 case 2:
                     console.log(err.message);
