@@ -1,9 +1,9 @@
-package MusicAPI.GeneticAlgorithm;
+package MusicAPI.virtuouso.models.genetic;
 
 import java.util.*;
 
+import MusicAPI.virtuouso.models.genetic.fitness.FitnessFunction;
 import org.jenetics.*;
-import org.jenetics.util.*;
 import org.jenetics.engine.Engine;
 
 import static org.jenetics.engine.EvolutionResult.toBestPhenotype;

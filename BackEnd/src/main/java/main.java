@@ -1,7 +1,8 @@
 import static spark.Spark.*;
 
+import MusicAPI.virtuouso.models.genetic.fitness.CommonChordProgFitFunc;
 import com.google.gson.Gson;
-import MusicAPI.GeneticAlgorithm.*;
+import MusicAPI.virtuouso.models.genetic.*;
 
 import ImageAPI.*;
 

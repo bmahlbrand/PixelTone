@@ -4,7 +4,7 @@
 <html>
 
   <head>
-    <title>PexelTone</title>
+    <title>PixelTone</title>
     <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <link rel="stylesheet" href="assets/css/bootstrap.css">
@@ -18,7 +18,7 @@
 
 
     <!-- our app -->
-    <script types="text/javascript" src="app.js"></script>
+    <script types="text/javascript" src="app/app.js"></script>
 
 
   </head>
@@ -35,6 +35,7 @@
             <li><a href="#home"><i class="home"></i> Home</a></li>
             <li><a href="#login"><i class="login"></i> Login</a></li>
             <li><a href="#about"><i class="about"></i> About</a></li>
+            <li><a href="#upload"><i class="upload"></i> Upload</a></li>
           </ul>
         </div>
       </nav>
@@ -49,12 +50,15 @@
     </div>
 
     <!-- Modules -->
-    <script src="app.js"></script>
+    <script src="app/app.js"></script>
+    <!-- File Upload -->
+    <script  type="text/javascript" src="extensions/ng-file-upload.js"></script>
 
     <!-- Controllers -->
-    <script src="controllers/homeController.js"></script>
-    <script src="controllers/loginController.js"></script>
-    <script src="controllers/aboutController.js"></script>
+    <script src="app/home/homeController.js"></script>
+    <script src="app/login/loginController.js"></script>
+    <script src="app/about/aboutController.js"></script>
+    <script src="app/upload/uploadController.js"></script>
 
     <!-- Directives -->
 

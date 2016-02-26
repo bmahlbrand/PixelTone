@@ -34,8 +34,12 @@ var userRoutes = require('./userRoutes');
 var imageRoutes = require('./imageRoutes');
 var testUpload = require('./testUpload');
 
+//Serve up FrontEnd Requests
+var dirname = config.staticContent;
+app.use("/",express.static(dirname));
+
 //Simple Home Page to test without Angular
-app.get('/', function (request, response) {
+app.get('/test', function (request, response) {
     response.send('Hello, welcome to PixelTone<br><br><br>'
     + '<a href=/login>Login</a><br><br>'
     + '<a href=/signup>signup</a><br><br>'
@@ -86,6 +90,11 @@ app.post('/login', function(req, res, next) {
             });
         }
         else {
+            if(err.ID == null){
+                 console.log("SOMETHING REALLY BAD");
+                 res.redirect('/login');
+            }
+              
             switch (err.ID) {
                 case 2:
                     console.log(err.message);
