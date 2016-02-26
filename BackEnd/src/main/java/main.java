@@ -1,5 +1,6 @@
 import static spark.Spark.*;
 
+import MusicAPI.virtuouso.models.genetic.fitness.CommonChordProgFitFunc;
 import com.google.gson.Gson;
 import MusicAPI.virtuouso.models.genetic.*;
 

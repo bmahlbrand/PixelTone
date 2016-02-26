@@ -1,4 +1,4 @@
-package MusicAPI.virtuouso.models.genetic;
+package MusicAPI.virtuouso.models.genetic.fitness;
 
 import org.jenetics.Genotype;
 import org.jenetics.IntegerGene;

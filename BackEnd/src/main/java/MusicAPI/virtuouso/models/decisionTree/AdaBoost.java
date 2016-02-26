@@ -1,4 +1,4 @@
-package MusicAPI.virtuouso.models;
+package MusicAPI.virtuouso.models.decisionTree;
 
 /**
  * Created by ben on 4/4/2015.
