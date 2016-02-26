@@ -1,6 +1,6 @@
 angular.module("pixelTone")
-  .controller('homeController', ['$scope', function($scope) {
-    
+  .controller('homeController', ['$scope', 'facebookFactory', function($scope, facebookFactory) {
+
     $scope.upLoadNewSong = function(){
       var fileUploadControl = $("#profilePhotoFileUpload")[0];
       var file = fileUploadControl.files[0];
@@ -19,10 +19,25 @@ angular.module("pixelTone")
       $('#myModal').modal('hide');
       $scope.addSong(auth,output);
 
-      
+
 
     }
 
+    $scope.facebookPhotos = [];
+    $scope.getUsersPhotos = function(){
+      facebookFactory.login().then(function(response){
+        facebookFactory.getUsersPhotos().then(function(response){
+          photos = response.data;
+          console.log(photos);
+          $scope.facebookPhotos = photos;
+        })
+      })
+    };
+
+    $scope.toggleFacebookModal = function(){
+      $("#facebookModal").modal();
+      $scope.getUsersPhotos();
+    }
 
     $scope.recentSongs = [
       {
@@ -42,14 +57,14 @@ angular.module("pixelTone")
         author: 'Jessica'
       }
     ];
-    
+
 
     $scope.addSong = function(author, img){
       $scope.songsCreated.push({'icon' :img, 'author' :author});
     }
 
     $scope.songsCreated = [];
-    
+
 
 
 }]);
