@@ -1,6 +1,6 @@
 (function(){
 
-	var pixelTone = angular.module('pixelTone', ['ngRoute']);
+	var pixelTone = angular.module('pixelTone', ['ngRoute', 'ngFileUpload']);
 
 	//Routes
 	pixelTone.config(function($routeProvider){
@@ -27,6 +27,16 @@
 		.when('/login', {
 			templateUrl: 'app/login/login.html',
 			controller: 'loginController'
+		})
+        
+        .when('/signup', {
+			templateUrl: 'app/login/login.html',
+			controller: 'loginController'
+		})
+        
+        .when('/upload', {
+			templateUrl: 'app/upload/upload.html',
+			controller: 'uploadController'
 		});
 	});
 

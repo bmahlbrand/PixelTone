@@ -34,16 +34,9 @@ var userRoutes = require('./userRoutes');
 var imageRoutes = require('./imageRoutes');
 var testUpload = require('./testUpload');
 
-
 //Serve up FrontEnd Requests
 var dirname = config.staticContent;
-app.use(
-        "/", //the URL throught which you want to access to you static content
-        express.static(dirname) //where your static content is located in your filesystem
-    );
-
-
-
+app.use("/",express.static(dirname));
 
 //Simple Home Page to test without Angular
 app.get('/test', function (request, response) {
