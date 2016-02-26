@@ -1,7 +1,7 @@
 import static spark.Spark.*;
 
 import com.google.gson.Gson;
-import MusicAPI.GeneticAlgorithm.*;
+import MusicAPI.virtuouso.models.genetic.*;
 
 import ImageAPI.*;
 

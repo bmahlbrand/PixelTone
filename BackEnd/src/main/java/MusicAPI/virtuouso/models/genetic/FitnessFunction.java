@@ -1,4 +1,4 @@
-package MusicAPI.GeneticAlgorithm;
+package MusicAPI.virtuouso.models.genetic;
 
 import org.jenetics.Genotype;
 import org.jenetics.IntegerGene;
