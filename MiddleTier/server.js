@@ -19,38 +19,19 @@ app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.json()); // get information from html forms
 app.use(bodyParser.urlencoded({ extended: true }));
-<<<<<<< HEAD
 
 // required for passport
 app.use(session({
                 secret: 'deadbeefisnumberone', // session secret
                 saveUninitialized: true,
                 resave: true }));
-=======
-    
-// required for passport
-app.use(session({ 
-                secret: 'deadbeefisnumberone', // session secret
-                saveUninitialized: true,
-                resave: true })); 
->>>>>>> master
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash());
 
-<<<<<<< HEAD
-=======
-//Expanding the routes
->>>>>>> master
-var userRoutes = require('./userRoutes');
-var imageRoutes = require('./imageRoutes');
-var testUpload = require('./testUpload');
 
-<<<<<<< HEAD
-//Testing working correctly
-app.use(express.static(__dirname + '/public'));
 
-//Auth before proceeding
+//Check current session for authentication before proceeding
 var checkAuth = function(req, res, next) {
     if (!req.isAuthenticated())
     {
@@ -65,58 +46,21 @@ var checkAuth = function(req, res, next) {
 };
 
 
-//Load Route Handlers
-app.use('/users' , userRoutes);
-app.use('/images' , checkAuth, imageRoutes);
-app.use('/test' , checkAuth, testUpload);
-
-
-app.get('*', function(req, res) {
-  res.sendFile(__dirname + '/public/index.html');
-=======
-//Simple Home Page to test without Angular
-app.get('/', function (request, response) {
-    response.send('Hello, welcome to PixelTone<br><br><br>'
-    + '<a href=/login>Login</a><br><br>'
-    + '<a href=/signup>signup</a><br><br>'
-    + '<a href=/users/forgot>forgot</a><br><br>'
-    + '<a href=/users/logout>logout</a>'
-    );
-});
-
-//Check current session for authentication before proceeding
-var checkAuth = function(req, res, next) { 
-    if (!req.isAuthenticated())  
-    {
-        console.log('Not Authenticated');
-        res.sendStatus(401); 
-    }
-    else 
-    {
-        console.log('Authenticated');
-        next(); 
-    }
-};
+//Expanding the routes
+var userRoutes = require('./userRoutes');
+var imageRoutes = require('./imageRoutes');
+var testUpload = require('./testUpload');
 
 //Load Route Handlers
-app.use('/users' , userRoutes); //Login, Logout, Reset, Create
-app.use('/images' , checkAuth, imageRoutes); //Routes to handle generation
-app.use('/test' , checkAuth, testUpload); //Sample page to handle file uploads
+app.use(express.static(__dirname + '/public'));
+app.use('/api/users' , userRoutes);
+app.use('/api/images' , checkAuth, imageRoutes);
+app.use('/api/test' , checkAuth, testUpload);
 
-//Simple page for Login testing
-app.get('/login', function(req, res) {
-    res.send('<form action="/login" method="post">'
-        + '<p>Email: <input type="text" name="email" placeholder="Enter Email" /></p>'
-        + '<p>Password: <input type="password" name="password" /></p>'
-        + '<p><input type="submit" value="login" /></p>'
-        + '</form>'
-    );
-});
-
-//Handle Logins with Username/Password 
+//Handle Logins with Username/Password
 app.post('/login', function(req, res, next) {
     passport.authenticate('local-login', function (err, user) {
-           
+
         //Sucessfully logged in user
         if (user) {
             req.logIn(user, function (err) {
@@ -141,25 +85,14 @@ app.post('/login', function(req, res, next) {
                     res.redirect('/signup');
                     break;
             }
-        }     
+        }
   })(req, res, next);
-});
-
-//Simple Page for Signup Testing
-app.get('/signup', function(req, res) {   
-    res.send(
-          '<form action="/signup" method="post">'
-        + '<p>Email: <input type="text" name="email" placeholder="Create Email" /></p>'
-        + '<p>Password: <input type="password" name="password" /></p>'
-        + '<p><input type="submit" value="signup" /></p>'
-        + '</form>'
-    );
 });
 
 //Handle signup data requests
 app.post('/signup', function (req, res, next) {
     passport.authenticate('local-signup', function (err, user) {
-         
+
         //Sucessfully created user
         if (user) {
             console.log("Created User:" + user);
@@ -172,13 +105,13 @@ app.post('/signup', function (req, res, next) {
         }
 
     })(req, res, next);
->>>>>>> master
+});
+
+
+app.get('*', function(req, res) {
+  res.sendFile(__dirname + '/public/index.html');
 });
 
 app.listen(3000, function () {
     console.log('Middle-Tier Listening on Port 3000');
-<<<<<<< HEAD
 });
-=======
-});
->>>>>>> master

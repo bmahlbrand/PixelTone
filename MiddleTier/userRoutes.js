@@ -12,7 +12,7 @@ userRoutes.get('/forgot', function (request, response) {
         //user is already logged in
         return response.redirect('/');
     }
-   
+
     //Path to forgot pass page
     response.redirect('/users/forgotUI');
 });
@@ -26,7 +26,7 @@ userRoutes.get('/forgotUI', function (req, res) {
         );
 });
 
-//Handle User Forgot Pass sent EMAIL 
+//Handle User Forgot Pass sent EMAIL
 userRoutes.post('/forgot', function (req, res) {
     if (req.isAuthenticated()) {
         //user is alreay logged in
@@ -39,7 +39,7 @@ userRoutes.post('/forgot', function (req, res) {
             console.log("Other Error");
             return res.redirect('/');
         }
-                
+
         // check to see if theres already a user with that email
         if (user) {
             //Create token
@@ -47,7 +47,7 @@ userRoutes.post('/forgot', function (req, res) {
 
             user.local.resetPasswordToken = token;
             user.local.resetPasswordExpires = Date.now() + 3600000; // 1 hour
-                
+
             console.log('Created Token');
 
             user.save(function (err) {
@@ -55,9 +55,9 @@ userRoutes.post('/forgot', function (req, res) {
                     throw err;
                 else {
                     console.log('Saved Token Creation');
-                        
+
                     //SEND EMAIL HERE WITH LINK
-                        
+
                     return res.send('Token Created for One Hour:' + token
                         + '<br>Click here to continue: <a href=/users/reset/' + token + '>Here</a>');
                 }
@@ -75,18 +75,18 @@ userRoutes.post('/forgot', function (req, res) {
 //Check if if usertoken hasn't expired yet, and user exists with that token
 //if so, show reset password UI
 userRoutes.get('/reset/:token', function(req, res) {
-    
+
     console.log(req.params.token);
-    
+
   User.findOne({ 'local.resetPasswordToken': req.params.token, 'local.resetPasswordExpires': { $gt: Date.now() } }, function(err, user) {
     if (!user) {
       console.log('error', 'Password reset token is invalid or has expired.');
       return res.redirect('/users/forgot');
     }
-    
+
     req.flash('user', user);
     //console.log('Found user to reset:' + req.user);
-    return res.redirect('/users/resetUI');   
+    return res.redirect('/users/resetUI');
   });
 });
 
@@ -156,5 +156,5 @@ userRoutes.post('/reset', function (req, res) {
 //Simple logout
 userRoutes.get('/logout', function (request, response) {
     request.logOut();
-    response.redirect('/'); 
+    response.redirect('/');
 });
