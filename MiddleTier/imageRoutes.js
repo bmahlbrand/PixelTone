@@ -5,13 +5,12 @@ var https = require('https');
 var http = require('http');
 var fs = require ('fs');
 //Setup Image analyzer (replace with API later)
-var ColorThief = require('color-thief');
-var color = new ColorThief();
+var imagecolors = require('imagecolors');
 
 var imageRoutes = module.exports = express();
 
 //Simplified color constants
-var COLORS = [ "BLACK", "WHITE", "RED", "GREEN", "BLUE", "YELLOW", "ORANGE", "PURPLE", "GREY", "BROWN"];
+//var COLORS = [ "BLACK", "WHITE", "RED", "GREEN", "BLUE", "YELLOW", "ORANGE", "PURPLE", "GREY", "BROWN"];
 
 var key = config.MSEmotionPrimeKey;
 if (key == null || key == "")
@@ -98,7 +97,40 @@ var parseMSResponse = function (response) {
             faces.push(emotions);
         });
      
-        //Get Dominant Color
+     
+        //can be path or uRL! double bonus
+        var numberOfColors = 5;
+        var colors = getColors(image, numberOfColors);
+     
+        var colorArray = [];
+        
+        //THINK ABOUT THIS SOME MORE
+        //If first element has < 20, then image is neutral???
+        if( colors[0].percent <= 20 &&  colors[0].percent - colors[1].percent <= 5)
+            console.log("no dominant color");
+            //Do something! like store neutral into object
+        
+        for(var i = 0; i < numberOfColors; i++)
+        {
+             //If color percent < 20 we don't care
+             if( colors[i].percent > 20 )
+             {
+                 var colorObj = {};
+                 var key = "Percent";
+                 var key2 = "Color";
+                 colorObj[key] = colors[i].percent;
+                 colorObj[key2] = colors[i].family;
+                 colorArray.push(colorObj);
+                 
+             }            
+             console.log("Color:" + i)
+             console.log("Hex:" + colors[i].hex);
+             console.log("Percent:" + colors[i].percent);
+             console.log("Family:" +colors[i].family);
+             console.log();
+        }
+     
+        /*//Get Dominant Color
         var colorThief = color.getColor(image);
         var r = colorThief[0];
         var g = colorThief[1];
@@ -121,17 +153,14 @@ var parseMSResponse = function (response) {
             //console.log("Converted:" +  getColor(r, g, b));
             var pal = getColor(r, g, b);
             pals.push(pal);
-        }   
+        }   */
                 
         //Create object to send to generator
         var generationParameters =
             {
                 "numberOfFaces": totalFaces,
                 "faces": faces,
-                "domColor": domColor,
-                "pal1": pals[0],
-                "pal2": pals[1],
-                "pal3": pals[2]
+                "colorEntries": colorArray 
             }
 
         return sendParameters(generationParameters);
@@ -195,6 +224,51 @@ Array.prototype.sortOn = function (key) {
     });
 }
 
+
+//Send generatedParameters request to BackEnd
+var sendParameters = function (params) {
+    var generateOptions = {
+        host: 'localhost',
+        path: '/generateSong',
+        port: 3001,
+        method: 'POST'
+    };
+
+    var req = http.request(generateOptions, function (response) {
+        var str = ''
+        response.on('data', function (chunk) {
+            str += chunk;
+        });
+
+        response.on('end', function () {
+            console.log("Response from BackEnd:" + str);
+            //INSERT CODE TO HANDLE RESPONSE (Will be a song??)      
+        });
+
+        response.on('error', function (err) {
+            console.log(err);
+        });
+
+    });
+
+    req.write(JSON.stringify(params));
+    req.end();
+};
+
+
+var getColors = function(image, number) {
+    imagecolors.extract(image, number, function(err, colors){
+    if (!err){
+        return colors;
+    }
+    });
+};
+
+
+
+
+
+/* RIP GOOD IDEA :****(
 //http://www.calculatorcat.com/free_calculators/color_slider/rgb_hex_color_slider.phtml
 //Parse the RGB Color values into a rough color estimate
 var getColor = function (R, G, B) {
@@ -280,33 +354,4 @@ var getColor = function (R, G, B) {
         return COLORS[4];
     }
 };
-
-//Send generatedParameters request to BackEnd
-var sendParameters = function (params) {
-    var generateOptions = {
-        host: 'localhost',
-        path: '/generateSong',
-        port: 3001,
-        method: 'POST'
-    };
-
-    var req = http.request(generateOptions, function (response) {
-        var str = ''
-        response.on('data', function (chunk) {
-            str += chunk;
-        });
-
-        response.on('end', function () {
-            console.log("Response from BackEnd:" + str);
-            //INSERT CODE TO HANDLE RESPONSE (Will be a song??)      
-        });
-
-        response.on('error', function (err) {
-            console.log(err);
-        });
-
-    });
-
-    req.write(JSON.stringify(params));
-    req.end();
-};
+*/
