@@ -1,5 +1,6 @@
 package MusicAPI.harmonicsKB.triads;
 
+import MusicAPI.harmonicsKB.voicing.Inversion;
 import MusicAPI.structure.Note;
 import MusicAPI.utils.LimitedQueue;
 import MusicAPI.harmonicsKB.intervals.Degree;
@@ -18,4 +19,16 @@ public abstract class Triad {
     protected abstract LimitedQueue<Note> constructChordTones(Note root);
 
     protected abstract boolean noteInTriad(Note root, Note check);
+
+    void inversion(Inversion inversion) {
+        switch (inversion) {
+            case Root:
+                break;
+            case First:
+//                notes.get(0).getOctave();
+                break;
+            case Second:
+                break;
+        }
+    }
 }
