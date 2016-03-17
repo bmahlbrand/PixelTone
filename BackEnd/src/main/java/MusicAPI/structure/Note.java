@@ -16,6 +16,7 @@ public class Note extends VoiceElement implements Serializable {
         this.tone = new Tone(note);
         this.dynamics = Dynamics.Forte;
         this.accent = Accent.Unaccented;
+        this.octave = new Octave(3);
     }
 
     public Note(int index) {
@@ -36,6 +37,10 @@ public class Note extends VoiceElement implements Serializable {
 
     public Note getWholeStep() {
         return new Note(tone.wholeStep().toString());
+    }
+
+    public Octave getOctave() {
+        return octave;
     }
 
     @Override

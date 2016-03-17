@@ -19,7 +19,7 @@ public class CommonChordProgFitFunc implements FitnessFunction {
         int score = 0;
 
         for (int count = 0; count < chordProg.length - 1; count++) {
-            if (DegreeWeights.getCommon(chordProg[count] - 1, chordProg[count + 1] -1) == 1)
+            if (DegreeWeights.getCommon(chordProg[count] - 1, chordProg[count + 1] - 1) == 1)
                 score++;
         }
 

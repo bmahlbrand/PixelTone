@@ -9,30 +9,51 @@ public enum BeatDuration {
     Quarter,
     Eighth,
     Sixteenth,
-    ThirtySecond;
+    ThirtySecond,
+    SixtyFourth;
 
     private int ppqn;
+    private boolean dotted;
 
     BeatDuration() {
         ppqn = 96;
+        dotted = false;
+    }
+
+    void setDotted(boolean dotted) {
+        this.dotted = dotted;
     }
 
     int getPulses(Tempo tempo) {
+        int pulses = 0;
         switch(this) {
             case Whole:
-                return ppqn * tempo.getBpm() * 4;
+                pulses = ppqn * tempo.getBpm() * 4;
+                break;
             case Half:
-                return ppqn * tempo.getBpm() * 2;
+                pulses = ppqn * tempo.getBpm() * 2;
+                break;
             case Quarter:
-                return ppqn * tempo.getBpm();
+                pulses = ppqn * tempo.getBpm();
+                break;
             case Eighth:
-                return (ppqn * tempo.getBpm()) / 2;
+                pulses = (ppqn * tempo.getBpm()) / 2;
+                break;
             case Sixteenth:
-                return (ppqn * tempo.getBpm()) / 4;
+                pulses = (ppqn * tempo.getBpm()) / 4;
+                break;
             case ThirtySecond:
-                return (ppqn * tempo.getBpm()) / 8;
+                pulses = (ppqn * tempo.getBpm()) / 8;
+                break;
+            case SixtyFourth: //because why the fuck not
+                pulses = (ppqn * tempo.getBpm()) / 16;
+                break;
         }
 
-        return 0;
+        if (dotted) {
+            pulses += pulses / 2;
+        }
+
+        return pulses;
     }
 }

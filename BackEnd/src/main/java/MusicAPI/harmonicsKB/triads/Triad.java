@@ -25,9 +25,20 @@ public abstract class Triad {
             case Root:
                 break;
             case First:
-//                notes.get(0).getOctave();
+                try {
+                    notes.get(0).getOctave().stepUp();
+                } catch(Exception e) { e.printStackTrace(); }
+
                 break;
             case Second:
+                try {
+                    notes.get(0).getOctave().stepUp();
+                } catch(Exception e) { e.printStackTrace(); }
+
+                try {
+                    notes.get(1).getOctave().stepUp();
+                } catch(Exception e) { e.printStackTrace(); }
+
                 break;
         }
     }
