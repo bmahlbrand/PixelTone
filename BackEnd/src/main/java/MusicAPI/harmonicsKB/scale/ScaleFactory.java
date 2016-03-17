@@ -17,5 +17,7 @@ public class ScaleFactory {
         return null;
     }
 
-
+    public static boolean noteInScale(Note note) {
+        return false;
+    }
 }
