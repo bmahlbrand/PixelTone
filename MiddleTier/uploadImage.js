@@ -1,17 +1,18 @@
 var AWS = require('aws-sdk');
 var fs = require('fs');
+var keygen = require('random-key');
 
 AWS.config.region = 'us-east-1';
 
 var s3bucket = new AWS.S3({params: {Bucket: 'pixeltone'}});
 var body = fs.createReadStream('./testImg.jpg');
-var myKey = 'myKey1.jpg';
+var myKey = keygen.generateBase30(20) + '.jpg';
 
 s3bucket.createBucket(function() {
 	var params = {	
 		Key: myKey,
 		Body: body,
-		ContentType: 'jpeg',
+		ContentType: 'image/jpeg',
 		ACL: 'public-read'
 	};
 	s3bucket.upload(params).on('httpUploadProgress', function(evt) {
