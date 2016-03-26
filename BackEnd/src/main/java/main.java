@@ -1,13 +1,20 @@
 import static spark.Spark.*;
 
-import MusicAPI.virtuouso.models.genetic.fitness.CommonChordProgFitFunc;
+import ImageAPI.Objects.ColorEntry;
+import ImageAPI.Objects.Emotion;
+import ImageAPI.Objects.Face;
+import ImageAPI.Objects.GenerationParams;
 import com.google.gson.Gson;
-import MusicAPI.virtuouso.models.genetic.*;
 
 import ImageAPI.*;
 
 public class main {
+
+    public static MoodToMusicFactory moodToMusicFactory = new MoodToMusicFactory();
+
     public static void main(String[] args) {
+
+
         port(3001);
 
         get("/", (request, response) -> "PixelTone BackEnd Works");
@@ -51,6 +58,8 @@ public class main {
             {
                 System.out.println("Color:" + ce.Color + " Color Percent:" + ce.Percent);
             }
+
+            moodToMusicFactory.TranslateParameters(gp);
 
 
             //Store song in database?

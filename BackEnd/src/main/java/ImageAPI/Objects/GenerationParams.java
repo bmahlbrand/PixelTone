@@ -1,4 +1,7 @@
-package ImageAPI;
+package ImageAPI.Objects;
+
+import ImageAPI.Objects.ColorEntry;
+import ImageAPI.Objects.Face;
 
 import java.util.List;
 

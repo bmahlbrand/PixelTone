@@ -1,4 +1,6 @@
-package ImageAPI;
+package ImageAPI.Objects;
+
+import ImageAPI.Objects.Emotion;
 
 import java.util.List;
 
