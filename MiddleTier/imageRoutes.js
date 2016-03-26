@@ -4,6 +4,8 @@ var multer = require('multer');
 var https = require('https');
 var http = require('http');
 var fs = require ('fs');
+var jsonfile = require('jsonfile');
+var sp = require('./sendParams');
 //Setup Image analyzer (replace with API later)
 var imagecolors = require('imagecolors');
 
@@ -140,8 +142,14 @@ var parseMSResponse = function (response) {
                     "faces": faces,
                     "colorEntries": colorArray
                 }
+                
+                
+                //var file = 'cb.json'
+                //jsonfile.writeFile(file, generationParameters, function (err) {
+                 //   console.error(err)
+                //});
             //console.log(generationParameters);      
-            return sendParameters(generationParameters);
+            return sp.sendParameters(generationParameters);
         });
     });
 
@@ -201,37 +209,6 @@ Array.prototype.sortOn = function (key) {
         }
         return 0;
     });
-}
-
-
-//Send generatedParameters request to BackEnd
-var sendParameters = function (params) {
-    var generateOptions = {
-        host: 'localhost',
-        path: '/generateSong',
-        port: 3001,
-        method: 'POST'
-    };
-
-    var req = http.request(generateOptions, function (response) {
-        var str = ''
-        response.on('data', function (chunk) {
-            str += chunk;
-        });
-
-        response.on('end', function () {
-            console.log("Response from BackEnd:" + str);
-            //INSERT CODE TO HANDLE RESPONSE (Will be a song??)      
-        });
-
-        response.on('error', function (err) {
-            console.log(err);
-        });
-
-    });
-
-    req.write(JSON.stringify(params));
-    req.end();
 };
 
 function getColors(imagePath, numOfColors, callback) {
@@ -243,25 +220,3 @@ function getColors(imagePath, numOfColors, callback) {
     console.log(err);
     });
 };
-
-
-
-/*SAVE DATA
-var jsonfile = require('jsonfile')
- 
-var file = '/tmp/data.json'
-var obj = {name: 'JP'}
- 
-jsonfile.writeFile(file, obj, function (err) {
-  console.error(err)
-})
-
-// READ FILE IN
-var jsonfile = require('jsonfile')
-var util = require('util')
- 
-var file = '/tmp/data.json'
-jsonfile.readFile(file, function(err, obj) {
-  console.dir(obj)
-})
-*/
