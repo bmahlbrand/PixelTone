@@ -140,7 +140,7 @@ var parseMSResponse = function (response) {
                     "faces": faces,
                     "colorEntries": colorArray
                 }
-
+            //console.log(generationParameters);      
             return sendParameters(generationParameters);
         });
     });

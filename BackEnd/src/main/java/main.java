@@ -12,8 +12,8 @@ public class main {
 
         get("/", (request, response) -> "PixelTone BackEnd Works");
 
-        CommonChordProgFitFunc fitnessfunction = new CommonChordProgFitFunc();
-        GeneticAlgorithm.geneticAlgorithm(1, 7, 100, fitnessfunction);
+       // CommonChordProgFitFunc fitnessfunction = new CommonChordProgFitFunc();
+        //GeneticAlgorithm.geneticAlgorithm(1, 7, 100, fitnessfunction);
 
         post("/generateSong", (request, response) -> {
             System.out.println("Generate Parameter Request Received");
@@ -46,11 +46,13 @@ public class main {
             }
 
             System.out.println("\nImage Color Information\n");
-            System.out.println("Dominant Color:" + gp.domColor);
-            System.out.println("#1 Palette Color:" + gp.pal1);
-            System.out.println("#2 Palette Color:" + gp.pal2);
-            System.out.println("#3 Palette Color:" + gp.pal3);
-            //Ship to MoodToMusic to change the moods/emotions to music
+
+            for( ColorEntry ce : gp.colorEntries)
+            {
+                System.out.println("Color:" + ce.Color + " Color Percent:" + ce.Percent);
+            }
+
+
             //Store song in database?
             //????? TBD
 
