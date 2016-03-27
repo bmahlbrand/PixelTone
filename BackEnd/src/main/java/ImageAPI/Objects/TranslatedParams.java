@@ -5,7 +5,14 @@ package ImageAPI.Objects;
  */
 public class TranslatedParams {
 
+    public EmotionParamEntry[] fromEmotion;
+    public ColorParamEntry[] fromColor;
 
+    public TranslatedParams(EmotionParamEntry[] fe, ColorParamEntry[] fc)
+    {
+        this.fromEmotion = fe;
+        this.fromColor = fc;
 
+    }
 
 }

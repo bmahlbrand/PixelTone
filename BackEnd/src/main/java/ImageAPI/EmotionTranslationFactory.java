@@ -1,10 +1,8 @@
 package ImageAPI;
 
 import ImageAPI.Objects.*;
-import MusicAPI.harmonicsKB.Tempo;
 
 import java.util.Arrays;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -12,50 +10,18 @@ import java.util.List;
  */
 public class EmotionTranslationFactory {
 
-  //Mappings
-    //From Microsoft:
-        //Anger
-        //Contempt
-        //Disgust
-        //Fear
-        //Happiness
-        //Neutral
-        //Sadness
-        //Surprise
-  class EmotionEntry
-  {
-      String key1;
-      String key2;
-      double Tempo;
-      double AccentWeight;
-      double FlatOSharpWeight;
-
-      public EmotionEntry(String k, String k2, double t, double w)
-      {
-          this.key1 = k;
-          this.key2 = k2;
-          this.Tempo = t;
-          this.AccentWeight = w;
-      }
-
-      //Sprint 3,, rythm, melody?? loudness??
-  }
-
-    public FromEmotion translate(int numOfFaces, List<Face> faces)
+    public EmotionParamEntry[] translate(int numOfFaces, List<Face> faces)
     {
         //FromEmotion  fe = ;
 
         //There are no faces
         if(numOfFaces == 0)
         {
-            //Tempo
-            Tempo t = new Tempo(100);
-            //Key
-            String k = "CMajor";
-            //All are 1 ??
-            EmotionWeights ew = new EmotionWeights();
-
-            return new FromEmotion(t, k, ew);
+            EmotionParamEntry e = new EmotionParamEntry("Cmajor", "Cmajor", 1, 1);
+            e.overallWeight = 0;
+            EmotionParamEntry[] ar = new EmotionParamEntry[1];
+            ar[0] = e;
+            return ar;
         }
 
         class Mapping
@@ -120,22 +86,8 @@ public class EmotionTranslationFactory {
         EmotionClassification ec3 = m[2].ec;
 
         double weightTotal = m[0].weight + m[1].weight + m[2].weight;
-       // double w1 = m[0].weight/weightTotal;
-       // double w2 = m[1].weight/weightTotal;
-       // double w3 = m[2].weight/weightTotal;
 
-
-
-        class Entry
-        {
-
-
-            EmotionEntry e;
-
-            double weight;
-        }
-
-        Entry[] e = new Entry[3];
+        EmotionParamEntry[] e = new EmotionParamEntry[3];
 
         for(int q = 0; q < 3; q++)
         {
@@ -144,50 +96,50 @@ public class EmotionTranslationFactory {
             switch (m[q].ec)
             {
                 case anger:
-                    e[q].e = getEmotion(EmotionClassification.anger);
-                    e[q].weight = w1;
+                    e[q] = getEmotion(EmotionClassification.anger);
+                    e[q].overallWeight = w1;
                     break;
                 case contempt:
-                    e[q].e = getEmotion(EmotionClassification.contempt);
-                    e[q].weight = w1;
+                    e[q] = getEmotion(EmotionClassification.contempt);
+                    e[q].overallWeight = w1;
                     break;
                 case disgust:
-                    e[q].e = getEmotion(EmotionClassification.disgust);
-                    e[q].weight = w1;
+                    e[q] = getEmotion(EmotionClassification.disgust);
+                    e[q].overallWeight = w1;
                     break;
                 case fear:
-                    e[q].e = getEmotion(EmotionClassification.fear);
-                    e[q].weight = w1;
+                    e[q] = getEmotion(EmotionClassification.fear);
+                    e[q].overallWeight = w1;
                     break;
                 case happiness:
-                    e[q].e = getEmotion(EmotionClassification.happiness);
-                    e[q].weight = w1;
+                    e[q] = getEmotion(EmotionClassification.happiness);
+                    e[q].overallWeight = w1;
                     break;
                 case neutral:
-                    e[q].e = getEmotion(EmotionClassification.neutral);
-                    e[q].weight = w1;
+                    e[q] = getEmotion(EmotionClassification.neutral);
+                    e[q].overallWeight = w1;
                     break;
                 case sadness:
-                    e[q].e = getEmotion(EmotionClassification.sadness);
-                    e[q].weight = w1;
+                    e[q] = getEmotion(EmotionClassification.sadness);
+                    e[q].overallWeight = w1;
                     break;
                 case surprise:
-                    e[q].e = getEmotion(EmotionClassification.surprise);
-                    e[q].weight = w1;
+                    e[q] = getEmotion(EmotionClassification.surprise);
+                    e[q].overallWeight = w1;
                     break;
             }
         }
 
-
+        return e;
 
     }
 
     //Ionian is major
     //aeolian is minor
     //fifth is notetype?
-    private EmotionEntry getEmotion(EmotionClassification ec)
+    private EmotionParamEntry getEmotion(EmotionClassification ec)
     {
-        //Mapping  (Key1, Key2, TempoWeight, Acccent Weight)  (add flatOSharp weight)
+        //Mapping  (Key1, Key2, TempoWeight, Acccent Weight)  (add flatOSharp weight  <1 flats, >1 sharps)
             //Anger
                 //Bmajor, Fmajor, 2, 2
             //Neutral
@@ -204,34 +156,34 @@ public class EmotionTranslationFactory {
                 //C minor, Bminor, .5, .25
             //Contempt (mix of anger, disgust)
                 //Bmajor, Fminor, .5, 1.5
-        EmotionEntry e;
+        EmotionParamEntry e;
 
         switch (ec)
         {
             case anger: // B Major, F Major, fastest tempo weight, highest accent weight
-                return new EmotionEntry("Bma", "Fma", 2, 2);
+                return new EmotionParamEntry("Bma", "Fma", 2, 2);
 
             case contempt:              //Mix of anger/disgust
-                return new EmotionEntry("Bma", "Fmi", .5, 1.5);
+                return new EmotionParamEntry("Bma", "Fmi", .5, 1.5);
 
             case disgust:               //Minor
-                return new EmotionEntry("Fmin", "Emi", .75, .50);
+                return new EmotionParamEntry("Fmin", "Emi", .75, .50);
 
             case fear:
-                return new EmotionEntry("Ebmin", "D#min", 1.25, 1.75);
+                return new EmotionParamEntry("Ebmin", "D#min", 1.25, 1.75);
 
             case happiness:
-                return new EmotionEntry("Gmaj", "Ema", 1.25, 1.25);
+                return new EmotionParamEntry("Gmaj", "Ema", 1.25, 1.25);
 
             case neutral:
-                return new EmotionEntry("Cma", "Cma", 1, 1);
+                return new EmotionParamEntry("Cma", "Cma", 1, 1);
 
             case sadness:
-                return new EmotionEntry("Cmin", "Bmin", .5, .25);
-            
+                return new EmotionParamEntry("Cmin", "Bmin", .5, .25);
+
             case surprise:
-                return new EmotionEntry("Ama", "Dma", 1.5, 1.5);
+                return new EmotionParamEntry("Ama", "Dma", 1.5, 1.5);
         }
-        return new EmotionEntry("Cma", "Cma", 1, 1);
+        return new EmotionParamEntry("Cma", "Cma", 1, 1);
     }
 }

@@ -20,11 +20,10 @@ public class MoodToMusicFactory {
     //HRMMM what shall we return??
     public TranslatedParams TranslateParameters(GenerationParams gp)
     {
-        TranslatedParams translatedParams = new TranslatedParams();
-
-        //TranslatedParams.fromEmotion = emotionTranslationFactory.translate(gp.faces, gp.numberOfFaces);
-        //TranslatedParams.fromColor = colorTranslationFactory.translate(gp.ColorEntries);
-
+        TranslatedParams translatedParams = new TranslatedParams(
+                emotionTranslationFactory.translate(gp.numberOfFaces, gp.faces),
+                colorTranslationFactory.translate(gp.colorEntries)
+        );
 
         return translatedParams;
     }
