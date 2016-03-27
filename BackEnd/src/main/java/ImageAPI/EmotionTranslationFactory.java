@@ -13,8 +13,6 @@ public class EmotionTranslationFactory {
 
     public EmotionParamEntry[] translate(int numOfFaces, List<Face> faces)
     {
-        //FromEmotion  fe = ;
-
         //There are no faces
         if(numOfFaces == 0)
         {
@@ -161,7 +159,7 @@ public class EmotionTranslationFactory {
 
         switch (ec)
         {
-            case anger: // B Major, F Major, fastest tempo weight, highest accent weight
+            case anger:
                 return new EmotionParamEntry("Bma", "Fma", 2, 2);
 
             case contempt:              //Mix of anger/disgust
