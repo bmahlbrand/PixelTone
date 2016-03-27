@@ -22,8 +22,8 @@ public class MoodToMusicFactory {
     {
         TranslatedParams translatedParams = new TranslatedParams();
 
-        //TranslatedParams.fromColor = colorTranslationFactory.translate(gp.faces, gp.numberOfFaces);
-        //TranslatedParams.fromEmotion = emotionTranslationFactory.translate(gp.ColorEntries);
+        //TranslatedParams.fromEmotion = emotionTranslationFactory.translate(gp.faces, gp.numberOfFaces);
+        //TranslatedParams.fromColor = colorTranslationFactory.translate(gp.ColorEntries);
 
 
         return translatedParams;
