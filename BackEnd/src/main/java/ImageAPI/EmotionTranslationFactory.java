@@ -1,6 +1,7 @@
 package ImageAPI;
 
 import ImageAPI.Objects.*;
+import ImageAPI.Params.EmotionParamEntry;
 
 import java.util.Arrays;
 import java.util.List;

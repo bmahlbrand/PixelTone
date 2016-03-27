@@ -1,7 +1,7 @@
 package ImageAPI;
 
-import ImageAPI.Objects.GenerationParams;
-import ImageAPI.Objects.TranslatedParams;
+import ImageAPI.Params.GenerationParams;
+import ImageAPI.Params.TranslatedParams;
 
 /**
  * Created by Jacob on 2/22/2016.
@@ -26,6 +26,13 @@ public class MoodToMusicFactory {
         );
 
         return translatedParams;
+    }
+
+    private MusicParams MergeParams(TranslatedParams translatedParams)
+    {
+
+
+        return MusicParams;
     }
 
 }

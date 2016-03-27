@@ -1,4 +1,4 @@
-package ImageAPI.Objects;
+package ImageAPI.Params;
 
 import ImageAPI.Objects.ColorEntry;
 import ImageAPI.Objects.Face;

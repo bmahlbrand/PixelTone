@@ -1,4 +1,4 @@
-package ImageAPI.Objects;
+package ImageAPI.Params;
 
 /**
  * Created by Jacob on 3/27/2016.

@@ -3,7 +3,7 @@ import static spark.Spark.*;
 import ImageAPI.Objects.ColorEntry;
 import ImageAPI.Objects.Emotion;
 import ImageAPI.Objects.Face;
-import ImageAPI.Objects.GenerationParams;
+import ImageAPI.Params.GenerationParams;
 import com.google.gson.Gson;
 
 import ImageAPI.*;
