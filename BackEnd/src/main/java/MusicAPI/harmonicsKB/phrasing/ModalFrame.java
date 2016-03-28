@@ -14,4 +14,6 @@ public class ModalFrame {
 
     FrameFocus upperFocus;
     FrameFocus lowerFocus;
+
+    MelodicMotion motion;
 }
