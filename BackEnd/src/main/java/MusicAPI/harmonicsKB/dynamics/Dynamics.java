@@ -20,7 +20,7 @@ public enum Dynamics {
         this.velocity = velocity;
     }
 
-    int getVolume() {
+    public int getVolume() {
         return velocity;
     }
 }

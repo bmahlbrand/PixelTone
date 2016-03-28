@@ -2,6 +2,11 @@ package MusicAPI.structure;
 
 import MusicAPI.harmonicsKB.dynamics.Accent;
 import MusicAPI.harmonicsKB.dynamics.Dynamics;
+import MusicAPI.harmonicsKB.rhythm.BeatDuration;
+
+import MusicAPI.virtuouso.MIDIGenerator;
+
+import javax.sound.midi.*;
 
 import java.io.Serializable;
 
@@ -17,6 +22,14 @@ public class Note extends VoiceElement implements Serializable {
         this.dynamics = Dynamics.Forte;
         this.accent = Accent.Unaccented;
         this.octave = new Octave(3);
+    }
+
+    public Note(String note, BeatDuration rhythm) {
+        this.tone = new Tone(note);
+        this.dynamics = Dynamics.Forte;
+        this.accent = Accent.Unaccented;
+        this.octave = new Octave(3);
+        duration = rhythm;
     }
 
     public Note(int index) {
@@ -68,5 +81,21 @@ public class Note extends VoiceElement implements Serializable {
 
     public static void main() {
         System.out.println(new Note("A"));
+    }
+
+    public int addToMidiTrack(Track midiTrack, int startingPosition){
+        int midiNoteFrequency = MIDIGenerator.getNoteFrequency(tone.index(), octave.getOctaveMidi());
+        try{
+            ShortMessage currentNote = new ShortMessage(ShortMessage.NOTE_ON, 0, midiNoteFrequency, dynamics.getVolume());
+            midiTrack.add(new MidiEvent(currentNote, startingPosition));
+
+            startingPosition += 6 * duration.getNumberOfSixtyFourthNotes();
+
+            currentNote = new ShortMessage(ShortMessage.NOTE_OFF, 0, midiNoteFrequency, dynamics.getVolume());
+            midiTrack.add(new MidiEvent(currentNote, startingPosition));
+        }
+        catch(Exception e){}
+        
+        return startingPosition;
     }
 }

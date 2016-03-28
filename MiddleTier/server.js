@@ -7,7 +7,9 @@ var session      = require('express-session');
 var mongoose     = require('mongoose');
 var passport     = require('passport');
 var flash        = require('connect-flash');
-
+var util         = require('util');
+var jsonfile = require('jsonfile');
+var sp = require('./sendParams');
 mongoose.connect(config.mongodb);
 
 require('./config/passport')(passport);
@@ -141,6 +143,59 @@ app.post('/signup', function (req, res, next) {
         }
 
     })(req, res, next);
+});
+
+
+//FOR QUICK TESTING
+app.get('/deadbeef', function(req, res, next) {
+    res.send(
+        'Load PreCalculatedJson Without Auth<br><br>'
+        + '<a href=/solo>The Solos</a><br><br>'
+        + '<a href=/cb>Crying Baby</a><br><br>'
+        + '<a href=/leo>Leonidas</a><br><br>'
+    );
+});
+
+
+app.get('/solo', function(req, res, next) {
+    var file = 'solo.json'
+    jsonfile.readFile(file, function(err, obj) {
+        sp.sendParameters(obj);
+        res.send(
+            'Load PreCalculatedJson Without Auth<br><br>'
+            + '<a href=/solo>The Solos</a><br><br>'
+            + '<a href=/cb>Crying Baby</a><br><br>'
+            + '<a href=/leo>Leonidas</a><br><br>'
+        );
+    });
+});
+
+
+app.get('/cb', function(req, res, next) {
+    var file = 'cb.json'
+    jsonfile.readFile(file, function(err, obj) {
+        sp.sendParameters(obj);
+        res.send(
+            'Load PreCalculatedJson Without Auth<br><br>'
+            + '<a href=/solo>The Solos</a><br><br>'
+            + '<a href=/cb>Crying Baby</a><br><br>'
+            + '<a href=/leo>Leonidas</a><br><br>'
+        );
+    });
+
+});
+
+app.get('/leo', function(req, res, next) {
+    var file = 'leo.json'
+    jsonfile.readFile(file, function(err, obj) {
+        sp.sendParameters(obj);
+        res.send(
+            'Load PreCalculatedJson Without Auth<br><br>'
+            + '<a href=/solo>The Solos</a><br><br>'
+            + '<a href=/cb>Crying Baby</a><br><br>'
+            + '<a href=/leo>Leonidas</a><br><br>'
+        );
+    });
 });
 
 app.listen(3000, function () {

@@ -1,25 +1,37 @@
 import static spark.Spark.*;
 
-import MusicAPI.virtuouso.models.genetic.fitness.CommonChordProgFitFunc;
+import ImageAPI.Objects.ColorEntry;
+import ImageAPI.Objects.Emotion;
+import ImageAPI.Objects.Face;
+import ImageAPI.Objects.GenerationParams;
 import com.google.gson.Gson;
-import MusicAPI.virtuouso.models.genetic.*;
+import MusicAPI.structure.*;
+import MusicAPI.harmonicsKB.rhythm.*;
+import MusicAPI.virtuouso.*;
 
 import ImageAPI.*;
 
 public class main {
+
+    public static MoodToMusicFactory moodToMusicFactory = new MoodToMusicFactory();
+
     public static void main(String[] args) {
+
+
         port(3001);
 
         get("/", (request, response) -> "PixelTone BackEnd Works");
 
-        CommonChordProgFitFunc fitnessfunction = new CommonChordProgFitFunc();
-        GeneticAlgorithm.geneticAlgorithm(1, 7, 100, fitnessfunction);
+       // CommonChordProgFitFunc fitnessfunction = new CommonChordProgFitFunc();
+        //GeneticAlgorithm.geneticAlgorithm(1, 7, 100, fitnessfunction);
 
         post("/generateSong", (request, response) -> {
             System.out.println("Generate Parameter Request Received");
 
             return handleParameters(request.body());
         });
+
+        testMidiGeneration();
     }
 
     public static String handleParameters(String params) throws Exception {
@@ -46,11 +58,15 @@ public class main {
             }
 
             System.out.println("\nImage Color Information\n");
-            System.out.println("Dominant Color:" + gp.domColor);
-            System.out.println("#1 Palette Color:" + gp.pal1);
-            System.out.println("#2 Palette Color:" + gp.pal2);
-            System.out.println("#3 Palette Color:" + gp.pal3);
-            //Ship to MoodToMusic to change the moods/emotions to music
+
+            for( ColorEntry ce : gp.colorEntries)
+            {
+                System.out.println("Color:" + ce.Color + " Color Percent:" + ce.Percent);
+            }
+
+            moodToMusicFactory.TranslateParameters(gp);
+
+
             //Store song in database?
             //????? TBD
 
@@ -59,5 +75,25 @@ public class main {
         }
         //Ideally we want to return a status code based on processing status (200) for success
         return "Sucessfully Processed Params";
+    }
+
+    private static void testMidiGeneration(){
+        Note quarterNote = new Note("A", BeatDuration.Quarter);
+        Note halfNote = new Note("B", BeatDuration.Half);
+        Beat thisBeat = new Beat();
+        thisBeat.addNote(quarterNote);
+        thisBeat.addNote(halfNote);
+        Measure thisMeasure = new Measure();
+        thisMeasure.addBeat(thisBeat);
+        Section thisSection = new Section();
+        thisSection.addMeasure(thisMeasure);
+        Voice thisVoice = new Voice();
+        thisVoice.addSection(thisSection);
+        Composition thisComposition = new Composition(120);
+        thisComposition.addVoice(thisVoice);
+
+        MIDIGenerator.generateMidi(thisComposition);
+
+
     }
 }
