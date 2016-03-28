@@ -7,11 +7,18 @@ import java.util.Collection;
 public class Beat implements Serializable {
     Collection<VoiceElement> notes;
 
+    public Beat(){
+    	notes = new ArrayList<VoiceElement> ();
+    }
     public void addNote(Note note) {
-
+    	notes.add(note);
     }
 
-    public ArrayList<? extends Note> getNotes() {
+    public Collection<VoiceElement> getVoiceElements() {
+        return notes;
+    }
+
+     public ArrayList<? extends Note> getNotes() {
         return null;
     }
 }

@@ -5,6 +5,9 @@ import ImageAPI.Objects.Emotion;
 import ImageAPI.Objects.Face;
 import ImageAPI.Objects.GenerationParams;
 import com.google.gson.Gson;
+import MusicAPI.structure.*;
+import MusicAPI.harmonicsKB.rhythm.*;
+import MusicAPI.virtuouso.*;
 
 import ImageAPI.*;
 
@@ -27,6 +30,8 @@ public class main {
 
             return handleParameters(request.body());
         });
+
+        testMidiGeneration();
     }
 
     public static String handleParameters(String params) throws Exception {
@@ -70,5 +75,25 @@ public class main {
         }
         //Ideally we want to return a status code based on processing status (200) for success
         return "Sucessfully Processed Params";
+    }
+
+    private static void testMidiGeneration(){
+        Note quarterNote = new Note("A", BeatDuration.Quarter);
+        Note halfNote = new Note("B", BeatDuration.Half);
+        Beat thisBeat = new Beat();
+        thisBeat.addNote(quarterNote);
+        thisBeat.addNote(halfNote);
+        Measure thisMeasure = new Measure();
+        thisMeasure.addBeat(thisBeat);
+        Section thisSection = new Section();
+        thisSection.addMeasure(thisMeasure);
+        Voice thisVoice = new Voice();
+        thisVoice.addSection(thisSection);
+        Composition thisComposition = new Composition(120);
+        thisComposition.addVoice(thisVoice);
+
+        MIDIGenerator.generateMidi(thisComposition);
+
+
     }
 }

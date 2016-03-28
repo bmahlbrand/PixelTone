@@ -56,4 +56,24 @@ public enum BeatDuration {
 
         return pulses;
     }
+
+    public int getNumberOfSixtyFourthNotes(){
+        switch(this) {
+            case Whole:
+                return 64;
+            case Half:
+                return 32;
+            case Quarter:
+                return 16;
+            case Eighth:
+                return 8;
+            case Sixteenth:
+                return 4;
+            case ThirtySecond:
+                return 2;
+            case SixtyFourth: //because why the fuck not
+                return 1;
+        }
+        return 0;
+    }
 }
