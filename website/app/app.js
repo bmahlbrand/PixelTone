@@ -3,7 +3,7 @@
 	var pixelTone = angular.module('pixelTone', ['ngRoute', 'ngFileUpload']);
 
 	//Routes
-	pixelTone.config(function($routeProvider){
+	pixelTone.config(['$routeProvider', '$locationProvider', function($routeProvider,$locationProvider){
 		$routeProvider
 
 		//home page
@@ -28,17 +28,20 @@
 			templateUrl: 'app/login/login.html',
 			controller: 'loginController'
 		})
-        
+
         .when('/signup', {
 			templateUrl: 'app/login/login.html',
 			controller: 'loginController'
 		})
-        
+
         .when('/upload', {
 			templateUrl: 'app/upload/upload.html',
 			controller: 'uploadController'
 		});
-	});
+
+	  // use the HTML5 History API
+	  $locationProvider.html5Mode(true);
+	}]);
 
 
 })();
