@@ -5,7 +5,7 @@ import MusicAPI.structure.Note;
 import MusicAPI.harmonicsKB.intervals.Interval;
 import MusicAPI.utils.LimitedQueue;
 
-public class ChromaticScale extends Scale {
+public class ChromaticScale<T> extends Scale {
     public ChromaticScale(Note root, Mode mode) {
         super(root, mode);
     }

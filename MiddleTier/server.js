@@ -7,9 +7,7 @@ var session      = require('express-session');
 var mongoose     = require('mongoose');
 var passport     = require('passport');
 var flash        = require('connect-flash');
-var util         = require('util');
-var jsonfile = require('jsonfile');
-var sp = require('./sendParams');
+
 mongoose.connect(config.mongodb);
 
 require('./config/passport')(passport);
@@ -32,22 +30,6 @@ app.use(passport.session()); // persistent login sessions
 app.use(flash());
 
 
-<<<<<<< HEAD
-=======
-//Serve up FrontEnd Requests
-var dirname = config.staticContent;
-app.use("/",express.static(dirname));
-
-//Simple Home Page to test without Angular
-app.get('/test', function (request, response) {
-    response.send('Hello, welcome to PixelTone<br><br><br>'
-    + '<a href=/login>Login</a><br><br>'
-    + '<a href=/signup>signup</a><br><br>'
-    + '<a href=/users/forgot>forgot</a><br><br>'
-    + '<a href=/users/logout>logout</a>'
-    );
-});
->>>>>>> master
 
 //Check current session for authentication before proceeding
 var checkAuth = function(req, res, next) {
@@ -88,11 +70,6 @@ app.post('/login', function(req, res, next) {
             });
         }
         else {
-            if(err.ID == null){
-                 console.log("SOMETHING REALLY BAD");
-                 res.redirect('/login');
-            }
-              
             switch (err.ID) {
                 case 2:
                     console.log(err.message);
@@ -131,61 +108,8 @@ app.post('/signup', function (req, res, next) {
 });
 
 
-<<<<<<< HEAD
 app.get('*', function(req, res) {
   res.sendFile(__dirname + '/public/index.html');
-=======
-//FOR QUICK TESTING
-app.get('/deadbeef', function(req, res, next) {
-    res.send(
-        'Load PreCalculatedJson Without Auth<br><br>'
-        + '<a href=/solo>The Solos</a><br><br>'
-        + '<a href=/cb>Crying Baby</a><br><br>'
-        + '<a href=/leo>Leonidas</a><br><br>'
-    );
-});
-
-
-app.get('/solo', function(req, res, next) {
-    var file = 'solo.json'
-    jsonfile.readFile(file, function(err, obj) {
-        sp.sendParameters(obj);
-        res.send(
-            'Load PreCalculatedJson Without Auth<br><br>'
-            + '<a href=/solo>The Solos</a><br><br>'
-            + '<a href=/cb>Crying Baby</a><br><br>'
-            + '<a href=/leo>Leonidas</a><br><br>'
-        );
-    });
-});
-
-
-app.get('/cb', function(req, res, next) {
-    var file = 'cb.json'
-    jsonfile.readFile(file, function(err, obj) {
-        sp.sendParameters(obj);
-        res.send(
-            'Load PreCalculatedJson Without Auth<br><br>'
-            + '<a href=/solo>The Solos</a><br><br>'
-            + '<a href=/cb>Crying Baby</a><br><br>'
-            + '<a href=/leo>Leonidas</a><br><br>'
-        );
-    });
-
-});
-
-app.get('/leo', function(req, res, next) {
-    var file = 'leo.json'
-    jsonfile.readFile(file, function(err, obj) {
-        sp.sendParameters(obj);
-        res.send(
-            'Load PreCalculatedJson Without Auth<br><br>'
-            + '<a href=/solo>The Solos</a><br><br>'
-            + '<a href=/cb>Crying Baby</a><br><br>'
-            + '<a href=/leo>Leonidas</a><br><br>'
-        );
-    });
->>>>>>> master
 });
 
 app.listen(3000, function () {

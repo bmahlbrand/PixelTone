@@ -4,19 +4,16 @@ var multer = require('multer');
 var https = require('https');
 var http = require('http');
 var fs = require ('fs');
-var jsonfile = require('jsonfile');
-var sp = require('./sendParams');
 //Setup Image analyzer (replace with API later)
-var imagecolors = require('imagecolors');
+var ColorThief = require('color-thief');
+var color = new ColorThief();
 
 var imageRoutes = module.exports = express();
 
 //Simplified color constants
-//var COLORS = [ "BLACK", "WHITE", "RED", "GREEN", "BLUE", "YELLOW", "ORANGE", "PURPLE", "GREY", "BROWN"];
-var NEWCOLORS = [ "brown", "pink", "red", "orange", "green", "yellow", "purple", "blue", "light", "neutral", "dark"];
+var COLORS = [ "BLACK", "WHITE", "RED", "GREEN", "BLUE", "YELLOW", "ORANGE", "PURPLE", "GREY", "BROWN"];
 
 var key = config.MSEmotionPrimeKey;
-
 if (key == null || key == "")
     console.log("No API KEY (CANT CONNECT TO MS) - GET FROM JACOB/BEN");
 
@@ -68,7 +65,6 @@ var parseMSResponse = function (response) {
        
         var totalFaces = 0;
         var faces = [];
-        
         //console.log("Top 3 Facial Traits");
         //Loop through all the faces returned from microsoft
         //Sort and parse results into object to send later
@@ -102,55 +98,43 @@ var parseMSResponse = function (response) {
             faces.push(emotions);
         });
      
-     
-        //can be path or uRL! double bonus
-        getColors(image, 5, function (colors) {
+        //Get Dominant Color
+        var colorThief = color.getColor(image);
+        var r = colorThief[0];
+        var g = colorThief[1];
+        var b = colorThief[2];
+        
+        //Get pallette of colors
+        var colorPal = color.getPalette(image, 4);
 
-            var colorArray = [];
-            console.log(colors);
-            var numberOfColors = colors.length >= 5 ? 5 : colors.length;
-            
-            //TWEAK THESE VALUES
-            //If dom color has <= 20, and next is within 5 then image is neutral
-            if (numberOfColors > 1 && colors[0].percent <= 15 && (colors[0].percent - colors[1].percent <= 5)) {
-                console.log("No dominant color");
-                var colorObj = {};
-                var key = "Percent";
-                var key2 = "Color";
-                colorObj[key] = colors[0].percent;
-                colorObj[key2] = "neutral";
-                colorArray.push(colorObj);
-            }
-            else {
-                for (var i = 0; i < numberOfColors; i++) {
-                    //If color percent < 10 we don't care
-                    if (colors[i].percent > 20) {
-                        var colorObj = {};
-                        var key = "Percent";
-                        var key2 = "Color";
-                        colorObj[key] = colors[i].percent;
-                        colorObj[key2] = colors[i].family;
-                        colorArray.push(colorObj);
-                    }
-                }
-            }
-
-
-            var generationParameters =
-                {
-                    "numberOfFaces": totalFaces,
-                    "faces": faces,
-                    "colorEntries": colorArray
-                }
+        //Convert DomColor   
+        var domColor = getColor(r, g, b);
+        
+        var pals = [];
+        
+        //Covert the top 3 color pallettes to a simplified range of colors
+        for (var i = 0; i < 4; i++) 
+        {
+            var r = colorPal[i][0];
+            var g = colorPal[i][1];
+            var b = colorPal[i][2];
+            //console.log("Converted:" +  getColor(r, g, b));
+            var pal = getColor(r, g, b);
+            pals.push(pal);
+        }   
                 
-                
-                //var file = 'cb.json'
-                //jsonfile.writeFile(file, generationParameters, function (err) {
-                 //   console.error(err)
-                //});
-            //console.log(generationParameters);      
-            return sp.sendParameters(generationParameters);
-        });
+        //Create object to send to generator
+        var generationParameters =
+            {
+                "numberOfFaces": totalFaces,
+                "faces": faces,
+                "domColor": domColor,
+                "pal1": pals[0],
+                "pal2": pals[1],
+                "pal3": pals[2]
+            }
+
+        return sendParameters(generationParameters);
     });
 
 
@@ -178,24 +162,24 @@ imageRoutes.post('/process', function (req, res) {
 //Send uploaded image to microsoft
 imageRoutes.get('/analyze', function (request, response) {
 
-        var req = https.request(options, parseMSResponse);
+    var req = https.request(options, parseMSResponse);
 
-        var stream = fs.createReadStream(image);
+    var stream = fs.createReadStream(image);
 
-        stream.on('open', function () {
-            stream.pipe(req);
-        });
+    stream.on('open', function () {
+        stream.pipe(req);
+    });
 
-        stream.on('close', function () {
-            console.log('Done Sending Image...');
-            req.end();
-        });
+    stream.on('close', function () {
+        console.log('Done Sending Image...');
+        req.end();
+    });
 
-        stream.on('error', function (err) {
-            console.log(err);
-        });
+    stream.on('error', function (err) {
+        console.log(err);
+    });
 
-        response.status(204).end();
+    response.status(204).end();
 });
 
 
@@ -209,14 +193,120 @@ Array.prototype.sortOn = function (key) {
         }
         return 0;
     });
+}
+
+//http://www.calculatorcat.com/free_calculators/color_slider/rgb_hex_color_slider.phtml
+//Parse the RGB Color values into a rough color estimate
+var getColor = function (R, G, B) {
+    //White
+    //All are above 240
+    if (R >= 240 && G >= 240 && B >= 240)
+        return COLORS[1];
+    
+    //Black
+    //All less than 45
+    if (R <= 45 && G <= 45 && B <= 45)
+        return COLORS[0];
+    
+    //GREY
+    //If difference is < 15 GREY
+    //get absolute value
+    if (Math.abs(R - G) <= 15 && Math.abs(R - B) <= 15)
+        return COLORS[8]
+    
+    //RED
+    if (R >= G && R >= B) 
+    {
+        //Red or Brown
+        if (Math.abs(G - B) <= 30) 
+        {
+            //BROWN
+            if (R < 140)
+                return COLORS[9];
+            //RED
+            else
+                return COLORS[2]
+        }
+           
+        //PURPLE
+        if (B > G)
+            return COLORS[7];
+        //ORANGE OR YELLOW
+        if (G > B) 
+        {
+            //YELLOW
+            if (G > 120)
+                return COLORS[5];
+            else 
+            {   //BROWN
+                if (R < 150)
+                    return COLORS[9];
+                else //ORANGE
+                    return COLORS[6];
+            }
+
+        }
+        //Something else RED
+        return COLORS[2];
+    }
+    
+    //GREEN
+    //shit is green no matter what others are???
+    if (G >= R && G >= B) 
+    {
+        //Green
+        if (Math.abs(R - B) <= 30)
+            return COLORS[3];
+            
+        ///STILL HAVE GREEN??
+        if (B > R)
+            return COLORS[3];
+        //Something else GREEN
+        return COLORS[3];
+    }
+    
+    //BLUE
+    if (B >= R && B >= G) 
+    {
+        //BLUE
+        if (Math.abs(G - R) <= 30)
+            return COLORS[4];
+        
+        //PURPLE
+        if (R > G)
+            return COLORS[7];
+            
+        //Something else
+        return COLORS[4];
+    }
 };
 
-function getColors(imagePath, numOfColors, callback) {
-    imagecolors.extract(imagePath, numOfColors, function(err, colors){
-    if (!err){
-        return callback(colors);
-    }
-    console.log("ERRROR GETTING COLORS");
-    console.log(err);
+//Send generatedParameters request to BackEnd
+var sendParameters = function (params) {
+    var generateOptions = {
+        host: 'localhost',
+        path: '/generateSong',
+        port: 3001,
+        method: 'POST'
+    };
+
+    var req = http.request(generateOptions, function (response) {
+        var str = ''
+        response.on('data', function (chunk) {
+            str += chunk;
+        });
+
+        response.on('end', function () {
+            console.log("Response from BackEnd:" + str);
+            //INSERT CODE TO HANDLE RESPONSE (Will be a song??)      
+        });
+
+        response.on('error', function (err) {
+            console.log(err);
+        });
+
     });
+
+    req.write(JSON.stringify(params));
+    req.end();
 };

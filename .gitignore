@@ -5,5 +5,3 @@
 
 BackEnd/build/
 *.iml
-
-MiddleTier/node_modules/canvas/lib/bindings.js

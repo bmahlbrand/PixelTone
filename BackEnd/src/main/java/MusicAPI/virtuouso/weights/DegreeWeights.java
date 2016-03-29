@@ -14,19 +14,6 @@ public class DegreeWeights {
             {0.0, 5.0, 0.0, 3.0, 0.0, 2.0, 0.0},
             {9.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0}
     };
-    private static int commonChordProg[][] = {
-            {1, 1, 1, 1, 1, 1, 1},
-            {0, 1, 0, 1, 1, 0, 1},
-            {0, 0, 1, 0, 0, 1, 0},
-            {0, 1, 0, 1, 1, 0, 1},
-            {1, 0, 0, 0, 1, 1, 1},
-            {0, 1, 0, 1, 0, 1, 0},
-            {1, 0, 1, 0, 1, 0, 1}
-    };
-
-    public static int getCommon(int i, int j) {
-        return commonChordProg[i][j];
-    }
 
     public static Double get(int i, int j) {
         return degreeWeight[i][j];

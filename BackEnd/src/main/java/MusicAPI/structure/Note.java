@@ -1,26 +1,23 @@
 package MusicAPI.structure;
 
-import MusicAPI.harmonicsKB.dynamics.Accent;
-import MusicAPI.harmonicsKB.dynamics.Dynamics;
-
 import java.io.Serializable;
 
 public class Note extends VoiceElement implements Serializable {
     Tone tone;
     Octave octave;
-    Dynamics dynamics;
-    Accent accent;
 
     //assumes tone, accidental, optional octave [A-G][#|b][0-8]
     public Note(String note) {
         this.tone = new Tone(note);
-        this.dynamics = Dynamics.Forte;
-        this.accent = Accent.Unaccented;
-        this.octave = new Octave(3);
     }
 
     public Note(int index) {
         this.tone = Tone.fromIndex(index);
+    }
+
+    //    TODO REMOVE ME LATER AND DO THIS CLEANLY / CONSISTENTLY
+    public Note(char tone, int accidental, int duration, int octave) {
+
     }
 
     public Accidental getAccidental() {
@@ -37,10 +34,6 @@ public class Note extends VoiceElement implements Serializable {
 
     public Note getWholeStep() {
         return new Note(tone.wholeStep().toString());
-    }
-
-    public Octave getOctave() {
-        return octave;
     }
 
     @Override

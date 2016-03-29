@@ -1,4 +1,4 @@
-package MusicAPI.harmonicsKB.phrasing;
+package MusicAPI.harmonicsKB;
 
 /**
  * Created by ben on 4/26/2015.

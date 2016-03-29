@@ -50,11 +50,34 @@ marketplace for music generation applications.
 3. Navigate to mongodb/bin folder, run mongod --dbpath="C:\pixeltonedb"
 
 ###Configure Computer for Graphic Parsing
-1. Install ImageMagic (ImageMagick-6.9.3-6-Q16-x64-dll.exe) from: http://www.imagemagick.org/script/binary-releases.php
+1. Install Python 2.7 (Make sure the path to python is in your PATH variable)
+2. Next you will need to install Visual Studio C++
+3. Right now only 2013 Works, you can 
+	1. Try installing: https://www.microsoft.com/en-us/download/details.aspx?id=40760
+	2. If that doesn't work, install: https://www.microsoft.com/en-gb/download/confirmation.aspx?id=44914
+4. Update NPM with (npm install npm)
+5. Install node-gyp globally with (npm install -g node-gyp)
+	1. If this fails there is something wrong with python or the MS Build Tools
+4. Download GTK and extract to C:\GTK  (64 or 32, probably need 64)
+	1.   http://ftp.gnome.org/pub/GNOME/binaries/win64/gtk+/2.22/gtk+-bundle_2.22.1-20101229_win64.zip
+	2.   http://ftp.gnome.org/pub/GNOME/binaries/win32/gtk+/2.24/gtk+-bundle_2.24.10-20120208_win32.zip
+5. Download and install libturbo-jpeg to C:\libturbo-jpeg
+	1. https://sourceforge.net/projects/libjpeg-turbo/files/1.4.2/
+	2. You want the VC executable (probably x64) libjpeg-turbo-1.4.2-vc64.exe
+6.  Build Canvas
+	1.  Navigate to Middle-tier/node_modules/color-thief/node_modules/canvas
+	2.  Run node-gyp rebuild --msvs_version=2013
+		1.  If you have errors it is not detecting GTK or Libturbo or something is messed up
+		2.  Check the binding.gyp file for correct directory entries to the above folders.
+
+7.	Right now libturbo is not supported building with MS2015, check for update later
+8.	Troubleshooting
+	1.	https://github.com/Automattic/node-canvas/wiki/Installation---Windows
+	2.	https://github.com/nodejs/node-gyp/issues/629#issuecomment-153196245
 
 ###Node
 1. Install Node
 2. Add the MS API Key to config/development file
-3. navigate to middletier folder, type: node server
+3. navigate to middletier folder, type: node index
 4. You should now be able to goto localhost:3000 and use the program
 	1. You may need to create a tmp folder in middletier/backend root
