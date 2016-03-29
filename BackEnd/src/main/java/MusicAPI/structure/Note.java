@@ -14,7 +14,7 @@ public class Note extends VoiceElement implements Serializable {
     Tone tone;
     Octave octave;
     Dynamics dynamics;
-    Accent accent;
+    public Accent accent;
 
     //assumes tone, accidental, optional octave [A-G][#|b][0-8]
     public Note(String note) {

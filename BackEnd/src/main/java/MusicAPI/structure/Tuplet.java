@@ -20,8 +20,13 @@ public class Tuplet extends VoiceElement {
 
     public Tuplet() {
 
-
     }
+
+    @Override
+    public int getDuration() {
+        return duration.getNumberOfSixtyFourthNotes() * 6;
+    }
+
     public  int addToMidiTrack(Track midiTrack, int startingPosition){ return startingPosition;}
 }
 

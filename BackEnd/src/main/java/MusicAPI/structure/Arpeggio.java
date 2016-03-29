@@ -16,6 +16,11 @@ public class Arpeggio extends VoiceElement {
 		this.duration = duration;
 	}
 
+	@Override
+	public int getDuration() {
+		return duration.getNumberOfSixtyFourthNotes() * 6;
+	}
+
 	public  int addToMidiTrack(Track midiTrack, int startingPosition){
 
 		for (Note note : triad.getNotes()) {
