@@ -7,12 +7,16 @@ var session      = require('express-session');
 var mongoose     = require('mongoose');
 var passport     = require('passport');
 var flash        = require('connect-flash');
+var path         = require('path');
 var util         = require('util');
+var localStrategy = require('passport-local' ).Strategy;
 var jsonfile = require('jsonfile');
 var sp = require('./sendParams');
 mongoose.connect(config.mongodb);
 
-require('./config/passport')(passport);
+//require('./config/passport')(passport);
+
+var User = require('./userModel');
 
 var app = express();
 
@@ -20,35 +24,28 @@ var app = express();
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.json()); // get information from html forms
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.urlencoded({ extended: false }));
     
 // required for passport
 app.use(session({ 
                 secret: 'deadbeefisnumberone', // session secret
-                saveUninitialized: true,
-                resave: true })); 
+                saveUninitialized: false,
+                resave: false })); 
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash());
+app.use(express.static(path.join(__dirname, '../website')));
 
 //Expanding the routes
 var userRoutes = require('./userRoutes');
 var imageRoutes = require('./imageRoutes');
 var testUpload = require('./testUpload');
 
-//Serve up FrontEnd Requests
-var dirname = config.staticContent;
-app.use("/",express.static(dirname));
+// configure passport
+passport.use(new localStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
-//Simple Home Page to test without Angular
-app.get('/test', function (request, response) {
-    response.send('Hello, welcome to PixelTone<br><br><br>'
-    + '<a href=/login>Login</a><br><br>'
-    + '<a href=/signup>signup</a><br><br>'
-    + '<a href=/users/forgot>forgot</a><br><br>'
-    + '<a href=/users/logout>logout</a>'
-    );
-});
 
 //Check current session for authentication before proceeding
 var checkAuth = function(req, res, next) { 
@@ -69,81 +66,43 @@ app.use('/users' , userRoutes); //Login, Logout, Reset, Create
 app.use('/images' , checkAuth, imageRoutes); //Routes to handle generation
 app.use('/test' , checkAuth, testUpload); //Sample page to handle file uploads
 
-//Simple page for Login testing
-app.get('/login', function(req, res) {
-    res.send('<form action="/login" method="post">'
-        + '<p>Email: <input type="text" name="email" placeholder="Enter Email" /></p>'
-        + '<p>Password: <input type="password" name="password" /></p>'
-        + '<p><input type="submit" value="login" /></p>'
-        + '</form>'
-    );
+// routes
+app.use('/user/', userRoutes);
+
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, '../website', 'index.html'));
 });
 
-//Handle Logins with Username/Password 
-app.post('/login', function(req, res, next) {
-    passport.authenticate('local-login', function (err, user) {
-           
-        //Sucessfully logged in user
-        if (user) {
-            req.logIn(user, function (err) {
-                if (err) { return next(err); }
-                console.log("Logged In User:" + user.local.email);
-                return res.redirect('/test/upload');
-            });
-        }
-        else {
-            if(err.ID == null){
-                 console.log("SOMETHING REALLY BAD");
-                 res.redirect('/login');
-            }
-              
-            switch (err.ID) {
-                case 2:
-                    console.log(err.message);
-                    res.set({ 'error': 2 });
-                    res.redirect('/signup');
-                    break;
-                case 3:
-                    console.log(err.message);
-                    res.set({ 'error': 3 });
-                    res.redirect('/signup');
-                    break;
-                default:
-                    res.redirect('/signup');
-                    break;
-            }
-        }     
-  })(req, res, next);
+app.use('/about', function(req, res) {
+  res.sendFile(path.join(__dirname, '../website', 'index.html'));
 });
 
-//Simple Page for Signup Testing
-app.get('/signup', function(req, res) {   
-    res.send(
-          '<form action="/signup" method="post">'
-        + '<p>Email: <input type="text" name="email" placeholder="Create Email" /></p>'
-        + '<p>Password: <input type="password" name="password" /></p>'
-        + '<p><input type="submit" value="signup" /></p>'
-        + '</form>'
-    );
+app.use('/login', function(req, res) {
+  res.sendFile(path.join(__dirname, '../website', 'index.html'));
 });
 
-//Handle signup data requests
-app.post('/signup', function (req, res, next) {
-    passport.authenticate('local-signup', function (err, user) {
-         
-        //Sucessfully created user
-        if (user) {
-            console.log("Created User:" + user);
-            res.redirect('/login')
-        }
-        else {
-            console.log(err.message);
-            res.set({ 'error': 1 });
-            res.redirect('/signup')
-        }
-
-    })(req, res, next);
+app.use('/register', function(req, res) {
+  res.sendFile(path.join(__dirname, '../website', 'index.html'));
 });
+
+app.use('/profile', function(req, res) {
+  res.sendFile(path.join(__dirname, '../website', 'index.html'));
+});
+// error hndlers
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+app.use(function(err, req, res) {
+  res.status(err.status || 500);
+  res.end(JSON.stringify({
+    message: err.message,
+    error: {}
+  }));
+});
+
 
 
 //FOR QUICK TESTING
