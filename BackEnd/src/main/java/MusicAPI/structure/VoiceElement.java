@@ -10,8 +10,7 @@ import javax.sound.midi.*;
 public abstract class VoiceElement {
     BeatDuration duration;
 
-    public BeatDuration getDuration() {
-        return duration;
-    }
+    public abstract int getDuration();
+
     public abstract int addToMidiTrack(Track midiTrack, int startingPosition);
 }

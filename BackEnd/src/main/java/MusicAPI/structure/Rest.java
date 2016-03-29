@@ -11,8 +11,12 @@ public class Rest extends VoiceElement implements Serializable {
 		this.duration = duration;
 	}
 
-	public int addToMidiTrack(Track midiTrack, int startingPosition){
-		return startingPosition + 6 * getDuration().getNumberOfSixtyFourthNotes();
-	}
+    @Override
+    public int getDuration() {
+        return duration.getNumberOfSixtyFourthNotes() * 6;
+    }
 
+	public int addToMidiTrack(Track midiTrack, int startingPosition){
+		return startingPosition + getDuration();
+	}
 }

@@ -36,6 +36,11 @@ public class Note extends VoiceElement implements Serializable {
         this.tone = Tone.fromIndex(index);
     }
 
+    @Override
+    public int getDuration() {
+        return accent.getDuration(duration);
+    }
+
     public Accidental getAccidental() {
         return tone.accidental;
     }
