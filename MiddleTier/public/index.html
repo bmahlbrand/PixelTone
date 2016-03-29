@@ -17,6 +17,7 @@
 
 
     <!-- our app -->
+<<<<<<< HEAD:MiddleTier/public/index.html
     <script types="text/javascript" src="app.js"></script>
     <!-- extra js stuff -->
     <script types="text/javascript" src="assets/js/extra.js"></script>
@@ -41,6 +42,10 @@
         fjs.parentNode.insertBefore(js, fjs);
       }(document, 'script', 'facebook-jssdk'));
     </script>
+=======
+    <script types="text/javascript" src="app/app.js"></script>
+
+>>>>>>> master:website/index.html
 
   </head>
 
@@ -53,9 +58,16 @@
             <a class="navbar-brand" href="/#/">PixelTone</a>
           </div>
           <ul class="nav navbar-nav navbar-right">
+<<<<<<< HEAD:MiddleTier/public/index.html
             <li><a href="home"><i class="home"></i> Home</a></li>
             <li><a href="login"><i class="login"></i> Login</a></li>
             <li><a href="about"><i class="about"></i> About</a></li>
+=======
+            <li><a href="#home"><i class="home"></i> Home</a></li>
+            <li><a href="#login"><i class="login"></i> Login</a></li>
+            <li><a href="#about"><i class="about"></i> About</a></li>
+            <li><a href="#upload"><i class="upload"></i> Upload</a></li>
+>>>>>>> master:website/index.html
           </ul>
         </div>
       </nav>
@@ -70,12 +82,15 @@
     </div>
 
     <!-- Modules -->
-    <script src="app.js"></script>
+    <script src="app/app.js"></script>
+    <!-- File Upload -->
+    <script  type="text/javascript" src="extensions/ng-file-upload.js"></script>
 
     <!-- Controllers -->
-    <script src="controllers/homeController.js"></script>
-    <script src="controllers/loginController.js"></script>
-    <script src="controllers/aboutController.js"></script>
+    <script src="app/home/homeController.js"></script>
+    <script src="app/login/loginController.js"></script>
+    <script src="app/about/aboutController.js"></script>
+    <script src="app/upload/uploadController.js"></script>
 
     <!-- Directives -->
 

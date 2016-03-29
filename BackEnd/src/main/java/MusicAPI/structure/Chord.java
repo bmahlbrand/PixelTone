@@ -1,7 +1,7 @@
 package MusicAPI.structure;
 
-import MusicAPI.harmonicsKB.intervals.Mode;
-import MusicAPI.harmonicsKB.intervals.Triad;
+import MusicAPI.harmonicsKB.triads.Triad;
+import MusicAPI.harmonicsKB.rhythm.BeatDuration;
 
 /**
  * Created by ben on 2/7/2016.
@@ -9,5 +9,8 @@ import MusicAPI.harmonicsKB.intervals.Triad;
 public class Chord extends VoiceElement {
     Note root;
     Triad triad;
-    Mode mode;
+
+    public Chord(Note root, Triad triad, BeatDuration duration) {
+
+    }
 }
