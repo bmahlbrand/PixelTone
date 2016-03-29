@@ -48,8 +48,16 @@ public class Note extends VoiceElement implements Serializable {
         return new Note(tone.halfStep().toString());
     }
 
+    public Note getHalfStep(BeatDuration duration) {
+        return new Note(tone.halfStep().toString(), duration);
+    }
+
     public Note getWholeStep() {
         return new Note(tone.wholeStep().toString());
+    }
+
+    public Note getWholeStep(BeatDuration duration) {
+        return new Note(tone.wholeStep().toString(), duration);
     }
 
     public Octave getOctave() {
@@ -58,7 +66,7 @@ public class Note extends VoiceElement implements Serializable {
 
     @Override
     public String toString() {
-        return tone.toString();
+        return tone.toString() + duration.toString();
     }
 
     @Override
@@ -85,7 +93,7 @@ public class Note extends VoiceElement implements Serializable {
 
     public int addToMidiTrack(Track midiTrack, int startingPosition){
         int midiNoteFrequency = MIDIGenerator.getNoteFrequency(tone.index(), octave.getOctaveMidi());
-        try{
+        try {
             ShortMessage currentNote = new ShortMessage(ShortMessage.NOTE_ON, 0, midiNoteFrequency, dynamics.getVolume());
             midiTrack.add(new MidiEvent(currentNote, startingPosition));
 

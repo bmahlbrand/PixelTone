@@ -35,10 +35,10 @@ public class ChromaticScale extends Scale {
             Note next = null;
             switch (intervals[i - 1]) {
                 case Semitone:
-                    next = scale.getLast().getHalfStep();
+                    next = scale.getLast().getHalfStep(root.getDuration());
                     break;
                 case Tone:
-                    next = scale.getLast().getWholeStep();
+                    next = scale.getLast().getWholeStep(root.getDuration());
                     break;
             }
 

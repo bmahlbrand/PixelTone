@@ -18,6 +18,10 @@ public abstract class Triad {
 
     protected abstract LimitedQueue<Note> constructChordTones(Note root);
 
+    public LimitedQueue<Note> getNotes() {
+        return notes;
+    }
+
     protected abstract boolean noteInTriad(Note root, Note check);
 
     void inversion(Inversion inversion) {
