@@ -160,29 +160,29 @@ public class EmotionTranslationFactory {
         switch (ec)
         {
             case anger:
-                return new EmotionParamEntry("Bma", "Fma", 2, 2);
+                return new EmotionParamEntry("B-major", "F-major", 2, 2);
 
             case contempt:              //Mix of anger/disgust
-                return new EmotionParamEntry("Bma", "Fmi", .5, 1.5);
+                return new EmotionParamEntry("B-major", "F-minor", .5, 1.5);
 
             case disgust:               //Minor
-                return new EmotionParamEntry("Fmin", "Emi", .75, .50);
+                return new EmotionParamEntry("F-minor", "E-minor", .75, .50);
 
             case fear:
-                return new EmotionParamEntry("Ebmin", "D#min", 1.25, 1.75);
+                return new EmotionParamEntry("Eb-minor", "D#-minor", 1.25, 1.75);
 
             case happiness:
-                return new EmotionParamEntry("Gmaj", "Ema", 1.25, 1.25);
+                return new EmotionParamEntry("G-major", "E-major", 1.25, 1.25);
 
             case neutral:
-                return new EmotionParamEntry("Cma", "Cma", 1, 1);
+                return new EmotionParamEntry("C-major", "C-major", 1, 1);
 
             case sadness:
-                return new EmotionParamEntry("Cmin", "Bmin", .5, .25);
+                return new EmotionParamEntry("C-minor", "B-minor", .5, .25);
 
             case surprise:
-                return new EmotionParamEntry("Ama", "Dma", 1.5, 1.5);
+                return new EmotionParamEntry("A-major", "D-major", 1.5, 1.5);
         }
-        return new EmotionParamEntry("Cma", "Cma", 1, 1);
+        return new EmotionParamEntry("C-major", "C-major", 1, 1);
     }
 }

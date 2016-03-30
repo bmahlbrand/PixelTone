@@ -6,6 +6,7 @@ import ImageAPI.Objects.Face;
 
 import ImageAPI.Params.GenerationParams;
 
+import ImageAPI.Params.MusicParams;
 import MusicAPI.harmonicsKB.triads.Augmented7thTriad;
 import MusicAPI.harmonicsKB.triads.Diminished7thTriad;
 import MusicAPI.harmonicsKB.triads.Major7ThTriad;
@@ -69,11 +70,9 @@ public class main {
                 System.out.println("Color:" + ce.Color + " Color Percent:" + ce.Percent);
             }
 
-            moodToMusicFactory.TranslateParameters(gp);
+            MusicParams mp = moodToMusicFactory.TranslateParameters(gp);
 
-
-            //Store song in database?
-            //????? TBD
+            //Send to quill??
 
         } catch (Exception e) {
             throw new Exception("Invalid JSON", e);
