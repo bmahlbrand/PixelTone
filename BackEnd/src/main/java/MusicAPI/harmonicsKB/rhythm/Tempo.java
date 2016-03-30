@@ -8,20 +8,13 @@ public enum Tempo {
     Grave(35),
     Largo(50),
     Lento(60),
-    Larghetto(66),
     Adagio(70),
-    Adagietto(75),
     Andante(85),
-    Andantino(80),
-    MarciaModerato(85),
-    AndanteModerato(92),
-    Moderato(108),
-    Allegretto(112),
-    AllegroModerato(116),
+    AndanteModerato(95),
+    Moderato(110),
+    AllegroModerato(120),
     Allegro(140),
     Vivace(170),
-    Vivacissimo(175),
-    Allegrissimo(180),
     Presto(200),
     Prestissimo(215);
 
@@ -34,4 +27,75 @@ public enum Tempo {
     int getBpm() {
         return bpm;
     }
+
+    public Tempo getTempo(int bpm)
+    {
+        if(bpm < 35)
+            return Larghissimo;
+
+        if(bpm < 50)
+            return Grave;
+
+        if(bpm < 60)
+            return Largo;
+
+        if( bpm < 70)
+            return Lento;
+
+        if(bpm < 85)
+            return Adagio;
+
+        if(bpm < 95)
+            return Andante;
+
+        if(bpm < 110)
+            return AndanteModerato;
+
+        if(bpm < 120)
+            return Moderato;
+
+        if(bpm < 140)
+            return AllegroModerato;
+
+        if(bpm < 170)
+            return Allegro;
+
+        if(bpm < 200)
+            return Vivace;
+
+        if(bpm < 215)
+            return Presto;
+
+        return Prestissimo;
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

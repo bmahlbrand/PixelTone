@@ -3,11 +3,10 @@ import static spark.Spark.*;
 import ImageAPI.Objects.ColorEntry;
 import ImageAPI.Objects.Emotion;
 import ImageAPI.Objects.Face;
-import ImageAPI.Objects.GenerationParams;
-import MusicAPI.harmonicsKB.intervals.Mode;
-import MusicAPI.harmonicsKB.scale.ChromaticScale;
-import MusicAPI.harmonicsKB.scale.DiatonicScale;
-import MusicAPI.harmonicsKB.scale.PentatonicScale;
+
+import ImageAPI.Params.GenerationParams;
+
+import ImageAPI.Params.MusicParams;
 import MusicAPI.harmonicsKB.triads.Augmented7thTriad;
 import MusicAPI.harmonicsKB.triads.Diminished7thTriad;
 import MusicAPI.harmonicsKB.triads.Major7ThTriad;
@@ -31,7 +30,7 @@ public class main {
 
         get("/", (request, response) -> "PixelTone BackEnd Works");
 
-       // CommonChordProgFitFunc fitnessfunction = new CommonChordProgFitFunc();
+        //CommonChordProgFitFunc fitnessfunction = new CommonChordProgFitFunc();
         //GeneticAlgorithm.geneticAlgorithm(1, 7, 100, fitnessfunction);
 
         post("/generateSong", (request, response) -> {
@@ -73,11 +72,9 @@ public class main {
                 System.out.println("Color:" + ce.Color + " Color Percent:" + ce.Percent);
             }
 
-            moodToMusicFactory.TranslateParameters(gp);
+            MusicParams mp = moodToMusicFactory.TranslateParameters(gp);
 
-
-            //Store song in database?
-            //????? TBD
+            //Send to quill??
 
         } catch (Exception e) {
             throw new Exception("Invalid JSON", e);
