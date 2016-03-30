@@ -4,6 +4,8 @@ import ImageAPI.Params.EmotionParamEntry;
 import ImageAPI.Params.GenerationParams;
 import ImageAPI.Params.MusicParams;
 import ImageAPI.Params.TranslatedParams;
+import MusicAPI.harmonicsKB.dynamics.Accent;
+import MusicAPI.harmonicsKB.rhythm.Tempo;
 
 /**
  * Created by Jacob on 2/22/2016.
@@ -160,8 +162,8 @@ public class MoodToMusicFactory {
 
             //Calculate Accent Type, Accent Weight
         //Use top 2 colors
-        double AT1 = translatedParams.fromColor[0].AccentType;
-        double AT2 = translatedParams.fromColor[1].AccentType;
+        Accent AT1 = translatedParams.fromColor[0].AccentType;
+        Accent AT2 = translatedParams.fromColor[1].AccentType;
 
         //total percent
         double t = translatedParams.fromColor[0].overallWeight + translatedParams.fromColor[1].overallWeight;
@@ -186,7 +188,10 @@ public class MoodToMusicFactory {
             AW2 = translatedParams.fromColor[1].AccentPercent;
         }
 
-        MusicParams mp = new MusicParams(calcedTempo, calcedTempo + 10, k1, k2, relativeMinor, AT1, AW1, AT2, AW2);
+        Tempo t1 = Tempo.Moderato.getTempo( (int)calcedTempo);
+        Tempo t2 = Tempo.Moderato.getTempo( (int)(calcedTempo + 10));
+        
+        MusicParams mp = new MusicParams(t1, t2, k1, k2, relativeMinor, AT1, AW1, AT2, AW2);
 
         return mp;
     }

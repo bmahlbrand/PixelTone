@@ -12,7 +12,5 @@ public class TranslatedParams {
     {
         this.fromEmotion = fe;
         this.fromColor = fc;
-
     }
-
 }
