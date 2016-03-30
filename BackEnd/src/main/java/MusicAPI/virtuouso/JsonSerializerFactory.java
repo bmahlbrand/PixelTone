@@ -1,88 +1,36 @@
-import static spark.Spark.*;
+package MusicAPI.virtuouso;
 
-import ImageAPI.Objects.ColorEntry;
-import ImageAPI.Objects.Emotion;
-import ImageAPI.Objects.Face;
-
-import ImageAPI.Params.GenerationParams;
-
+import MusicAPI.harmonicsKB.rhythm.BeatDuration;
 import MusicAPI.harmonicsKB.triads.Augmented7thTriad;
 import MusicAPI.harmonicsKB.triads.Diminished7thTriad;
 import MusicAPI.harmonicsKB.triads.Major7ThTriad;
 import MusicAPI.harmonicsKB.triads.Minor7ThTriad;
-import com.google.gson.Gson;
 import MusicAPI.structure.*;
-import MusicAPI.harmonicsKB.rhythm.*;
-import MusicAPI.virtuouso.*;
+import com.google.gson.Gson;
+import com.google.gson.stream.JsonWriter;
 
-import ImageAPI.*;
+import java.io.*;
 
-public class main {
+/**
+ * Created by ben on 3/29/2016.
+ */
+public class JsonSerializerFactory {
+    FileWriter fileWriter;
 
-    public static MoodToMusicFactory moodToMusicFactory = new MoodToMusicFactory();
+    static public void serializeComposition(Composition composition) throws IOException {
 
-    public static void main(String[] args) {
+        FileOutputStream outputStream = new FileOutputStream("composition.json");
+        JsonWriter writer = new JsonWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+        writer.setIndent("  ");
 
-        port(3001);
+        Gson gson = new Gson();
+        gson.toJson(composition, Composition.class, writer);
 
-        get("/", (request, response) -> "PixelTone BackEnd Works");
+        writer.close();
 
-       // CommonChordProgFitFunc fitnessfunction = new CommonChordProgFitFunc();
-        //GeneticAlgorithm.geneticAlgorithm(1, 7, 100, fitnessfunction);
-
-        post("/generateSong", (request, response) -> {
-            System.out.println("Generate Parameter Request Received");
-
-            return handleParameters(request.body());
-        });
-
-        testMidiGeneration();
     }
 
-    public static String handleParameters(String params) throws Exception {
-        try {
-            Gson gson = new Gson();
-            GenerationParams gp = gson.fromJson(params, GenerationParams.class);
-            //System.out.println(params);
-
-            System.out.println("Parameters Received");
-            System.out.println("------------------------------------");
-            System.out.println("Facial Information");
-            System.out.println("Number of Faces:" + gp.numberOfFaces);
-            int i = 0;
-            for (Face f : gp.faces) {
-
-                System.out.println("Face #" + i++ + ":\n");
-
-                for (Emotion e : f.emotions) {
-                    System.out.println("Facial Emotion:" + e.emotion);
-                    System.out.println("Emotion Value:" + e.value);
-                }
-
-                System.out.println("------------------------------------");
-            }
-
-            System.out.println("\nImage Color Information\n");
-
-            for( ColorEntry ce : gp.colorEntries)
-            {
-                System.out.println("Color:" + ce.Color + " Color Percent:" + ce.Percent);
-            }
-
-            moodToMusicFactory.TranslateParameters(gp);
-
-
-            //Store song in database?
-            //????? TBD
-
-        } catch (Exception e) {
-            throw new Exception("Invalid JSON", e);
-        }
-        //Ideally we want to return a status code based on processing status (200) for success
-        return "Sucessfully Processed Params";
-    }
-
-    private static void testMidiGeneration(){
+    public static void main(String []srgs) throws IOException {
         Note quarterNote = new Note("A", BeatDuration.Quarter);
         Note halfNote = new Note("B", BeatDuration.Half);
         Beat thisBeat = new Beat();
@@ -167,9 +115,16 @@ public class main {
         thisVoice.addSection(thisSection);
         Composition thisComposition = new Composition(120);
         thisComposition.addVoice(thisVoice);
+        FileOutputStream outputStream = new FileOutputStream("composition.json");
+        JsonWriter writer = new JsonWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+        writer.setIndent("  ");
 
-        MIDIGenerator.generateMidi(thisComposition);
+        Gson gson = new Gson();
+        gson.toJson(thisComposition, Composition.class, writer);
 
+        writer.close();
+
+        System.out.println();
 
     }
 }

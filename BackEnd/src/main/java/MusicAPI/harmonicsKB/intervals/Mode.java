@@ -38,4 +38,24 @@ public enum Mode {
         steps = values.toArray(steps);
         return steps;
     }
+
+    public Mode relativeMinor() {
+        switch(this) {
+            case Ionian:
+                return Aeolian;
+        }
+
+        System.err.println("not a major mode, invalid");
+        return this;
+    }
+
+    public Mode relativeMajor() {
+        switch(this) {
+            case Aeolian:
+                return Ionian;
+        }
+
+        System.err.println("not a minor mode, invalid");
+        return this;
+    }
 }

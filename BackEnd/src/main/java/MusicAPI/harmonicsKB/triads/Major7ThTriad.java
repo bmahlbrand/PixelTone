@@ -13,7 +13,7 @@ public class Major7ThTriad extends Triad {
 
     public Major7ThTriad(Note root) {
         mode = Mode.Ionian;
-        degrees.add(Degree.Leading);
+        degrees = constructDegrees();
         notes = constructChordTones(root);
     }
 

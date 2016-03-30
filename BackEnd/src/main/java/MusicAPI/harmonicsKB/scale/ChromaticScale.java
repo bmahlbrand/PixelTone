@@ -5,7 +5,7 @@ import MusicAPI.structure.Note;
 import MusicAPI.harmonicsKB.intervals.Interval;
 import MusicAPI.utils.LimitedQueue;
 
-public class ChromaticScale<T> extends Scale {
+public class ChromaticScale extends Scale {
     public ChromaticScale(Note root, Mode mode) {
         super(root, mode);
     }
@@ -35,10 +35,10 @@ public class ChromaticScale<T> extends Scale {
             Note next = null;
             switch (intervals[i - 1]) {
                 case Semitone:
-                    next = scale.getLast().getHalfStep();
+                    next = scale.getLast().getHalfStep(root.duration);
                     break;
                 case Tone:
-                    next = scale.getLast().getWholeStep();
+                    next = scale.getLast().getWholeStep(root.duration);
                     break;
             }
 
