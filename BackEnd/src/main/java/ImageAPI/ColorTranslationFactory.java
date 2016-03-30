@@ -19,9 +19,9 @@ public class ColorTranslationFactory {
         //brown, pink, red, orange, green, yellow, purple, blue, light, neutral, dark
 
         //Controls Tempo
-        //Flat or Sharp weights
-        //Overall Effect
-        //Minor or Major
+        //AccentType 1 = staccato, 2 = staccatissimo, 3 = marcato, 4 = accent, 5 = tenuto, 0 = nothing
+        //AccentWeight(percent)
+        //Relative Major
 
 
         int i =0 ;
@@ -29,47 +29,47 @@ public class ColorTranslationFactory {
             //Tempo, Accent, Flat, Major
             switch (c.Color) {
                 case brown:     //anticipation interest,..this will mean faces?? so maybe not count as much
-                    cpe[i] = new ColorParamEntry(1.1, 1, 1.1, true);
+                    cpe[i] = new ColorParamEntry(1.1, 1, .10, true);
                     cpe[i].overallWeight = c.Percent/100;
                     break;
                 case pink: //digust, boredom
-                    cpe[i] = new ColorParamEntry( .75, .5, .75, true);
+                    cpe[i] = new ColorParamEntry( .75, 5, .75, true);
                     cpe[i].overallWeight = c.Percent/100;
                     break;
                 case red:   //rage, anger
-                    cpe[i] = new ColorParamEntry(2, 2, .25, true);
+                    cpe[i] = new ColorParamEntry(2, 4, .75, true);
                     cpe[i].overallWeight = c.Percent/100;
                     break;
                 case orange:    //surprise, anticipation
-                    cpe[i] = new ColorParamEntry(1.25, 1.5, 1.25, true);
+                    cpe[i] = new ColorParamEntry(1.25, 2, .5, true);
                     cpe[i].overallWeight = c.Percent/100;
                     break;
                 case green: //fear
-                    cpe[i] = new ColorParamEntry(1.25, 1.75, 1.25, false);
+                    cpe[i] = new ColorParamEntry(1.25, 1, .25, false);
                     cpe[i].overallWeight = c.Percent/100;
                     break;
                 case yellow:    //surprise, joy
-                    cpe[i] = new ColorParamEntry( 1.5, 1.75, 1.75, true );
+                    cpe[i] = new ColorParamEntry( 1.5, 2, .75, true );
                     cpe[i].overallWeight = c.Percent/100;
                     break;
                 case purple:    //disgust, loathing
-                    cpe[i] = new ColorParamEntry( .75, 1, .5, false );
+                    cpe[i] = new ColorParamEntry( .75, 5, .5, false );
                     cpe[i].overallWeight = c.Percent/100;
                     break;
                 case blue: //Same as sad
-                    cpe[i] = new ColorParamEntry(.5, .5, .25, false );
+                    cpe[i] = new ColorParamEntry(.5, 5, .75, false );
                     cpe[i].overallWeight = c.Percent/100;
                     break;
                 case light:     //weak emotion
-                    cpe[i] = new ColorParamEntry(1.25, 1.25, 1.25, true);
+                    cpe[i] = new ColorParamEntry(1.25, 0, 0, true);
                     cpe[i].overallWeight = c.Percent/100;
                     break;
                 case neutral:   //no effect
-                    cpe[i] = new ColorParamEntry(1, 1, 1, true);
+                    cpe[i] = new ColorParamEntry(1, 0, 0, true);
                     cpe[i].overallWeight = c.Percent/100;
                     break;
                 case dark:  //strong emotions
-                    cpe[i] = new ColorParamEntry(1.5, 1.5, .5, false);
+                    cpe[i] = new ColorParamEntry(1.5, 4, .5, false);
                     cpe[i].overallWeight = c.Percent/100;
                     break;
             }

@@ -6,8 +6,8 @@ package ImageAPI.Params;
 public class ColorParamEntry {
 
     public double Tempo;
-    public double AccentWeight;
-    public double FlatOSharpWeight;
+    public double AccentType;
+    public double AccentPercent;
     public boolean major;
     public double overallWeight;
 
@@ -15,8 +15,8 @@ public class ColorParamEntry {
     public ColorParamEntry(double t, double w, double f, boolean major)
     {
         this.Tempo = t;
-        this.AccentWeight = w;
-        this.FlatOSharpWeight = f;
+        this.AccentType = w;
+        this.AccentPercent = f;
         this.major = major;
     }
 }

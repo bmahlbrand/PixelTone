@@ -158,25 +158,35 @@ public class MoodToMusicFactory {
             relativeMinor = !translatedParams.fromColor[0].major;
 
 
-            //Calculate Accent Type, Dynamic Weights
+            //Calculate Accent Type, Accent Weight
+        //Use top 2 colors
+        double AT1 = translatedParams.fromColor[0].AccentType;
+        double AT2 = translatedParams.fromColor[1].AccentType;
 
-            double AW = translatedParams.fromColor[0].AccentWeight;
+        //total percent
+        double t = translatedParams.fromColor[0].overallWeight + translatedParams.fromColor[1].overallWeight;
+        double w1 = translatedParams.fromColor[0].overallWeight/t;
+        //double w2 = translatedParams.fromColor[1].overallWeight/t;
 
+        double AW1 = 1;
+        double AW2 = 1;
+        if(w1 >= .75)
+        {
+            AW1 = translatedParams.fromColor[0].AccentPercent;
+            AW2 = translatedParams.fromColor[1].AccentPercent/2;
+        }
+        else if(w1 >= .40 && w1 <= .60)
+        {
+            AW1 = translatedParams.fromColor[0].AccentPercent;
+            AW2 = translatedParams.fromColor[1].AccentPercent;
+        }
+        else if( w1 <= .25)
+        {
+            AW1 = translatedParams.fromColor[0].AccentPercent/2;
+            AW2 = translatedParams.fromColor[1].AccentPercent;
+        }
 
-            String AT;
-
-            if(AW > 1.5)
-                AT = ""
-            double AWP = translatedParams.fromColor[0].overallWeight;
-
-
-
-        //}
-
-
-
-
-        MusicParams mp = new MusicParams(calcedTempo, calcedTempo + 10, k1, k2, relativeMinor, AW, AWP);
+        MusicParams mp = new MusicParams(calcedTempo, calcedTempo + 10, k1, k2, relativeMinor, AT1, AW1, AT2, AW2);
 
         return mp;
     }
