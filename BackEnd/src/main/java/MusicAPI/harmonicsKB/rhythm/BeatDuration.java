@@ -24,29 +24,29 @@ public enum BeatDuration {
         this.dotted = dotted;
     }
 
-    int getPulses(Tempo tempo) {
+    int getPulses() {
         int pulses = 0;
         switch(this) {
             case Whole:
-                pulses = ppqn * tempo.getBpm() * 4;
+                pulses = ppqn * 4;
                 break;
             case Half:
-                pulses = ppqn * tempo.getBpm() * 2;
+                pulses = ppqn * 2;
                 break;
             case Quarter:
-                pulses = ppqn * tempo.getBpm();
+                pulses = ppqn;
                 break;
             case Eighth:
-                pulses = (ppqn * tempo.getBpm()) / 2;
+                pulses = ppqn / 2;
                 break;
             case Sixteenth:
-                pulses = (ppqn * tempo.getBpm()) / 4;
+                pulses = ppqn / 4;
                 break;
             case ThirtySecond:
-                pulses = (ppqn * tempo.getBpm()) / 8;
+                pulses = ppqn / 8;
                 break;
             case SixtyFourth: //because why the fuck not
-                pulses = (ppqn * tempo.getBpm()) / 16;
+                pulses = ppqn / 16;
                 break;
         }
 

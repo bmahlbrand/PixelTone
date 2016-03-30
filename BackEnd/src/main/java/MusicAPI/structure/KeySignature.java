@@ -9,7 +9,13 @@ class KeySignature implements Serializable {
     Tone fifth;
     //alterations
 
+    public KeySignature(Mode mode, Tone fifth) {
+        this.mode = mode;
+        this.fifth = fifth;
+    }
+
     public KeySignature relativeKey(Mode relativeMode) {
+
         return null; //TODO implement
     }
 
