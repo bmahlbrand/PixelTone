@@ -4,9 +4,9 @@ package ImageAPI.Params;
  * Created by Jacob on 3/27/2016.
  */
 public class EmotionParamEntry {
-    String key1;
-    String key2;
-    double Tempo;
+    public String key1;
+    public String key2;
+    public double Tempo;
     double AccentWeight;
     double FlatOSharpWeight;
     public double overallWeight;

@@ -20,8 +20,8 @@ public class ColorTranslationFactory {
 
         //Controls Tempo
         //Flat or Sharp weights
-        //Minor or Major
         //Overall Effect
+        //Minor or Major
 
 
         int i =0 ;

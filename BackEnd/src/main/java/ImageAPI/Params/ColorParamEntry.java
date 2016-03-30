@@ -5,10 +5,10 @@ package ImageAPI.Params;
  */
 public class ColorParamEntry {
 
-    double Tempo;
-    double AccentWeight;
-    double FlatOSharpWeight;
-    boolean major;
+    public double Tempo;
+    public double AccentWeight;
+    public double FlatOSharpWeight;
+    public boolean major;
     public double overallWeight;
 
     //Tempo, Accent, Flat, Major
