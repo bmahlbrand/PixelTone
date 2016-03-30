@@ -6,13 +6,11 @@ var http = require('http');
 var fs = require ('fs');
 var jsonfile = require('jsonfile');
 var sp = require('./sendParams');
-//Setup Image analyzer (replace with API later)
 var imagecolors = require('imagecolors');
 
 var imageRoutes = module.exports = express();
 
 //Simplified color constants
-//var COLORS = [ "BLACK", "WHITE", "RED", "GREEN", "BLUE", "YELLOW", "ORANGE", "PURPLE", "GREY", "BROWN"];
 var NEWCOLORS = [ "brown", "pink", "red", "orange", "green", "yellow", "purple", "blue", "light", "neutral", "dark"];
 
 var key = config.MSEmotionPrimeKey;
@@ -143,12 +141,11 @@ var parseMSResponse = function (response) {
                     "colorEntries": colorArray
                 }
                 
-                
-                //var file = 'cb.json'
-                //jsonfile.writeFile(file, generationParameters, function (err) {
-                 //   console.error(err)
-                //});
-            //console.log(generationParameters);      
+                //Use for saving json to disk for quick testing
+                    //var file = 'cb.json'
+                    //jsonfile.writeFile(file, generationParameters, function (err) {
+                    //   console.error(err)
+                    //});   
             return sp.sendParameters(generationParameters);
         });
     });

@@ -8,8 +8,9 @@ var mongoose     = require('mongoose');
 var passport     = require('passport');
 var flash        = require('connect-flash');
 var util         = require('util');
-var jsonfile = require('jsonfile');
-var sp = require('./sendParams');
+var jsonfile     = require('jsonfile');
+var sp           = require('./sendParams');
+
 mongoose.connect(config.mongodb);
 
 require('./config/passport')(passport);
