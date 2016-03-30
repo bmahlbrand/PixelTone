@@ -6,7 +6,10 @@ var mongoose = require('mongoose');
 
 var exports = module.exports = {};
 
+//configure aws
 AWS.config.loadFromPath('./config/awsConfig.json');
+//connect to mongodb
+//mongoose.connect("mongodb://127.0.0.1:27017/PixelTone");
 
 exports.uploadImage = function(file) {
 	var s3bucket = new AWS.S3({params: {Bucket: 'pixeltone'}});
@@ -20,6 +23,7 @@ exports.uploadImage = function(file) {
 			ContentType: 'image/jpeg',
 			ACL: 'public-read'
 		};
+		console.log('Uploading image to S3...');
 		s3bucket.upload(params).on('httpUploadProgress', function(evt) {
 				//console.log(evt);
 				console.log(Math.round((evt.loaded / evt.total) * 100) + '% uploaded');
@@ -34,16 +38,16 @@ exports.uploadImage = function(file) {
 					newImage.local.uploadDate = new Date();
 					newImage.local.songKey = null;
 
-					console.log(newImage);
+					//console.log(newImage);
 
 					newImage.save(function(err) {
 						if (err) {
-							//console.log("Error occurred");
+							console.log("Error occurred");
                             throw err;
                         }
                         else {
                             console.log("Image created:" + myKey);
-                            //return done(null, newImage);
+                            //return;
                         }
 					});
 

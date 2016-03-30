@@ -6,6 +6,7 @@ var http = require('http');
 var fs = require ('fs');
 var jsonfile = require('jsonfile');
 var sp = require('./sendParams');
+var aws = require('./uploadImage.js');
 //Setup Image analyzer (replace with API later)
 var imagecolors = require('imagecolors');
 
@@ -170,6 +171,7 @@ imageRoutes.post('/process', function (req, res) {
             console.log(req.body);
             console.log(req.file);
             image = ".\\tmp\\" + req.file.filename;
+            aws.uploadImage(image);
         }
     });
     res.status(204).end();
