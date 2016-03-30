@@ -49,4 +49,8 @@ public class Chord extends VoiceElement {
         return startingPosition;
     }
 
+    public Triad getTriad(){
+        return triad;
+    }
+
 }

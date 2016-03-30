@@ -17,14 +17,13 @@ public class GeneticAlgorithm {
 
     }
 
-    public static void geneticAlgorithm(int minVal, int maxVal, int length, FitnessFunction fitFunctionInstance) {
+    public static final Phenotype<IntegerGene,Integer> geneticAlgorithm(int minVal, int maxVal, int length, FitnessFunction fitFunctionInstance) {
 
         final Engine<IntegerGene, Integer> engine = Engine
                 .builder(
                         fitFunctionInstance::fitnessFunction,
                         IntegerChromosome.of(minVal, maxVal, length))
                 .optimize(Optimize.MAXIMUM)
-                .maximalPhenotypeAge(11)
                 .populationSize(500)
                 .alterers(
                         new Mutator<>(0.115),
@@ -33,11 +32,10 @@ public class GeneticAlgorithm {
 
         final Phenotype<IntegerGene, Integer> best =
                 engine.stream()
-                        .limit(bySteadyFitness(15))
-                        .limit(250)
+                        .limit(500)
                         .collect(toBestPhenotype());
 
-        System.out.println(best);
+        return best;
     }
 
     public static ArrayList<Enum> integertoEnum(final Genotype<IntegerGene> gt, ArrayList<Enum> myEnum) {
@@ -52,5 +50,9 @@ public class GeneticAlgorithm {
 
     public static final int[] genotypeToIntArray(final Genotype<IntegerGene> gt) {
         return gt.getChromosome().toSeq().stream().mapToInt(IntegerGene::intValue).toArray();
+    }
+
+    public static final int[] phenotypeToIntArray(final Phenotype<IntegerGene,Integer> phenotype){
+        return genotypeToIntArray(phenotype.getGenotype());
     }
 }

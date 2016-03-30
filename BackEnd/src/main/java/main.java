@@ -12,10 +12,12 @@ import MusicAPI.harmonicsKB.triads.Augmented7thTriad;
 import MusicAPI.harmonicsKB.triads.Diminished7thTriad;
 import MusicAPI.harmonicsKB.triads.Major7ThTriad;
 import MusicAPI.harmonicsKB.triads.Minor7ThTriad;
+import MusicAPI.harmonicsKB.triads.MajorTriad;
 import com.google.gson.Gson;
 import MusicAPI.structure.*;
 import MusicAPI.harmonicsKB.rhythm.*;
 import MusicAPI.virtuouso.*;
+import MusicAPI.virtuouso.models.genetic.*;
 
 import ImageAPI.*;
 
@@ -85,7 +87,35 @@ public class main {
     }
 
     private static void testMidiGeneration(){
-        Note quarterNote = new Note("A", BeatDuration.Quarter);
+        Section thisSection = new Section();
+        Beat b = new Beat();
+        Chord chord = new Chord(new MajorTriad(new Note("C")),BeatDuration.Whole);
+        b.addChord(chord);
+        Measure m = new Measure();
+        m.addBeat(b);
+        thisSection.addMeasure(m);
+
+        GeneticMotive firstMeasure = new GeneticMotive(new Note("C"), Mode.Ionian, m);
+
+        Beat b2 = new Beat();
+        Chord chord2 = new Chord(new MajorTriad(new Note("G")),BeatDuration.Whole);
+        b2.addChord(chord2);
+        m = new Measure();
+        m.addBeat(b2);
+        thisSection.addMeasure(m);
+
+        Voice thisVoice = new Voice();
+        thisVoice.addSection(thisSection);
+        Composition thisComposition = new Composition(80);
+        thisComposition.addVoice(thisVoice);
+
+
+        GeneticMotive secondMeasure = new GeneticMotive(new Note("C"), Mode.Ionian, m);
+        thisSection = new Section();
+        thisSection.addMeasure(firstMeasure.getMotiveContent());
+        thisSection.addMeasure(secondMeasure.getMotiveContent());
+
+        /*Note quarterNote = new Note("A", BeatDuration.Quarter);
         Note halfNote = new Note("B", BeatDuration.Half);
         Beat thisBeat = new Beat();
         thisBeat.addNote(quarterNote);
@@ -124,7 +154,7 @@ public class main {
         b4.addChord(chord4);
         m2.addBeat(b);
         thisSection.addMeasure(m2);
-
+*/
 //        ChromaticScale cs = new ChromaticScale(new Note("C", BeatDuration.Whole), Mode.Ionian);
 //        for (Note note : cs.getScale()) {
 //            System.out.println(note.toString());
@@ -165,9 +195,8 @@ public class main {
             thisSection.addMeasure(measure);
         }
 */
-        Voice thisVoice = new Voice();
+        thisVoice = new Voice();
         thisVoice.addSection(thisSection);
-        Composition thisComposition = new Composition(120);
         thisComposition.addVoice(thisVoice);
 
         MIDIGenerator.generateMidi(thisComposition);

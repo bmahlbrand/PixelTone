@@ -24,6 +24,15 @@ public abstract class Triad {
 
     protected abstract boolean noteInTriad(Note root, Note check);
 
+    public boolean noteInTriad(Note check){
+         for (Note note : notes) {
+            if (note.equalsIgnoreOctaveAndDuration(check))
+                return true;
+        }
+
+        return false;
+    }
+
     void inversion(Inversion inversion) {
         switch (inversion) {
             case Root:

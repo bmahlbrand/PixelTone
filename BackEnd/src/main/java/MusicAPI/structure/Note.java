@@ -41,6 +41,10 @@ public class Note extends VoiceElement implements Serializable {
         return accent.getDuration(duration);
     }
 
+    public void setDuration(BeatDuration duration){
+        this.duration = duration;
+    }
+
     public Accidental getAccidental() {
         return tone.accidental;
     }
@@ -89,6 +93,22 @@ public class Note extends VoiceElement implements Serializable {
                 && this.duration == other.duration
                 && this.octave == other.octave)
             return true;
+        return false;
+    }
+
+    public boolean equalsIgnoreOctaveAndDuration(Object obj){
+         if (obj == null)
+            return false;
+
+        if (!Note.class.isAssignableFrom(obj.getClass())) {
+            return false;
+        }
+
+        final Note other = (Note) obj;
+        if (this.tone.toString().equals(other.tone.toString())){
+            return true;
+        }
+
         return false;
     }
 
