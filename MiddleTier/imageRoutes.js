@@ -6,6 +6,10 @@ var http = require('http');
 var fs = require ('fs');
 var jsonfile = require('jsonfile');
 var sp = require('./sendParams');
+
+var aws = require('./uploadImage.js');
+//Setup Image analyzer (replace with API later)
+
 var imagecolors = require('imagecolors');
 
 var imageRoutes = module.exports = express();
@@ -180,9 +184,15 @@ imageRoutes.post('/process', function (req, res) {
             //console.log(req.file);
             //console.log(req);
             image = ".\\tmp\\" + req.file.filename;
+            console.log(req.body);
+            console.log(req.file);
+           // UNIX image = "./tmp/" + req.file.filename;
+            //console.log("USER: " + req.user);
+            aws.uploadImage(image, req.user.username);
+
             pref = req.body.pref;
             voices = req.body.voices;
-            chaos = req.body.chaos;        
+            chaos = req.body.chaos;
         }
     });
     res.status(204).end();
