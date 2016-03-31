@@ -178,8 +178,8 @@ imageRoutes.post('/process', function (req, res) {
             console.log(req.body);
             console.log(req.file);
             image = "./tmp/" + req.file.filename;
-            
-            aws.uploadImage(image, req.user.local.email);
+            //console.log("USER: " + req.user);
+            aws.uploadImage(image, req.user.username);
 
             pref = req.body.pref;
             voices = req.body.voices;

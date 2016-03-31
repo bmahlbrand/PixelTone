@@ -3,10 +3,11 @@ var mongoose = require('mongoose');
 // define the schema for our image model
 var imageSchema = mongoose.Schema({
     local: {
-        key: String,
-        user: String,
+        key: 		String,
+        user: 		String,
         uploadDate: Date,
-        songKey: String
+        songKey: 	String,
+        url: 		String
     }
 });
 

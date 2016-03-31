@@ -37,16 +37,17 @@ exports.uploadImage = function(file, user) {
 					newImage.local.user = user;
 					newImage.local.uploadDate = new Date();
 					newImage.local.songKey = null;
+					newImage.local.url = 'https://s3.amazonaws.com/pixeltone/' + myKey;
 
 					//console.log(newImage);
 
 					newImage.save(function(err) {
 						if (err) {
-							console.log("Error occurred");
+							//console.log("Error occurred");
                             throw err;
                         }
                         else {
-                            console.log("Image created:" + myKey);
+                            console.log("Image Saved");
                             //return;
                         }
 					});
