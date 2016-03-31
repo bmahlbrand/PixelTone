@@ -19,6 +19,10 @@ public abstract class Scale {
         this.scale = buildScale();
     }
 
+    public LimitedQueue<Note> getScale() {
+        return scale;
+    }
+
     public Note getNote(Degree degree) {
         return this.scale.get(degree.toInt());
     }

@@ -7,13 +7,22 @@ var session      = require('express-session');
 var mongoose     = require('mongoose');
 var passport     = require('passport');
 var flash        = require('connect-flash');
+var path         = require('path');
 var util         = require('util');
+var localStrategy = require('passport-local' ).Strategy;
 var jsonfile = require('jsonfile');
 var sp = require('./sendParams');
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> origin/MusicAPI
 mongoose.connect(config.mongodb);
 
-require('./config/passport')(passport);
+//require('./config/passport')(passport);
+
+var User = require('./userModel');
 
 var app = express();
 
@@ -21,16 +30,27 @@ var app = express();
 app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.json()); // get information from html forms
+<<<<<<< HEAD
 app.use(bodyParser.urlencoded({ extended: true }));
 
+=======
+app.use(bodyParser.urlencoded({ extended: false }));
+    
+>>>>>>> origin/MusicAPI
 // required for passport
 app.use(session({
                 secret: 'deadbeefisnumberone', // session secret
+<<<<<<< HEAD
                 saveUninitialized: true,
                 resave: true }));
+=======
+                saveUninitialized: false,
+                resave: false })); 
+>>>>>>> origin/MusicAPI
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash());
+app.use(express.static(path.join(__dirname, '../website')));
 
 //Expanding the routes
 var userRoutes = require('./userRoutes');
@@ -38,19 +58,11 @@ var imageRoutes = require('./imageRoutes');
 var testUpload = require('./testUpload');
 var songRoutes = require('./songRoutes');
 
-//Serve up FrontEnd Requests
-var dirname = config.staticContent;
-app.use("/",express.static(dirname));
+// configure passport
+passport.use(new localStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
 
-//Simple Home Page to test without Angular
-app.get('/test', function (request, response) {
-    response.send('Hello, welcome to PixelTone<br><br><br>'
-    + '<a href=/login>Login</a><br><br>'
-    + '<a href=/signup>signup</a><br><br>'
-    + '<a href=/users/forgot>forgot</a><br><br>'
-    + '<a href=/users/logout>logout</a>'
-    );
-});
 
 //Check current session for authentication before proceeding
 var checkAuth = function(req, res, next) {
@@ -72,16 +84,14 @@ app.use('/images' , checkAuth, imageRoutes); //Routes to handle generation
 app.use('/test' , checkAuth, testUpload); //Sample page to handle file uploads
 app.use('/songs', songRoutes);
 
-//Simple page for Login testing
-app.get('/login', function(req, res) {
-    res.send('<form action="/login" method="post">'
-        + '<p>Email: <input type="text" name="email" placeholder="Enter Email" /></p>'
-        + '<p>Password: <input type="password" name="password" /></p>'
-        + '<p><input type="submit" value="login" /></p>'
-        + '</form>'
-    );
+// routes
+app.use('/user/', userRoutes);
+
+app.get('/', function(req, res) {
+  res.sendFile(path.join(__dirname, '../website', 'index.html'));
 });
 
+<<<<<<< HEAD
 //Handle Logins with Username/Password
 app.post('/login', function(req, res, next) {
     passport.authenticate('local-login', function (err, user) {
@@ -146,7 +156,29 @@ app.post('/signup', function (req, res, next) {
         }
 
     })(req, res, next);
+=======
+app.use('/about', function(req, res) {
+  res.sendFile(path.join(__dirname, '../website', 'index.html'));
 });
+
+app.use('/login', function(req, res) {
+  res.sendFile(path.join(__dirname, '../website', 'index.html'));
+});
+
+app.use('/register', function(req, res) {
+  res.sendFile(path.join(__dirname, '../website', 'index.html'));
+});
+
+app.use('/profile', function(req, res) {
+  res.sendFile(path.join(__dirname, '../website', 'index.html'));
+});
+
+app.use('/upload', function(req, res) {
+  res.sendFile(path.join(__dirname, '../website', 'index.html'));
+>>>>>>> origin/MusicAPI
+});
+
+
 
 
 //FOR QUICK TESTING
@@ -194,6 +226,24 @@ app.get('/leo', function(req, res, next) {
             + '<a href=/leo>Leonidas</a><br><br>'
         );
     });
+});
+
+
+
+
+// error hndlers
+app.use(function(req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+app.use(function(err, req, res) {
+  res.status(err.status || 500);
+  res.end(JSON.stringify({
+    message: err.message,
+    error: {}
+  }));
 });
 
 app.listen(3000, function () {

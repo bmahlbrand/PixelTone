@@ -6,13 +6,11 @@ var http = require('http');
 var fs = require ('fs');
 var jsonfile = require('jsonfile');
 var sp = require('./sendParams');
-//Setup Image analyzer (replace with API later)
 var imagecolors = require('imagecolors');
 
 var imageRoutes = module.exports = express();
 
 //Simplified color constants
-//var COLORS = [ "BLACK", "WHITE", "RED", "GREEN", "BLUE", "YELLOW", "ORANGE", "PURPLE", "GREY", "BROWN"];
 var NEWCOLORS = [ "brown", "pink", "red", "orange", "green", "yellow", "purple", "blue", "light", "neutral", "dark"];
 
 var key = config.MSEmotionPrimeKey;
@@ -22,6 +20,10 @@ if (key == null || key == "")
 
 var image = "";
 
+//User Supplied Params -- global is bad
+var voices = 1;
+var chaos = 1;
+var pref = 5;
 
 //Setup for saving image to disk
 //Put into ./tmp folder, rename it with date on the end
@@ -65,7 +67,6 @@ var parseMSResponse = function (response) {
 
         var parsed = JSON.parse(str);
         //console.log(parsed);
-
         var totalFaces = 0;
         var faces = [];
 
@@ -107,7 +108,7 @@ var parseMSResponse = function (response) {
         getColors(image, 5, function (colors) {
 
             var colorArray = [];
-            console.log(colors);
+            //console.log(colors);
             var numberOfColors = colors.length >= 5 ? 5 : colors.length;
 
             //TWEAK THESE VALUES
@@ -140,16 +141,20 @@ var parseMSResponse = function (response) {
                 {
                     "numberOfFaces": totalFaces,
                     "faces": faces,
-                    "colorEntries": colorArray
+                    "colorEntries": colorArray,
+                    "chaos": chaos,
+                    "pref": pref,
+                    "voices": voices
                 }
-
-
-                //var file = 'cb.json'
-                //jsonfile.writeFile(file, generationParameters, function (err) {
-                 //   console.error(err)
-                //});
-            //console.log(generationParameters);
+                //Use for saving json to disk for quick testing
+                    //var file = 'cb.json'
+                    //jsonfile.writeFile(file, generationParameters, function (err) {
+                    //   console.error(err)
+                    //});   
             return sp.sendParameters(generationParameters);
+           //var returnData = sp.sendParameters(generationParameters);
+           //console.log("From send params" + returnData);
+
         });
     });
 
@@ -167,9 +172,13 @@ imageRoutes.post('/process', function (req, res) {
             console.error(err);
         }
         else if (req.file) {
-            console.log(req.body);
-            console.log(req.file);
+           // console.log(req.body);
+            //console.log(req.file);
+            //console.log(req);
             image = ".\\tmp\\" + req.file.filename;
+            pref = req.body.pref;
+            voices = req.body.voices;
+            chaos = req.body.chaos;
         }
     });
     res.status(204).end();

@@ -3,8 +3,12 @@ import static spark.Spark.*;
 import ImageAPI.Objects.ColorEntry;
 import ImageAPI.Objects.Emotion;
 import ImageAPI.Objects.Face;
-import ImageAPI.Objects.GenerationParams;
+
+import ImageAPI.Params.GenerationParams;
+
+import ImageAPI.Params.MusicParams;
 import com.google.gson.Gson;
+import MusicAPI.virtuouso.*;
 
 import ImageAPI.*;
 
@@ -14,19 +18,25 @@ public class main {
 
     public static void main(String[] args) {
 
-
         port(3001);
 
         get("/", (request, response) -> "PixelTone BackEnd Works");
 
        // CommonChordProgFitFunc fitnessfunction = new CommonChordProgFitFunc();
-        //GeneticAlgorithm.geneticAlgorithm(1, 7, 100, fitnessfunction);
+       // GeneticAlgorithm.geneticAlgorithm(1, 7, 100, fitnessfunction);
 
         post("/generateSong", (request, response) -> {
             System.out.println("Generate Parameter Request Received");
+            String status = handleParameters(request.body());
+            String songpath = "hello darkness, my old friend";
 
-            return handleParameters(request.body());
+            //Fake json this
+            String JSON = "{\"Result\":\"" + status + "\",\"SongPath\":\"" + songpath + "\"}";
+
+            return JSON;
         });
+
+        testMidiGeneration();
     }
 
     public static String handleParameters(String params) throws Exception {
@@ -59,16 +69,20 @@ public class main {
                 System.out.println("Color:" + ce.Color + " Color Percent:" + ce.Percent);
             }
 
-            moodToMusicFactory.TranslateParameters(gp);
+            MusicParams mp = moodToMusicFactory.TranslateParameters(gp);
 
-
-            //Store song in database?
-            //????? TBD
+            //Send to quill??
 
         } catch (Exception e) {
             throw new Exception("Invalid JSON", e);
         }
         //Ideally we want to return a status code based on processing status (200) for success
         return "Sucessfully Processed Params";
+    }
+
+    private static void testMidiGeneration() {
+
+        Quill.createComposition();
+
     }
 }
