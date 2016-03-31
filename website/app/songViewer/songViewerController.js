@@ -24,10 +24,11 @@ angular.module("pixelTone")
         }
 
         $scope.fetchSong = function (song) {
-          $http.get("/songs/song")
+          $http.get("/solo")
             .then(function(res) {
-              $scope.song = new composition(res.data);
-              $scope.displaySongOnCanvas();
+              console.log(res.data);
+              //$scope.song = new composition(res.data);
+              //$scope.displaySongOnCanvas();
             });
         };
 
