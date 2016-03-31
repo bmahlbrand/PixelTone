@@ -156,6 +156,9 @@ var parseMSResponse = function (response) {
                     //   console.error(err)
                     //});   
             return sp.sendParameters(generationParameters);
+           //var returnData = sp.sendParameters(generationParameters);
+           //console.log("From send params" + returnData);
+           
         });
     });
 

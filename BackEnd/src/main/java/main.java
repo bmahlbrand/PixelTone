@@ -7,18 +7,10 @@ import ImageAPI.Objects.Face;
 import ImageAPI.Params.GenerationParams;
 
 import ImageAPI.Params.MusicParams;
-import MusicAPI.harmonicsKB.intervals.Mode;
-import MusicAPI.harmonicsKB.triads.MajorTriad;
 import com.google.gson.Gson;
-import MusicAPI.structure.*;
-import MusicAPI.harmonicsKB.rhythm.*;
 import MusicAPI.virtuouso.*;
-import MusicAPI.virtuouso.models.genetic.*;
 
 import ImageAPI.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class main {
 
