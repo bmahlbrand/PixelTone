@@ -11,7 +11,7 @@ AWS.config.loadFromPath('./config/awsConfig.json');
 //connect to mongodb
 //mongoose.connect("mongodb://127.0.0.1:27017/PixelTone");
 
-exports.uploadImage = function(file) {
+exports.uploadImage = function(file, user) {
 	var s3bucket = new AWS.S3({params: {Bucket: 'pixeltone'}});
 	var body = fs.createReadStream(file);
 	var myKey = keygen.generateBase30(20) + '.jpg';
@@ -34,7 +34,7 @@ exports.uploadImage = function(file) {
 
 					var newImage = new Image();
 					newImage.local.key = myKey;
-					newImage.local.user = null;
+					newImage.local.user = user;
 					newImage.local.uploadDate = new Date();
 					newImage.local.songKey = null;
 

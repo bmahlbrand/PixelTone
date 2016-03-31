@@ -171,7 +171,7 @@ imageRoutes.post('/process', function (req, res) {
             console.log(req.body);
             console.log(req.file);
             image = ".\\tmp\\" + req.file.filename;
-            aws.uploadImage(image);
+            aws.uploadImage(image, req.user.local.email);
         }
     });
     res.status(204).end();
