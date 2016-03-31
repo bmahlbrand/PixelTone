@@ -22,7 +22,7 @@ public class Quill {
 
     }
 
-    public static void createComposition() {
+    public static Composition createComposition() {
         Composition composition = new Composition();
 
 
@@ -64,9 +64,7 @@ public class Quill {
         Voice otherVoice = new Voice();
         thisVoice.addSection(Quill.scaleExercise());
         thisComposition.addVoice(thisVoice);
-
-        MIDIGenerator.generateMidi(thisComposition);
-
+        return thisComposition;
     }
 
     public static Section scaleExercise() {

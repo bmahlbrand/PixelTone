@@ -3,13 +3,14 @@ var http = require('http');
 module.exports = {
 
     //Send generatedParameters request to BackEnd
-    sendParameters: function(params) {
+    sendParameters: function(params, res) {
         var generateOptions = {
             host: 'localhost',
             path: '/generateSong',
             port: 3001,
             method: 'POST'
         };
+        var midiResponse = {};
 
 
         var req = http.request(generateOptions, function(response) {
@@ -22,7 +23,8 @@ module.exports = {
                 console.log("Response from BackEnd:");
                 //INSERT CODE TO HANDLE RESPONSE (Will be a song??)
                 var response = JSON.parse(str);
-                return saveReturn(response);
+                saveReturn(response);
+                res.send(JSON.stringify(response));
 
             });
 
@@ -69,6 +71,6 @@ var saveReturn = function(returnData)
         });
     });*/
 
-    return;
+    return returnData;
 
 }

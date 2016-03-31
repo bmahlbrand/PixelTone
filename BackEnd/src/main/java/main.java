@@ -7,8 +7,9 @@ import ImageAPI.Objects.Face;
 import ImageAPI.Params.GenerationParams;
 
 import ImageAPI.Params.MusicParams;
-import com.google.gson.Gson;
 import MusicAPI.virtuouso.*;
+import MusicAPI.structure.*;
+import com.google.gson.Gson;
 
 import ImageAPI.*;
 
@@ -28,12 +29,12 @@ public class main {
         post("/generateSong", (request, response) -> {
             System.out.println("Generate Parameter Request Received");
             String status = handleParameters(request.body());
-            String songpath = "hello darkness, my old friend";
-
+            Composition comp = Quill.createComposition();
             //Fake json this
-            String JSON = "{\"Result\":\"" + status + "\",\"SongPath\":\"" + songpath + "\"}";
 
-            return JSON;
+            Gson gson = new Gson();
+            String json = gson.toJson(comp);
+            return json;
         });
 
         testMidiGeneration();

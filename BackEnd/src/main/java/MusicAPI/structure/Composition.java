@@ -12,7 +12,7 @@ public class Composition implements Serializable {
 
     public Composition(int tempo){
     	this.tempo = tempo;
-        voices = new ArrayList<Voice>();
+      this.voices = new ArrayList<Voice>();
     }
 
     public Composition(){
