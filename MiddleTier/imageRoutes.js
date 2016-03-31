@@ -68,6 +68,8 @@ var parseMSResponse = function (response) {
         var parsed = JSON.parse(str);
         //console.log(parsed);
        
+ 
+       
         var totalFaces = 0;
         var faces = [];
         
@@ -109,7 +111,7 @@ var parseMSResponse = function (response) {
         getColors(image, 5, function (colors) {
 
             var colorArray = [];
-            console.log(colors);
+            //console.log(colors);
             var numberOfColors = colors.length >= 5 ? 5 : colors.length;
             
             //TWEAK THESE VALUES
@@ -171,8 +173,9 @@ imageRoutes.post('/process', function (req, res) {
             console.error(err);
         }
         else if (req.file) {
-            console.log(req.body);
-            console.log(req.file);
+           // console.log(req.body);
+            //console.log(req.file);
+            //console.log(req);
             image = ".\\tmp\\" + req.file.filename;
             pref = req.body.pref;
             voices = req.body.voices;

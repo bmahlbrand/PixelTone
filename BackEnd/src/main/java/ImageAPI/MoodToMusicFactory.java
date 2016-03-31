@@ -74,7 +74,7 @@ public class MoodToMusicFactory {
 
         //Merge arrays
         tm = new TempoM[translatedParams.fromColor.length + translatedParams.fromEmotion.length];
-        int i = translatedParams.fromColor.length - 1, j = translatedParams.fromEmotion.length, k = tm.length;
+        int i = translatedParams.fromColor.length - 1, j = translatedParams.fromEmotion.length - 1, k = tm.length;
 
         //SORRY HAHA
         while (k > 0)
