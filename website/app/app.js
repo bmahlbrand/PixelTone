@@ -39,6 +39,7 @@ pixelTone.config(['$routeProvider', '$locationProvider', function($routeProvider
 		access: {restricted: true}
 	})
 
+
 	.when('/upload', {
 			templateUrl: 'app/upload/upload.html',
 			controller: 'uploadController',
@@ -51,7 +52,6 @@ pixelTone.config(['$routeProvider', '$locationProvider', function($routeProvider
 
   // use the HTML5 History API
   $locationProvider.html5Mode(true);
-
 }]);
 
 pixelTone.run(function ($rootScope, $location, $route, AuthService) {

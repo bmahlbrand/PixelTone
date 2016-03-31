@@ -7,4 +7,8 @@ public class Composition implements Serializable {
     MetaData metadata;
 
     Collection<Voice> voices;
+
+    void addVoice() {
+        
+    }
 }
