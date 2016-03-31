@@ -17,6 +17,9 @@ import MusicAPI.virtuouso.models.genetic.*;
 
 import ImageAPI.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class main {
 
     public static MoodToMusicFactory moodToMusicFactory = new MoodToMusicFactory();
@@ -32,8 +35,13 @@ public class main {
 
         post("/generateSong", (request, response) -> {
             System.out.println("Generate Parameter Request Received");
+            String status = handleParameters(request.body());
+            String songpath = "hello darkness, my old friend";
 
-            return handleParameters(request.body());
+            //Fake json this
+            String JSON = "{\"Result\":\"" + status + "\",\"SongPath\":\"" + songpath + "\"}";
+
+            return JSON;
         });
 
         testMidiGeneration();

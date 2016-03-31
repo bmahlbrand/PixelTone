@@ -18,8 +18,12 @@ module.exports = {
             });
 
             response.on('end', function() {
-                console.log("Response from BackEnd:" + str);
-                //INSERT CODE TO HANDLE RESPONSE (Will be a song??)      
+                console.log("Response from BackEnd:");
+                //INSERT CODE TO HANDLE RESPONSE (Will be a song??)   
+                
+                var response = JSON.parse(str);
+                console.log(response);
+                   
             });
 
             response.on('error', function(err) {

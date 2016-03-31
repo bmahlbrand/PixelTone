@@ -13,8 +13,8 @@ public class EmotionTranslationFactory {
 
 
     private class Mapping {
-        double weight;
-        EmotionClassification ec;
+        public double weight;
+        public EmotionClassification ec;
     }
 
     public EmotionParamEntry[] translate(int numOfFaces, List<Face> faces) {
@@ -33,6 +33,7 @@ public class EmotionTranslationFactory {
 
         //Populate mapping array
         for (EmotionClassification ec : EmotionClassification.values()) {
+            m[i] = new Mapping();
             m[i].ec = ec;
             m[i++].weight = 0;
         }
