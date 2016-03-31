@@ -5,6 +5,7 @@ angular.module('pixelTone').factory('AuthService',
             // create user variable
             var user = null;
             var userName = null;
+            var userData = null;
 
             // return available functions for use in the controllers
             return ({
@@ -13,11 +14,19 @@ angular.module('pixelTone').factory('AuthService',
                 getUserStatus: getUserStatus,
                 login: login,
                 logout: logout,
-                register: register
+                register: register,
+                getRecentData: getRecentData
             });
 
             function getUserName() {
                 return userName;
+            }
+
+            function getRecentData() {
+                if (isLoggedIn) {
+                    getData();
+                    return userData;
+                }
             }
 
             function isLoggedIn() {
@@ -124,4 +133,29 @@ angular.module('pixelTone').factory('AuthService',
             }
 
 
+            function getData() {
+
+                // create a new instance of deferred
+                var deferred = $q.defer();
+
+                // send a post request to the server
+                $http.get('/user/images')
+                    // handle success
+                    .success(function(data, status) {
+                        if (status === 200) {
+                            userData = data;
+                            //console.log(userData);
+                            deferred.resolve();
+                        } else {
+                            deferred.reject();
+                        }
+                    })
+                    // handle error
+                    .error(function(data) {
+                        deferred.reject();
+                    });
+
+                // return promise object
+                return deferred.promise;
+            }
         }]);
