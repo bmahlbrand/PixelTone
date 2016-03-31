@@ -23,7 +23,7 @@ if (key == null || key == "")
     console.log("No API KEY (CANT CONNECT TO MS) - GET FROM JACOB/BEN");
 
 var image = "";
-var currentUser = "";
+var imageKey = "";
 
 //User Supplied Params -- global is bad
 var voices = 1;
@@ -156,7 +156,7 @@ var parseMSResponse = function (response) {
                     "chaos": chaos,
                     "pref": pref,
                     "voices": voices,
-                    "currentUser": currentUser
+                    "imageKey": imageKey
                 }
                 
                 //Use for saving json to disk for quick testing
@@ -193,7 +193,8 @@ imageRoutes.post('/process', function (req, res) {
             console.log(req.file);
            // UNIX image = "./tmp/" + req.file.filename;
             //console.log("USER: " + req.user);
-            aws.uploadImage(image, req.user.username);
+            imageKey = Date.now();
+            //aws.uploadImage(image, req.user.username, imageKey );
 
             pref = req.body.pref;
             voices = req.body.voices;

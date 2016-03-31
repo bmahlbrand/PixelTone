@@ -27,11 +27,11 @@ public class main {
 
         post("/generateSong", (request, response) -> {
             System.out.println("Generate Parameter Request Received");
-            String status = handleParameters(request.body());
-            String songpath = "hello darkness, my old friend";
+            String imageKey = handleParameters(request.body());
+            String songpath = "miditest.mid";
 
             //Fake json this
-            String JSON = "{\"Result\":\"" + status + "\",\"SongPath\":\"" + songpath + "\"}";
+            String JSON = "{\"imageKey\":\"" + imageKey + "\",\"songPath\":\"" + songpath + "\"}";
 
             return JSON;
         });
@@ -40,12 +40,13 @@ public class main {
     }
 
     public static String handleParameters(String params) throws Exception {
+
         try {
             Gson gson = new Gson();
             GenerationParams gp = gson.fromJson(params, GenerationParams.class);
             //System.out.println(params);
 
-            System.out.println("Parameters Received from:" + gp.currentUser);
+            System.out.println("Parameters Received");
             System.out.println("------------------------------------");
             System.out.println("Facial Information");
             System.out.println("Number of Faces:" + gp.numberOfFaces);
@@ -72,12 +73,12 @@ public class main {
             MusicParams mp = moodToMusicFactory.TranslateParameters(gp);
 
             //Send to quill??
-
+            return gp.imageKey;
         } catch (Exception e) {
             throw new Exception("Invalid JSON", e);
         }
         //Ideally we want to return a status code based on processing status (200) for success
-        return "Sucessfully Processed Params";
+
     }
 
     private static void testMidiGeneration() {
