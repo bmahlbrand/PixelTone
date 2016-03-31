@@ -88,6 +88,10 @@ app.use('/register', function(req, res) {
 app.use('/profile', function(req, res) {
   res.sendFile(path.join(__dirname, '../website', 'index.html'));
 });
+
+app.use('/upload', function(req, res) {
+  res.sendFile(path.join(__dirname, '../website', 'index.html'));
+});
 // error hndlers
 app.use(function(req, res, next) {
   var err = new Error('Not Found');

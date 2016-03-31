@@ -1,6 +1,6 @@
 
 //var Firebase = require("firebase");
-var pixelTone = angular.module('pixelTone', ['ngRoute']);
+var pixelTone = angular.module('pixelTone', ['ngRoute', 'ngFileUpload']);
 //Routes
 pixelTone.config(['$routeProvider', '$locationProvider', function($routeProvider,$locationProvider){
 	$routeProvider
@@ -37,6 +37,12 @@ pixelTone.config(['$routeProvider', '$locationProvider', function($routeProvider
 	.when('/logout', {
 		controller: 'logoutController',
 		access: {restricted: true}
+	})
+
+	.when('/upload', {
+			templateUrl: 'app/upload/upload.html',
+			controller: 'uploadController',
+			access: {restricted: false}
 	})
 
 	.otherwise({
