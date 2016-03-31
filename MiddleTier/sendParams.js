@@ -11,7 +11,7 @@ module.exports = {
             method: 'POST'
         };
 
-       
+
         var req = http.request(generateOptions, function(response) {
             var str = ''
             response.on('data', function(chunk) {
@@ -20,10 +20,10 @@ module.exports = {
 
             response.on('end', function() {
                 console.log("Response from BackEnd:");
-                //INSERT CODE TO HANDLE RESPONSE (Will be a song??)   
+                //INSERT CODE TO HANDLE RESPONSE (Will be a song??)
                 var response = JSON.parse(str);
                 return saveReturn(response);
-              
+
             });
 
             response.on('error', function(err) {
@@ -42,8 +42,8 @@ module.exports = {
 var saveReturn = function(returnData)
 {
     console.log(returnData);
-    
-    
+
+
      /*User.findOne({ 'local.resetPasswordToken': req.body.token, 'local.resetPasswordExpires': { $gt: Date.now() } }, function (err, user) {
         if (!user) {
             req.flash('error', 'Password reset token is invalid or has expired.');
@@ -68,7 +68,7 @@ var saveReturn = function(returnData)
             }
         });
     });*/
-   
+
     return;
-    
+
 }
