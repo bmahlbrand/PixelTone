@@ -22,6 +22,10 @@ if (key == null || key == "")
 
 var image = "";
 
+//User Supplied Params -- global is bad
+var voices = 1;
+var chaos = 1;
+var pref = 5;
 
 //Setup for saving image to disk
 //Put into ./tmp folder, rename it with date on the end
@@ -140,7 +144,10 @@ var parseMSResponse = function (response) {
                 {
                     "numberOfFaces": totalFaces,
                     "faces": faces,
-                    "colorEntries": colorArray
+                    "colorEntries": colorArray,
+                    "chaos": chaos,
+                    "pref": pref,
+                    "voices": voices
                 }
                 
                 
@@ -170,6 +177,9 @@ imageRoutes.post('/process', function (req, res) {
             console.log(req.body);
             console.log(req.file);
             image = ".\\tmp\\" + req.file.filename;
+            pref = req.body.pref;
+            voices = req.body.voices;
+            chaos = req.body.chaos;        
         }
     });
     res.status(204).end();

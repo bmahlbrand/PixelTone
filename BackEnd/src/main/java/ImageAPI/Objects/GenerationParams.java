@@ -12,4 +12,7 @@ public class GenerationParams {
     public int numberOfFaces;
     public List<Face> faces;
     public List<ColorEntry> colorEntries;
+    public int prefs;
+    public int chaos;
+    public int voices;
 }

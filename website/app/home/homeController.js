@@ -22,7 +22,7 @@ angular.module("pixelTone")
     }
 
 
-    $scope.recentSongs = [
+   /* $scope.recentSongs = [
       {
         icon: 'assets/img/test1.jpg',
         author: 'John',
@@ -43,7 +43,7 @@ angular.module("pixelTone")
         author: 'Jessica',
         music: 'assets/mp3/audio4.mp3'
       }
-    ];
+    ];*/
     
 
     $scope.addSong = function(author, img){
