@@ -3,6 +3,7 @@ package MusicAPI.structure;
 import MusicAPI.harmonicsKB.rhythm.BeatDuration;
 
 import java.util.ArrayList;
+import javax.sound.midi.*;
 
 /**
  * Created by ben on 3/5/2016.
@@ -19,6 +20,13 @@ public class Tuplet extends VoiceElement {
 
     public Tuplet() {
 
-
     }
+
+    @Override
+    public int getDuration() {
+        return duration.getNumberOfSixtyFourthNotes() * 6;
+    }
+
+    public  int addToMidiTrack(Track midiTrack, int startingPosition){ return startingPosition;}
 }
+

@@ -12,6 +12,9 @@ var util         = require('util');
 var localStrategy = require('passport-local' ).Strategy;
 var jsonfile = require('jsonfile');
 var sp = require('./sendParams');
+
+
+
 mongoose.connect(config.mongodb);
 
 //require('./config/passport')(passport);

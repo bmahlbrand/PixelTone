@@ -2,6 +2,7 @@ package MusicAPI.harmonicsKB.intervals;
 
 import MusicAPI.harmonicsKB.scale.DiatonicScale;
 import MusicAPI.structure.Note;
+import MusicAPI.structure.Tone;
 
 /**
  * Created by ben on 4/3/2015.
@@ -20,7 +21,7 @@ public enum Degree {
     NonScaleDegree(7);
 
     private int degree;
-    private String nonScaleTone;
+    private Tone nonScaleTone;
 
     //    Degree(String tone) { this.nonScaleTone = tone; }
     Degree(int degree) {
@@ -31,11 +32,11 @@ public enum Degree {
         return this.degree;
     }
 
-    public void setNonScaleDegree(String note) {
+    public void setNonScaleDegree(Tone note) {
         nonScaleTone = note;
     }
 
-    public String getNonScaleTone() {
+    public Tone getNonScaleTone() {
         return nonScaleTone;
     }
 
