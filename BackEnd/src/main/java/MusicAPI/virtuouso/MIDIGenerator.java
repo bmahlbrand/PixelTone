@@ -22,7 +22,7 @@ public class MIDIGenerator{
 
 			}
 
-			writeMidiToFile(midiSequence, "miditest.mid");
+			writeMidiToFile(midiSequence, "./songs/miditest.mid");
 			return "miditest.mid";
 
 		}
