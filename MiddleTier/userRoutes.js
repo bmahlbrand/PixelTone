@@ -3,6 +3,7 @@ var crypto = require('crypto');
 var flash = require('connect-flash');
 var passport = require('passport');
 var User = require('./userModel');
+var Image = require('./imageModel');
 
 
 var userRoutes = module.exports = express();
@@ -210,4 +211,62 @@ userRoutes.get('/status', function(req, res) {
   res.status(200).json({
     status: true
   });
+});
+
+//Get list of images and songs for user
+userRoutes.get('/images', function(req, res) {
+    if (!req.isAuthenticated()) {
+        return res.status(200).json({
+            status: false
+        });
+    }
+
+
+    /* User.findOne({ 'local.username': req.body.username }, function (err, user) {
+           if (!user) {
+                return res.status(200).json({
+                   status: false
+                       });
+           }*/
+
+    Image.collection.find({}, { 'local.user': req.body.username }).toArray(function(err, docs) {
+        if (!docs) {
+            return res.status(200).json({
+                status: false
+            });
+        }
+
+
+         for( var i = 0; i < docs.length; i++)
+         {
+             console.log(docs[i]);
+             
+             
+             
+         }
+        res.status(200).json({
+            status: true
+        });
+
+    });
+
+
+
+    //Loop through docs array, add keys to url  
+
+    /*local: {
+            key: 		String,
+            user: 		String,
+    
+            Image.findOne({ 'local.user': req.body.username }, function (err, user) {
+           */
+
+
+
+
+
+    //return JSON full of image/songs
+
+
+
 });
