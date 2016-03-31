@@ -235,9 +235,11 @@ userRoutes.get('/images', function(req, res) {
            docs.forEach(function(value){
                 var key = "URL";
                 var key2 = "Date";
+                var key3 = "SongPath"
                 var entry = {};
                 entry[key] = value.local.url;
                 entry[key2] = value.local.uploadDate;
+                entry[key3] = value.local.songPath;
                 imageData.push(entry);
             });
             

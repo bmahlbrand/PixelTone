@@ -144,7 +144,7 @@ angular.module('pixelTone').factory('AuthService',
                     .success(function(data, status) {
                         if (status === 200) {
                             userData = data;
-                            //console.log(userData);
+                            console.log(userData);
                             deferred.resolve();
                         } else {
                             deferred.reject();

@@ -6,6 +6,7 @@ import org.jenetics.Genotype;
 import org.jenetics.IntegerGene;
 import MusicAPI.virtuouso.weights.DegreeWeights;
 import MusicAPI.harmonicsKB.phrasing.Cadence;
+import MusicAPI.harmonicsKB.triads.*;
 
 public class CommonChordProgFitFunc implements FitnessFunction {
     Cadence thisCadence;
@@ -36,13 +37,13 @@ public class CommonChordProgFitFunc implements FitnessFunction {
     }
 
     private int checkValidChord(int position, int[] chordList){
-        score=0;
-        if (position =0){
+        int score=0;
+        if (position ==0){
             if (chordList[position] != 1)
                 score=-100;
         }
         else{
-            score = 5 * (int)DegreeWeights.get(chordList[position - 1] - 1, chordList[position] - 1)
+            score = 5 * (int)((double)DegreeWeights.get(chordList[position - 1] - 1, chordList[position] - 1));
         }
         return score;
     }
