@@ -37,6 +37,11 @@
         .when('/upload', {
 			templateUrl: 'app/upload/upload.html',
 			controller: 'uploadController'
+		})
+
+        .when('/songViewer', {
+			templateUrl: 'app/songViewer/songViewer.html',
+			controller: 'songViewerController'
 		});
 
 	  // use the HTML5 History API
