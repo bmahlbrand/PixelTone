@@ -5,3 +5,6 @@
 
 BackEnd/build/
 *.iml
+
+MiddleTier/config/awsConfig.json
+
