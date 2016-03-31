@@ -42,7 +42,7 @@ public class GeneticHarmonicProgression{
 		harmonicProgression = phenotypeToSection(GeneticAlgorithm.geneticAlgorithm(1, 7, 8, fitnessFunction));
 	}
 
-	public Section generateGeneticHarmonicProgression(){
+	public Section getHarmonicProgression(){
 		return harmonicProgression;
 	}
 

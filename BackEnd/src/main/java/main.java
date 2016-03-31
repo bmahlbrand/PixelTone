@@ -9,6 +9,7 @@ import ImageAPI.Params.GenerationParams;
 import ImageAPI.Params.MusicParams;
 import com.google.gson.Gson;
 import MusicAPI.virtuouso.*;
+import  MusicAPI.virtuouso.models.genetic.GeneticSimpleComposition;
 
 import ImageAPI.*;
 
@@ -83,7 +84,10 @@ public class main {
 
     private static void testMidiGeneration() {
 
-        Quill.createComposition();
+        GeneticSimpleComposition testComposition = new GeneticSimpleComposition();
+
+        MIDIGenerator.generateMidi(testComposition.getGeneratedSong());
+        //Quill.createComposition();
 
     }
 }
