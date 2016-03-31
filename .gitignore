@@ -5,3 +5,5 @@
 
 BackEnd/build/
 *.iml
+
+MiddleTier/node_modules

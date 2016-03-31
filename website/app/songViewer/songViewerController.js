@@ -18,8 +18,8 @@ angular.module("pixelTone")
               var note = measureNotes[j];
               vexNotes.push( new Vex.Flow.StaveNote({ keys: note.keys, duration: note.duration }));
             }
+            vexNotes.push( new Vex.Flow.BarNote());
           }
-          console.log(vexNotes);
           Vex.Flow.Formatter.FormatAndDraw(ctx, stave, vexNotes);
         }
 

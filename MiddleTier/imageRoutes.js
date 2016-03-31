@@ -219,4 +219,11 @@ function getColors(imagePath, numOfColors, callback) {
     console.log("ERRROR GETTING COLORS");
     console.log(err);
     });
+<<<<<<< HEAD
 };
+=======
+
+    req.write(JSON.stringify(params));
+    req.end();
+};
+>>>>>>> origin/s3upload
