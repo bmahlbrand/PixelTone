@@ -42,19 +42,14 @@ pixelTone.config(['$routeProvider', '$locationProvider', function($routeProvider
 
 	.when('/upload', {
 			templateUrl: 'app/upload/upload.html',
-<<<<<<< HEAD
-			controller: 'uploadController'
+						controller: 'uploadController',
+						access: {restricted: false}
 		})
 
         .when('/songViewer', {
 			templateUrl: 'app/songViewer/songViewer.html',
 			controller: 'songViewerController'
-		});
-=======
-			controller: 'uploadController',
-			access: {restricted: false}
-	})
->>>>>>> origin/MusicAPI
+		})
 
 	.otherwise({
       redirectTo: '/'
