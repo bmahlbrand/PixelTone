@@ -48,7 +48,8 @@ pixelTone.config(['$routeProvider', '$locationProvider', function($routeProvider
 
         .when('/songViewer', {
 			templateUrl: 'app/songViewer/songViewer.html',
-			controller: 'songViewerController'
+			controller: 'songViewerController',
+			access: {restricted: false}
 		})
 
 	.otherwise({
