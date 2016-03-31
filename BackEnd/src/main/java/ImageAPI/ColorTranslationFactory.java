@@ -13,6 +13,7 @@ public class ColorTranslationFactory {
     //https://en.wikipedia.org/wiki/Contrasting_and_categorization_of_emotions#/media/File:Plutchik-wheel.svg
     public ColorParamEntry[] translate(List<ColorEntry> ce) {
 
+
         ColorParamEntry[] cpe = new ColorParamEntry[ce.size()];
 
         //brown, pink, red, orange, green, yellow, purple, blue, light, neutral, dark

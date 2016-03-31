@@ -23,6 +23,7 @@ if (key == null || key == "")
     console.log("No API KEY (CANT CONNECT TO MS) - GET FROM JACOB/BEN");
 
 var image = "";
+var currentUser = "";
 
 //User Supplied Params -- global is bad
 var voices = 1;
@@ -142,6 +143,9 @@ var parseMSResponse = function (response) {
                     }
                 }
             }
+            
+            if(colorArray.length == 1)
+                colorArray.push(colorArray[0]);
 
 
             var generationParameters =
@@ -151,7 +155,8 @@ var parseMSResponse = function (response) {
                     "colorEntries": colorArray,
                     "chaos": chaos,
                     "pref": pref,
-                    "voices": voices
+                    "voices": voices,
+                    "currentUser": currentUser
                 }
                 
                 //Use for saving json to disk for quick testing
@@ -201,6 +206,9 @@ imageRoutes.post('/process', function (req, res) {
 //Send uploaded image to microsoft
 imageRoutes.get('/analyze', function (request, response) {
 
+        //SOrry
+        currentUser = request.user.username;
+        
         var req = https.request(options, parseMSResponse);
 
         var stream = fs.createReadStream(image);

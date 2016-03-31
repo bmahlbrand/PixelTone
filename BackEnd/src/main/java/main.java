@@ -45,7 +45,7 @@ public class main {
             GenerationParams gp = gson.fromJson(params, GenerationParams.class);
             //System.out.println(params);
 
-            System.out.println("Parameters Received");
+            System.out.println("Parameters Received from:" + gp.currentUser);
             System.out.println("------------------------------------");
             System.out.println("Facial Information");
             System.out.println("Number of Faces:" + gp.numberOfFaces);
