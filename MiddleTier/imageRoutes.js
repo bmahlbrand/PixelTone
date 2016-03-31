@@ -6,9 +6,17 @@ var http = require('http');
 var fs = require ('fs');
 var jsonfile = require('jsonfile');
 var sp = require('./sendParams');
-var aws = require('./uploadImage.js');
 //Setup Image analyzer (replace with API later)
 var imagecolors = require('imagecolors');
+
+var aws; 
+var hasAws = false;
+if(fs.existsSync('./config/awsConfig.json')) {
+    aws = require('./uploadImage.js');
+    hasAws = true;
+} else {
+    console.log("No API KEY (CANT CONNECT TO AWS)");
+}
 
 var imageRoutes = module.exports = express();
 
@@ -179,7 +187,8 @@ imageRoutes.post('/process', function (req, res) {
             console.log(req.file);
             image = "./tmp/" + req.file.filename;
             //console.log("USER: " + req.user);
-            aws.uploadImage(image, req.user.username);
+            if(hasAws)
+                aws.uploadImage(image, req.user.username);
 
             pref = req.body.pref;
             voices = req.body.voices;
