@@ -1,5 +1,6 @@
 package MusicAPI.virtuouso;
 
+import ImageAPI.Params.MusicParams;
 import MusicAPI.harmonicsKB.intervals.Mode;
 import MusicAPI.harmonicsKB.rhythm.BeatDuration;
 import MusicAPI.harmonicsKB.scale.ChromaticScale;
@@ -8,6 +9,7 @@ import MusicAPI.harmonicsKB.scale.PentatonicScale;
 import MusicAPI.harmonicsKB.triads.*;
 import MusicAPI.structure.*;
 import MusicAPI.virtuouso.models.genetic.GeneticMotive;
+import MusicAPI.virtuouso.models.genetic.GeneticSimpleComposition;
 
 /**
  * Created by ben on 3/5/2016.
@@ -65,6 +67,57 @@ public class Quill {
         thisVoice.addSection(Quill.scaleExercise());
         thisComposition.addVoice(thisVoice);
         return thisComposition;
+    }
+    public static void createComposition(MusicParams musicParams) {
+        GeneticSimpleComposition testComposition;
+        Mode mode = musicParams.RelativeMinor ? Mode.Aeolian : Mode.Ionian;
+
+        testComposition = new GeneticSimpleComposition(new Note(musicParams.Key1), mode, musicParams.TempoLow.getBpm());
+
+        MIDIGenerator.generateMidi(testComposition.getGeneratedSong());
+//
+//        Section thisSection = new Section();
+//        Beat b = new Beat();
+//        Chord chord = new Chord(new MajorTriad(new Note("C")), BeatDuration.Whole);
+//        b.addChord(chord);
+//        Measure m = new Measure();
+//        m.addBeat(b);
+//        thisSection.addMeasure(m);
+//
+//        GeneticMotive firstMeasure = new GeneticMotive(new Note("B"), Mode.Aeolian, m);
+//
+//        Beat b2 = new Beat();
+//        Chord chord2 = new Chord(new MajorTriad(new Note("G")), BeatDuration.Whole);
+//        b2.addChord(chord2);
+//        m = new Measure();
+//        m.addBeat(b2);
+//        thisSection.addMeasure(m);
+//
+//        Voice thisVoice = new Voice();
+//        thisVoice.addSection(thisSection);
+//        Composition thisComposition = new Composition(80);
+//        thisComposition.addVoice(thisVoice);
+//
+//
+//        GeneticMotive secondMeasure = new GeneticMotive(new Note("A"), Mode.Aeolian, m);
+//
+//
+//        GeneticMotive thirdMeasure = new GeneticMotive(new Note("A"), Mode.Aeolian, m);
+//        thisSection = new Section();
+//        thisSection.addMeasure(firstMeasure.getMotiveContent());
+//        thisSection.addMeasure(secondMeasure.getMotiveContent());
+//        thisSection.addMeasure(thirdMeasure.getMotiveContent());
+//
+//
+//        thisVoice = new Voice();
+//        thisVoice.addSection(thisSection);
+//        Voice otherVoice = new Voice();
+//        thisVoice.addSection(Quill.scaleExercise());
+//        thisComposition.addVoice(thisVoice);
+//
+//        MIDIGenerator.generateMidi(thisComposition);
+
+
     }
 
     public static Section scaleExercise() {
