@@ -7,6 +7,7 @@ import ImageAPI.Objects.Face;
 import ImageAPI.Params.GenerationParams;
 
 import ImageAPI.Params.MusicParams;
+import MusicAPI.harmonicsKB.rhythm.Tempo;
 import com.google.gson.Gson;
 import MusicAPI.virtuouso.*;
 import  MusicAPI.virtuouso.models.genetic.GeneticSimpleComposition;
@@ -29,7 +30,7 @@ public class main {
         post("/generateSong", (request, response) -> {
             System.out.println("Generate Parameter Request Received");
             String imageKey = handleParameters(request.body());
-            String songpath = "miditest.mid";
+            String songpath = imageKey + ".mid";
 
             //Fake json this
             String JSON = "{\"imageKey\":\"" + imageKey + "\",\"songPath\":\"" + songpath + "\"}";
@@ -37,7 +38,7 @@ public class main {
             return JSON;
         });
 
-        testMidiGeneration();
+//        testMidiGeneration();
     }
 
     public static String handleParameters(String params) throws Exception {
@@ -66,14 +67,14 @@ public class main {
 
             System.out.println("\nImage Color Information\n");
 
-            for( ColorEntry ce : gp.colorEntries)
-            {
+            for( ColorEntry ce : gp.colorEntries) {
                 System.out.println("Color:" + ce.Color + " Color Percent:" + ce.Percent);
             }
 
             MusicParams mp = moodToMusicFactory.TranslateParameters(gp);
 
-            //Send to quill??
+            Quill.createComposition(mp);
+
             return gp.imageKey;
         } catch (Exception e) {
             throw new Exception("Invalid JSON", e);
@@ -84,10 +85,13 @@ public class main {
 
     private static void testMidiGeneration() {
 
-        GeneticSimpleComposition testComposition = new GeneticSimpleComposition();
+//        GeneticSimpleComposition testComposition = new GeneticSimpleComposition();
 
-        MIDIGenerator.generateMidi(testComposition.getGeneratedSong());
-        //Quill.createComposition();
+//        MIDIGenerator.generateMidi(testComposition.getGeneratedSong());
+
+        MusicParams mp = new MusicParams(Tempo.Largo, Tempo.Moderato, "Bb", "C", true);
+        Quill.createComposition(mp);
+        System.out.println("song generated");
 
     }
 }
