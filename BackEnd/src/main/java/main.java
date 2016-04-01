@@ -8,12 +8,9 @@ import ImageAPI.Params.GenerationParams;
 
 import ImageAPI.Params.MusicParams;
 import MusicAPI.virtuouso.*;
-<<<<<<< HEAD
 import MusicAPI.structure.*;
 import com.google.gson.Gson;
-=======
 import  MusicAPI.virtuouso.models.genetic.GeneticSimpleComposition;
->>>>>>> MusicAPI
 
 import ImageAPI.*;
 
