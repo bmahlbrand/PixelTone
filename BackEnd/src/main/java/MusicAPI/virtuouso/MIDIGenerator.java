@@ -6,7 +6,8 @@ import java.io.*;
 
 public class MIDIGenerator{
 
-	public static Sequence generateMidi(Composition generatedSong){
+	public static String generateMidi(String path, Composition generatedSong){
+
 		Sequence midiSequence;
 		try{
 			midiSequence = new Sequence(Sequence.PPQ, 96);
@@ -22,6 +23,12 @@ public class MIDIGenerator{
 
 			}
 
+
+
+			writeMidiToFile(midiSequence, path);
+			return path;
+
+
 		}
 		catch (Exception e){
 			midiSequence = null;
@@ -29,6 +36,40 @@ public class MIDIGenerator{
 		return midiSequence;
 	}
 
+	public static String generateMidi(String path, Composition generatedSong1, Composition generatedSong2){
+		Sequence midiSequence;
+		try{
+			midiSequence = new Sequence(Sequence.PPQ, 96);
+
+			int voiceNumber = 0;
+
+			setTempo(midiSequence, generatedSong1.getTempo());
+
+			for(Voice instrument: generatedSong1.getVoices()){
+
+				addTrackToMidi(instrument, midiSequence);
+				voiceNumber++;
+
+			}
+
+			voiceNumber = 0;
+
+			setTempo(midiSequence, generatedSong2.getTempo());
+
+			for(Voice instrument: generatedSong2.getVoices()){
+
+				addTrackToMidi(instrument, midiSequence);
+				voiceNumber++;
+
+			}
+
+			writeMidiToFile(midiSequence, path);
+			return path;
+
+		}
+		catch (Exception e){}
+		return null;
+	}
 
 	private static void writeMidiToFile(Sequence midiTrack, String fileName){
 		File outputFile = new File(fileName);

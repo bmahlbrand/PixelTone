@@ -24,6 +24,7 @@ public class Quill {
 
     }
 
+
     public static Composition createComposition() {
         Composition composition = new Composition();
 
@@ -117,6 +118,18 @@ public class Quill {
 //
 //        MIDIGenerator.generateMidi(thisComposition);
 
+
+
+    public static void createComposition(MusicParams musicParams, String path) {
+        GeneticSimpleComposition testComposition1, testComposition2;
+        Mode mode = musicParams.RelativeMinor ? Mode.Ionian.relativeMinor() : Mode.Ionian;
+
+//        testComposition2 = new GeneticSimpleComposition(new Note(musicParams.Key1), mode, musicParams.TempoLow.getBpm());
+        testComposition1 = new GeneticSimpleComposition(new Note(musicParams.Key2), mode, musicParams.TempoHigh.getBpm());
+
+        MIDIGenerator.generateMidi(path, testComposition1.getGeneratedSong());
+
+//        MIDIGenerator.generateMidi(path, testComposition1.getGeneratedSong(), testComposition2.getGeneratedSong());
 
     }
 

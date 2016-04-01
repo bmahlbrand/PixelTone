@@ -39,7 +39,7 @@ public enum Mode {
         return steps;
     }
 
-    public Mode relativeMinor() {
+    public Mode relativeMinor() {//TODO FINISH
         switch(this) {
             case Ionian:
                 return Aeolian;
@@ -49,7 +49,7 @@ public enum Mode {
         return this;
     }
 
-    public Mode relativeMajor() {
+    public Mode relativeMajor() {//TODO FINISH
         switch(this) {
             case Aeolian:
                 return Ionian;
