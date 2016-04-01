@@ -12,7 +12,7 @@ angular.module("pixelTone")
 
           //find the width necessary for the voices
           var formatter = new Vex.Flow.Formatter();
-          var width = formatter.preCalculateMinTotalWidth(voices)+50;
+          var width = formatter.preCalculateMinTotalWidth(voices)*1.15;
 
           //create new canvas to actually fit this stuff
           var newCanvasHTML = "<canvas height='200' width='" +width+ "'id='vexflow-canvas'></canvas>";
@@ -36,7 +36,7 @@ angular.module("pixelTone")
         }
 
         $scope.fetchSong = function (song) {
-          $http.get("/songs/1234.mid.NTS")
+          $http.get("/songs/notes/1234.mid.NTS")
             .then(function(res) {
               console.log(res.data);
               comp = new composition(res.data);

@@ -109,11 +109,8 @@ public class main {
             }
 
             MusicParams mp = moodToMusicFactory.TranslateParameters(gp);
-                System.out.println("here");
             String path =  "./songs/" + gp.imageKey.replaceAll("\\\\","\\\\\\\\") + ".mid";
-                System.out.println("there");
             Quill.createComposition(mp, path);
-                System.out.println("where");
 
             return gp.imageKey.replaceAll("\\\\","\\\\\\\\");
         } catch (Exception e) {
