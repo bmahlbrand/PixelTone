@@ -38,7 +38,7 @@ public class main {
             return JSON;
         });
 
-//        testMidiGeneration();
+        testMidiGeneration();
     }
 
     public static String handleParameters(String params) throws Exception {
@@ -72,10 +72,10 @@ public class main {
             }
 
             MusicParams mp = moodToMusicFactory.TranslateParameters(gp);
+            String path =  "./songs/" + gp.imageKey.replaceAll("\\\\","\\\\\\\\") + ".mid";
+            Quill.createComposition(mp, path);
 
-            Quill.createComposition(mp);
-
-            return gp.imageKey;
+            return gp.imageKey.replaceAll("\\\\","\\\\\\\\");
         } catch (Exception e) {
             throw new Exception("Invalid JSON", e);
         }
@@ -90,7 +90,7 @@ public class main {
 //        MIDIGenerator.generateMidi(testComposition.getGeneratedSong());
 
         MusicParams mp = new MusicParams(Tempo.Largo, Tempo.Moderato, "Bb", "C", true);
-        Quill.createComposition(mp);
+        Quill.createComposition(mp, "./songs/testmidi.mid");
         System.out.println("song generated");
 
     }
