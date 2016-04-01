@@ -30,7 +30,7 @@ angular.module("pixelTone")
 
           //draw notes
           formatter.joinVoices(voices).format(voices);
-          for(var i=1; i<voices.length; i++) {
+          for(var i=0; i<voices.length; i++) {
             voices[i].draw(ctx, stave);
           }
         }
