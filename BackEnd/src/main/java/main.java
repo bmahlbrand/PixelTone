@@ -34,18 +34,9 @@ public class main {
             System.out.println("Generate Parameter Request Received");
 
             Gson gson = new Gson();
-            //GenerationParams gp = gson.fromJson(request.body(), GenerationParams.class);
 
-            //MusicParams mp = moodToMusicFactory.TranslateParameters(gp);
-            //String path =  "./songs/" + gp.imageKey.replaceAll("\\\\","\\\\\\\\") + ".mid";
-            //Composition comp = //Quill.createComposition(mp, path);
             Composition comp = Quill.createCompositionOLD();
-            //String status = handleParameters(request.body());
-            // = Quill.createComposition();
 
-            //Fake json this
-
-            //Gson gson = new Gson();
             String json = gson.toJson(comp);
             return json;
         });
@@ -63,7 +54,7 @@ public class main {
 
             //Fake json this
             String JSON = "{\"imageKey\":\"" + imageKey + "\",\"songPath\":\"" + songpath + "\"}";
-
+            System.out.println("Generation Complete!");
 
             return JSON;
         });
