@@ -9,7 +9,7 @@ var exports = module.exports = {};
 //configure aws
 //AWS.config.loadFromPath('./config/awsConfig.json');
 //connect to mongodb
-mongoose.connect("mongodb://127.0.0.1:27017/PixelTone");
+//mongoose.connect("mongodb://127.0.0.1:27017/PixelTone");
 
 exports.uploadImage = function(file, user, imageKey) {
 	var s3bucket = new AWS.S3({params: {Bucket: 'pixeltone'}});

@@ -140,7 +140,7 @@ var parseMSResponse = function (response) {
                     }
                 }
             }
-            
+
             if(colorArray.length == 1)
                 colorArray.push(colorArray[0]);
 
@@ -159,7 +159,7 @@ var parseMSResponse = function (response) {
                     //var file = 'cb.json'
                     //jsonfile.writeFile(file, generationParameters, function (err) {
                     //   console.error(err)
-                    //});   
+                    //});
             return sp.sendParameters(generationParameters);
            //var returnData = sp.sendParameters(generationParameters);
            //console.log("From send params" + returnData);
@@ -205,7 +205,7 @@ imageRoutes.get('/analyze', function (request, response) {
 
         //SOrry
         currentUser = request.user.username;
-        
+
         var req = https.request(options, parseMSResponse);
 
         var stream = fs.createReadStream(image);
@@ -247,9 +247,6 @@ function getColors(imagePath, numOfColors, callback) {
     console.log("ERRROR GETTING COLORS");
     console.log(err);
     });
-<<<<<<< HEAD
     req.write(JSON.stringify(params));
     req.end();
-=======
->>>>>>> MusicAPI
 };

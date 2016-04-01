@@ -15,6 +15,8 @@ var note = function(other) {
     this.octave = other.octave;
     this.dynamic = other.dynamic;
     this.accent = other.accent;
+    this.duration = other.duration;
+    console.log(this.duration);
   }else{
     this.tone = new tone();;
     this.octave = 0;
@@ -131,7 +133,6 @@ beat.prototype.getStaveNotes = function(){
   var notes = this.notes;
   for(var i =0; i<notes.length; i++) {
     var temp = notes[i].getStaveNote();
-    if(temp == null) console.log(notes[i]);
     staves.push(temp);
   }
   return staves;

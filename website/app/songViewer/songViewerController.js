@@ -3,16 +3,28 @@ angular.module("pixelTone")
         $scope.song = new composition();
         // get specific song
         $scope.displaySongOnCanvas = function() {
-          var canvas = $("#vexflow-canvas")[0];
-          var renderer = new Vex.Flow.Renderer(canvas,
-          Vex.Flow.Renderer.Backends.CANVAS);
-          var ctx = renderer.getContext();
-          var stave = new Vex.Flow.Stave(10, 0, 500);
-          stave.addClef("treble").setContext(ctx).draw();
+          //get canvas
+          var vfCancas = $("#vexflow-canvas");
+          var canvas = vfCancas[0];
+
+          //get voices
           var voices = $scope.song.getVoices();
-          console.log(voices);
-          var formatter = new Vex.Flow.Formatter().
-            joinVoices(voices).format(voices, 500);
+
+          //find the width necessary for the voices
+          var formatter = new Vex.Flow.Formatter();
+          var width = formatter.preCalculateMinTotalWidth(voices);
+
+          //get renderer and context
+          var renderer = new Vex.Flow.Renderer(canvas,
+            Vex.Flow.Renderer.Backends.CANVAS);
+
+          //make treble cleff and draw
+          var ctx = renderer.getContext();
+          var stave = new Vex.Flow.Stave(10, 0, width);
+          stave.addClef("treble").setContext(ctx).draw();
+
+          //draw notes
+          formatter.joinVoices(voices).format(voices, 500);
           for(var i=0; i<voices.length; i++) {
             voices[i].draw(ctx, stave);
           }
