@@ -6,29 +6,24 @@ angular.module("pixelTone")
           var canvas = $("#vexflow-canvas")[0];
           var renderer = new Vex.Flow.Renderer(canvas,
           Vex.Flow.Renderer.Backends.CANVAS);
-
           var ctx = renderer.getContext();
           var stave = new Vex.Flow.Stave(10, 0, 500);
           stave.addClef("treble").setContext(ctx).draw();
-          var vexNotes = [];
-          var measures = $scope.song.measures;
-          for(var i=0; i<measures.length; i++) {
-            var measureNotes = measures[i].notes;
-            for(var j=0; j<measureNotes.length; j++){
-              var note = measureNotes[j];
-              vexNotes.push( new Vex.Flow.StaveNote({ keys: note.keys, duration: note.duration }));
-            }
-            vexNotes.push( new Vex.Flow.BarNote());
+          var voices = $scope.song.getVoices();
+          console.log(voices);
+          var formatter = new Vex.Flow.Formatter().
+            joinVoices(voices).format(voices, 500);
+          for(var i=0; i<voices.length; i++) {
+            voices[i].draw(ctx, stave);
           }
-          Vex.Flow.Formatter.FormatAndDraw(ctx, stave, vexNotes);
         }
 
         $scope.fetchSong = function (song) {
           $http.get("/solo")
             .then(function(res) {
-              console.log(res.data);
-              //$scope.song = new composition(res.data);
-              //$scope.displaySongOnCanvas();
+              comp = new composition(res.data);
+              $scope.song = comp;
+              $scope.displaySongOnCanvas();
             });
         };
 

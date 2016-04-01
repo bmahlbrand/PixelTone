@@ -32,15 +32,29 @@ measure.prototype.addNote = function(note) {
   this.notes.push(note);
 }
 
-var composition = function(staff, timeSignature) {
-  this.staff = staff;
-  this.timeSignature = timeSignature;
+var compositionSection = function(cleff) {
+  this.cleff = cleff;
   this.measures = [];
   return this;
 }
-composition.prototype.addMeasure = function(measure) {
+compositionSection.prototype.addMeasure = function(measure) {
   this.measures.push(measure);
 }
+
+var composition = function(tempo) {
+  this.tempo = tempo;
+  this.sections = [];
+  return this;
+}
+composition.prototype.addSection = function(section) {
+  this.sections.push(section);
+}
+composition.prototype.createFromGenerate = function(generatedComposition) {
+  this.tempo = generatedComposition.tempo;
+  var generatedMeasures = generatedComposition.voices;
+}
+
+
 
 songRoutes.get('/recent', function (req, res) {
   var sl = new songList();
@@ -59,10 +73,12 @@ songRoutes.get('/user', function (req, res) {
 });
 
 songRoutes.get('/song', function(req, res) {
-  var comp = new composition("1", "2");
+  var comp = new composition("1");
+  var sect = new compositionSection("treble");
   var meas = new measure();
   meas.addNote(new note(["a/4"], "q"));
   meas.addNote(new note(["b/4"], "q"));
-  comp.addMeasure(meas);
+  sect.addMeasure(meas);
+  comp.addSection(sect);
   res.send(JSON.stringify(comp));
 });

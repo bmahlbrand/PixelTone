@@ -1,54 +1,267 @@
+var tone = function(other) {
+  if(other != null){
+    this.accidental = other.accidental;
+    this.tone = other.tone;
+  }else{
+    this.accidental = "";
+    this.tone = other.tone;
+  }
+  return this;
+}
+
 var note = function(other) {
   if(other != null){
-    this.keys = other.keys;
+    this.tone = new tone(other.tone);
+    this.octave = other.octave;
+    this.dynamic = other.dynamic;
+    this.accent = other.accent;
+  }else{
+    this.tone = new tone();;
+    this.octave = 0;
+    this.dynamic = "";
+    this.accent = ""
+  }
+  return this;
+}
+note.prototype.getKey = function() {
+  var key = this.tone.tone + "/" + this.octave.octave;
+  return key;
+}
+note.prototype.getStaveNote = function() {
+  var keys = [];
+  keys.push(this.getKey());
+  var duration = this.getDuration();
+  var sn = {keys: keys, duration:duration};
+  return new Vex.Flow.StaveNote(sn);
+}
+note.prototype.getDuration = function() {
+  return "q";
+}
+
+var rest = function(other) {
+  if(other != null){
     this.duration = other.duration;
   }else{
-    this.keys = [];
     this.duration = "";
   }
   return this;
 }
-
-note.prototype.addKey = function(key) {
-  this.keys.push(key);
+rest.prototype.getDuration = function() {
+  return "qr";
+  var sn = {keys: keys, duration:duration};
+  return new Vex.Flow.StaveNote(sn);
+}
+rest.prototype.getStaveNote = function() {
+  var duration = this.getDuration();
+  var keys = ["b/4"];
+  var sn = {keys: keys, duration:duration};
+  return new Vex.Flow.StaveNote(sn);
 }
 
-note.prototype.getKeys = function() {
-  return this.keys;
+var triad = function(other) {
+  var trio = other.triad;
+  if(other != null){
+    this.duration = other.duration;
+    this.degrees = trio.degrees;
+    this.mode = trio.mode;
+    this.notes = [];
+    for(var i=0; i<trio.notes.length; i++) {
+      var otherNote = trio.notes[i];
+      this.notes.push(new note(otherNote));
+    }
+  }else{
+    this.duration = "";
+    this.degrees = [];
+    this.notes = [];
+    this.degrees.push("");
+    this.degrees.push("");
+    this.degrees.push("");
+    this.notes.push(new note());
+    this.notes.push(new note());
+    this.notes.push(new note());
+  }
+  return this;
+}
+triad.prototype.getKeysArray = function() {
+  var keys = [];
+  for(var i=0; i<this.notes.length; i++) {
+    var key = this.notes[i].getKey();
+    keys.push(key);
+  }
+  return keys;
+}
+triad.prototype.getDuration = function() {
+  return "q";
+}
+triad.prototype.getStaveNote = function() {
+  var keys = this.getKeysArray();
+  var duration = this.getDuration();
+  var sn = {keys: keys, duration:duration};
+  return new Vex.Flow.StaveNote(sn);
 }
 
-note.prototype.setDuration = function(dur) {
-  this.duration = dur;
+function noteMaker(other) {
+  if(other != null) {
+    if(other.triad != null) {
+      return new triad(other);
+    }else if(other.tone != null){
+      return new note(other);
+    }else {
+      return new rest(other);
+    }
+  }else{
+    return new note();
+  }
 }
 
-note.prototype.getDuration = function() {
-  return this.duration;
+var beat = function(other) {
+  if(other!= null) {
+    this.notes = [];
+    for(var i=0; i<other.notes.length; i++) {
+      var otherNote = noteMaker(other.notes[i]);
+      this.notes.push(otherNote);
+    }
+  }else{
+    this.notes = [];
+  }
+  return this;
+}
+beat.prototype.getStaveNotes = function(){
+  var staves = [];
+  var notes = this.notes;
+  for(var i =0; i<notes.length; i++) {
+    var temp = notes[i].getStaveNote();
+    if(temp == null) console.log(notes[i]);
+    staves.push(temp);
+  }
+  return staves;
 }
 
 var measure = function(other) {
-  this.notes = [];
   if(other != null) {
-    for(var i=0; i<other.notes.length; i++) {
-      otherMeasure = other.notes[i];
-      this.notes.push(new note(otherMeasure));
+    this.beatCapacity = other.beatCapacity;
+    this.beats = [];
+    for(var i=0; i<other.beats.length; i++) {
+      var otherBeat = new beat(other.beats[i]);
+      this.beats.push(otherBeat);
     }
+  }else{
+    this.beatCapacity = "";
+    this.beats = [];
   }
   return this;
+}
+measure.prototype.getStaveNotes = function(){
+  var staves = [];
+  var beats = this.beats;
+  for(var i =0; i<beats.length; i++) {
+    var temp = beats[i].getStaveNotes();
+    for(var j=0; j<temp.length; j++) {
+      staves.push(temp[j]);
+    }
+  }
+  return staves;
+}
+
+var section = function(other) {
+  if(other != null) {
+    this.sectionType = other.sectionType;
+    this.key = other.key;
+    this.timeSig = other.timeSig;
+    this.measures = [];
+    for(var i=0; i<other.measures.length; i++) {
+      var otherMeasure = other.measures[i];
+      this.measures.push(new measure(otherMeasure));
+    }
+  }else{
+    this.sectionType = "";
+    this.key = "";
+    this.timeSig = "";
+    this.measures = [];
+  }
+  return this;
+}
+section.prototype.getStaveNotes = function(){
+  var staves = [];
+  var measures = this.measures;
+  for(var i =0; i<measures.length; i++) {
+    var temp = measures[i].getStaveNotes();
+    for(var j=0; j<temp.length; j++) {
+      staves.push(temp[j]);
+    }
+    staves.push( new Vex.Flow.BarNote());
+  }
+  return staves;
+}
+
+var voice = function(other) {
+  if(other != null) {
+    this.clef = other.clef;
+    this.sections = [];
+    for(var i=0; i<other.sections.length; i++) {
+      var otherSection = other.sections[i];
+      this.sections.push(new section(otherSection));
+    }
+  }else{
+    this.clef = "";
+    this.sections = [];
+  }
+  return this;
+}
+voice.prototype.getNumBeats = function() {
+  return 4;
+}
+voice.prototype.getBeatValue = function() {
+  return 4;
+}
+voice.prototype.getStaveNotes = function(){
+  var staves = [];
+  var sections = this.sections;
+  for(var i =0; i<sections.length; i++) {
+    var temp = sections[i].getStaveNotes();
+    for(var j=0; j<temp.length; j++) {
+      staves.push(temp[j]);
+    }
+  }
+  return staves;
+}
+voice.prototype.getVoice = function() {
+  var staveNotes = this.getStaveNotes();
+  var num_beats = this.getNumBeats();
+  var beat_value = this.getBeatValue();
+  var resolution = Vex.Flow.RESOLUTION;
+  var voiceParams = {
+    num_beats : num_beats,
+    beat_value : beat_value,
+    resolution : resolution
+  };
+  var ret = new Vex.Flow.Voice(voiceParams);
+  ret.setMode(Vex.Flow.Voice.Mode.SOFT);
+  ret.addTickables(staveNotes);
+  return ret;
 }
 
 var composition = function(other) {
   if(other != null) {
-    this.staff = other.staff;
-    this.timeSignature = other.timeSignature;
-    this.measures = [];
-    for(var i=0; i<other.measures.length; i++) {
-      otherMeasure = other.measures[i];
-      this.measures.push(new measure(otherMeasure));
+    this.metadata = other.metadata;
+    this.tempo = other.tempo;
+    this.voices = [];
+    for(var i=0; i<other.voices.length; i++) {
+      var otherVoice = other.voices[i];
+      this.voices.push(new voice(otherVoice));
     }
   }else{
-    this.staff = "";
-    this.timeSignature = "";
-    this.measures = [];
+    this.metadata = "";
+    this.tempo = "";
+    this.voices = [];
   }
   return this;
+}
+composition.prototype.getVoices = function() {
+  var voices = this.voices;
+  var ret = [];
+  for(var i=0; i<voices.length; i++) {
+    ret.push(voices[i].getVoice());
+  }
+  return ret;
 }
