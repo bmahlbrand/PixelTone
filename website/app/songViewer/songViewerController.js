@@ -33,15 +33,38 @@ angular.module("pixelTone")
           for(var i=0; i<voices.length; i++) {
             voices[i].draw(ctx, stave);
           }
-        }
+        };
+
+        $scope.playSong = function(songurl) {
+          MIDI.loadPlugin({
+		        soundfontUrl: "./assets/soundfont/",
+		        instrument: "acoustic_grand_piano",
+	          onprogress: function(state, progress) {
+              console.log("Loading..");
+			        console.log(state, progress);
+		        },
+		        onsuccess: function() {
+              console.log("Loaded!");
+              player = MIDI.Player;
+              console.log(player);
+				      player.loadFile(songurl, function(){
+                console.log(player);
+                player.start();
+                player.stop();
+                player.start();
+                player.resume();
+              });
+		          }
+	       });
+        };
 
         $scope.fetchSong = function (song) {
           $http.get("/songs/notes/1234.mid.NTS")
             .then(function(res) {
-              console.log(res.data);
               comp = new composition(res.data);
               $scope.song = comp;
               $scope.displaySongOnCanvas();
+              $scope.playSong("/songs/song/1234.mid");
             });
         };
 
