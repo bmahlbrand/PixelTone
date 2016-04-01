@@ -3,9 +3,9 @@ angular.module("pixelTone")
         $scope.song = new composition();
         // get specific song
         $scope.displaySongOnCanvas = function() {
-          //get canvas
-          var vfCancas = $("#vexflow-canvas");
-          var canvas = vfCancas[0];
+          //delete the stupid canvas
+          var canvasDiv = document.getElementById("vexflow-canvas-div");
+          canvasDiv.innerHTML = "";
 
           //get voices
           var voices = $scope.song.getVoices();
@@ -13,6 +13,11 @@ angular.module("pixelTone")
           //find the width necessary for the voices
           var formatter = new Vex.Flow.Formatter();
           var width = formatter.preCalculateMinTotalWidth(voices);
+
+          //create new canvas to actually fit this stuff
+          var newCanvasHTML = "<canvas height='200' width='" +width+ "'id='vexflow-canvas'></canvas>";
+          canvasDiv.innerHTML = newCanvasHTML;
+          var canvas = $("#vexflow-canvas")[0];
 
           //get renderer and context
           var renderer = new Vex.Flow.Renderer(canvas,
@@ -24,7 +29,7 @@ angular.module("pixelTone")
           stave.addClef("treble").setContext(ctx).draw();
 
           //draw notes
-          formatter.joinVoices(voices).format(voices, 500);
+          formatter.joinVoices(voices).format(voices);
           for(var i=0; i<voices.length; i++) {
             voices[i].draw(ctx, stave);
           }

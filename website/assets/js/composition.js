@@ -1,3 +1,15 @@
+function getStudpidDurationForNotes(duration) {
+  if(duration == "Half") return "h";
+  if(duration == "DottedHalf") return "h";
+  if(duration == "Quarter") return "q";
+  if(duration == "DottedQuarter") return "qd";
+  if(duration == "Eighth") return "8";
+  if(duration == "DottedEighth") return "8d";
+  if(duration == "Sixteenth") return "16";
+  if(duration == "DottedSixteenth") return "16";
+  return "q";
+}
+
 var tone = function(other) {
   if(other != null){
     this.accidental = other.accidental;
@@ -16,9 +28,8 @@ var note = function(other) {
     this.dynamic = other.dynamic;
     this.accent = other.accent;
     this.duration = other.duration;
-    console.log(this.duration);
   }else{
-    this.tone = new tone();;
+    this.tone = new tone();
     this.octave = 0;
     this.dynamic = "";
     this.accent = ""
@@ -37,7 +48,7 @@ note.prototype.getStaveNote = function() {
   return new Vex.Flow.StaveNote(sn);
 }
 note.prototype.getDuration = function() {
-  return "q";
+  return getStudpidDurationForNotes(this.duration);
 }
 
 var rest = function(other) {
@@ -49,9 +60,8 @@ var rest = function(other) {
   return this;
 }
 rest.prototype.getDuration = function() {
-  return "qr";
-  var sn = {keys: keys, duration:duration};
-  return new Vex.Flow.StaveNote(sn);
+  var ret = getStudpidDurationForNotes(this.duration);
+  return ret + "r";
 }
 rest.prototype.getStaveNote = function() {
   var duration = this.getDuration();
