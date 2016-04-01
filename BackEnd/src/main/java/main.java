@@ -1,3 +1,4 @@
+
 import static spark.Spark.*;
 
 import ImageAPI.Objects.ColorEntry;
@@ -7,12 +8,17 @@ import ImageAPI.Objects.Face;
 import ImageAPI.Params.GenerationParams;
 
 import ImageAPI.Params.MusicParams;
+
+import MusicAPI.harmonicsKB.rhythm.Tempo;
+import com.google.gson.Gson;
+
 import MusicAPI.virtuouso.*;
 import MusicAPI.structure.*;
-import com.google.gson.Gson;
-import  MusicAPI.virtuouso.models.genetic.GeneticSimpleComposition;
-
 import ImageAPI.*;
+
+
+import java.io.*;
+import java.nio.file.Files;
 
 public class main {
 
@@ -24,18 +30,47 @@ public class main {
 
         get("/", (request, response) -> "PixelTone BackEnd Works");
 
+        get("/notes/:filename", (request, response) -> {
+          String filename = "./songs/" + request.params(":filename");
+          File file = new File(filename);
+          if(file.exists()) {
+            OutputStream os = response.raw().getOutputStream();
+            Files.copy(file.toPath(), os);
+            os.close();
+            return null;
+          }else{
+            return "failure";
+          }
+        });
+
+        get("/songs/:filename", (request, response) -> {
+          String filename = "./songs/" + request.params(":filename");
+          File file = new File(filename);
+          if(file.exists()) {
+            OutputStream os = response.raw().getOutputStream();
+            Files.copy(file.toPath(), os);
+            os.close();
+            return null;
+          }else{
+            return "failure";
+          }
+        });
+
+
        // CommonChordProgFitFunc fitnessfunction = new CommonChordProgFitFunc();
        // GeneticAlgorithm.geneticAlgorithm(1, 7, 100, fitnessfunction);
 
         post("/generateSong", (request, response) -> {
-            System.out.println("Generate Parameter Request Received");
-            String status = handleParameters(request.body());
-            Composition comp = Quill.createComposition();
-            //Fake json this
+          System.out.println("Generate Parameter Request Received");
+          String imageKey = handleParameters(request.body());
+          String songpath = (imageKey + ".mid").replaceAll("\\\\","\\\\\\\\");;
+          String notepath = songpath + ".NTS";
+          //Fake json this
+          String JSON = "{\"imageKey\":\"" + imageKey +
+                        "\",\"songPath\":\"" + songpath +
+                        "\",\"notePath\":\"" + notepath + "\"}";
 
-            Gson gson = new Gson();
-            String json = gson.toJson(comp);
-            return json;
+          return JSON;
         });
 
         testMidiGeneration();
@@ -45,6 +80,7 @@ public class main {
 
         try {
             Gson gson = new Gson();
+            System.out.println(params);
             GenerationParams gp = gson.fromJson(params, GenerationParams.class);
             //System.out.println(params);
 
@@ -73,9 +109,13 @@ public class main {
             }
 
             MusicParams mp = moodToMusicFactory.TranslateParameters(gp);
+                System.out.println("here");
+            String path =  "./songs/" + gp.imageKey.replaceAll("\\\\","\\\\\\\\") + ".mid";
+                System.out.println("there");
+            Quill.createComposition(mp, path);
+                System.out.println("where");
 
-            //Send to quill??
-            return gp.imageKey;
+            return gp.imageKey.replaceAll("\\\\","\\\\\\\\");
         } catch (Exception e) {
             throw new Exception("Invalid JSON", e);
         }
@@ -85,10 +125,8 @@ public class main {
 
     private static void testMidiGeneration() {
 
-        GeneticSimpleComposition testComposition = new GeneticSimpleComposition();
-
-        MIDIGenerator.generateMidi(testComposition.getGeneratedSong());
-        //Quill.createComposition();
-
+              MusicParams mp = new MusicParams(Tempo.Largo, Tempo.Moderato, "Bb", "C", true);
+              Quill.createComposition(mp, "./songs/testmidi.mid");
+              System.out.println("song generated");
     }
 }

@@ -24,12 +24,11 @@ public enum Tempo {
         this.bpm = bpm;
     }
 
-    int getBpm() {
+    public int getBpm() {
         return bpm;
     }
 
-    public Tempo getTempo(int bpm)
-    {
+    public Tempo getTempo(int bpm) {
         if(bpm < 35)
             return Larghissimo;
 

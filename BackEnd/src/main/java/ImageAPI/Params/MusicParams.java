@@ -1,6 +1,7 @@
 package ImageAPI.Params;
 
 import MusicAPI.harmonicsKB.dynamics.Accent;
+import MusicAPI.harmonicsKB.intervals.Mode;
 import MusicAPI.harmonicsKB.rhythm.Tempo;
 
 /**
@@ -34,5 +35,13 @@ public class MusicParams {
         AccentType2 = at2;
         AccentWeight1 = aw1;
         AccentWeight2 = aw2;
+    }
+
+    public MusicParams(Tempo tl, Tempo th, String k1, String k2, boolean rm) {
+        TempoLow = tl;
+        TempoHigh = th;
+        Key1 = k1;
+        Key2 = k2;
+        RelativeMinor = rm;
     }
 }

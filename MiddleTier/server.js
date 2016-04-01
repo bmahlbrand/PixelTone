@@ -12,8 +12,11 @@ var util         = require('util');
 var localStrategy = require('passport-local' ).Strategy;
 var jsonfile = require('jsonfile');
 var sp = require('./sendParams');
+var grid = require('gridfs-stream');
+var fs = require('fs');
 
 mongoose.connect(config.mongodb);
+grid.mongo = mongoose.mongo;
 
 //require('./config/passport')(passport);
 

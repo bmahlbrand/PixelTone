@@ -47,6 +47,7 @@ var saveReturn = function(returnData)
     console.log(returnData);
         var key = returnData.imageKey;
         var sp = returnData.songPath;
+        var np = returnData.notePath;
 
      Image.findOne({ 'local.songKey': key }, function (err, img) {
         if (!img) {

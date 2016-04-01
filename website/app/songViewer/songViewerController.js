@@ -39,9 +39,9 @@ angular.module("pixelTone")
           $http.get("/solo")
             .then(function(res) {
               console.log(res.data);
-              comp = new composition(res.data);
-              $scope.song = comp;
-              $scope.displaySongOnCanvas();
+              //comp = new composition(res.data);
+              //$scope.song = comp;
+              //$scope.displaySongOnCanvas();
             });
         };
 

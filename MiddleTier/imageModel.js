@@ -8,6 +8,7 @@ var imageSchema = mongoose.Schema({
         uploadDate: Date,
         songKey: 	String,
         songPath:   String,
+        notePath:   String,
         url: 		String
     }
 });
