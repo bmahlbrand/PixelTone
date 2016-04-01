@@ -23,7 +23,7 @@ songRoutes.get('/user', function (req, res) {
   res.send(JSON.stringify(sl));
 });
 
-songRoutes.get('/:songfile', function(req, res) {
+songRoutes.get('/song/:songfile', function(req, res) {
   var songfile = req.params.songfile;
   console.log(songfile);
   var route = {
@@ -33,23 +33,32 @@ songRoutes.get('/:songfile', function(req, res) {
       method: 'GET'
   };
 
-  var req = http.request(route, function(response) {
-      var str = ''
-      response.on('data', function(chunk) {
-          str += chunk;
-      });
-
-      response.on('end', function() {
-          console.log("Response from BackEnd:");
-          //INSERT CODE TO HANDLE RESPONSE (Will be a song??)
-          console.log(str);
-          res.send(str);
-      });
-
-      response.on('error', function(err) {
-          console.log(err);
-      });
-
+  var request = http.request(route, function(response) {
+    response.pause();
+    res.writeHeader(response.statusCode, response.headers);
+    response.pipe(res);
+    response.resume();
   });
-  req.write(songfile);
+  req.pipe(request);
+  req.resume();
+});
+
+songRoutes.get('/notes/:notesfile', function(req, res) {
+  var notesfile = req.params.notesfile;
+  console.log(notesfile);
+  var route = {
+      host: 'localhost',
+      path: '/notes/'+notesfile,
+      port: 3001,
+      method: 'GET'
+  };
+
+  var request = http.request(route, function(response) {
+    response.pause();
+    res.writeHeader(response.statusCode, response.headers);
+    response.pipe(res);
+    response.resume();
+  });
+  req.pipe(request);
+  req.resume();
 });
