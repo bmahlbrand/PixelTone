@@ -113,7 +113,7 @@ app.get('/deadbeef', function(req, res, next) {
 app.get('/solo', function(req, res, next) {
     var file = 'solo.json'
     jsonfile.readFile(file, function(err, obj) {
-        var ret = sp.sendParameters(obj, res);
+        var ret = sp.sendParameters(obj, res, 1);
     });
 });
 

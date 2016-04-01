@@ -4,13 +4,29 @@ var Image = require('./imageModel');
 module.exports = {
 
     //Send generatedParameters request to BackEnd
-    sendParameters: function(params, res) {
-        var generateOptions = {
+    sendParameters: function(params, res, sv) {
+        
+        var generateOptions;
+        if(sv == 1)
+        {
+            generateOptions = {
             host: 'localhost',
             path: '/generateSong',
             port: 3001,
             method: 'POST'
-        };
+            };
+        }
+        else
+        {
+            generateOptions = {
+            host: 'localhost',
+            path: '/generateSongP',
+            port: 3001,
+            method: 'POST'
+            };   
+        }
+        
+     
         var midiResponse = {};
 
 
@@ -24,9 +40,9 @@ module.exports = {
                 console.log("Response from BackEnd:");
                 //INSERT CODE TO HANDLE RESPONSE (Will be a song??)
                 var response = JSON.parse(str);
-                saveReturn(response);
-                res.send(JSON.stringify(response));
-
+                
+                    saveReturn(response);
+                    res.send(JSON.stringify(response));
             });
 
             response.on('error', function(err) {
