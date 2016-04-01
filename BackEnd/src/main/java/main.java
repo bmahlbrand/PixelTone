@@ -36,16 +36,34 @@ public class main {
             String status = handleParameters(request.body());
             Composition comp = Quill.createComposition();
 
-            String imageKey = handleParameters(request.body());
-            String songpath = imageKey + ".mid";
-
-
             //Fake json this
 
             Gson gson = new Gson();
             String json = gson.toJson(comp);
             return json;
         });
+
+
+        post("/generateSongP", (request, response) -> {
+            System.out.println("Generate Parameter Request Received");
+
+            String status = handleParameters(request.body());
+            //Composition comp = Quill.createComposition();
+
+
+            String imageKey = handleParameters(request.body());
+            String songpath = imageKey + ".mid";
+
+            //Fake json this
+            String JSON = "{\"imageKey\":\"" + imageKey + "\",\"songPath\":\"" + songpath + "\"}";
+            //Fake json this
+
+
+            return JSON;
+        });
+
+
+
 
 //        testMidiGeneration();
     }
