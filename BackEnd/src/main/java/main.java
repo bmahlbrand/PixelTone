@@ -32,17 +32,9 @@ public class main {
 
         post("/generateSong", (request, response) -> {
             System.out.println("Generate Parameter Request Received");
-<<<<<<< HEAD
             String status = handleParameters(request.body());
             Composition comp = Quill.createComposition();
             //Fake json this
-=======
-            String imageKey = handleParameters(request.body());
-            String songpath = "miditest.mid";
-
-            //Fake json this
-            String JSON = "{\"imageKey\":\"" + imageKey + "\",\"songPath\":\"" + songpath + "\"}";
->>>>>>> MusicAPI
 
             Gson gson = new Gson();
             String json = gson.toJson(comp);
