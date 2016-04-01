@@ -57,6 +57,10 @@ public class Note extends VoiceElement implements Serializable {
         return tone.index();
     }
 
+    public Tone getTone(){
+        return tone;
+    }
+
     public Note getHalfStep() {
         return new Note(tone.halfStep().toString());
     }
@@ -132,7 +136,6 @@ public class Note extends VoiceElement implements Serializable {
             midiTrack.add(new MidiEvent(currentNote, startingPosition));
         }
         catch(Exception e){}
-        
         return startingPosition;
     }
 }
