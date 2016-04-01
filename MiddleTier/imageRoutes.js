@@ -6,6 +6,10 @@ var http = require('http');
 var fs = require ('fs');
 var jsonfile = require('jsonfile');
 var sp = require('./sendParams');
+
+var aws = require('./uploadImage.js');
+//Setup Image analyzer (replace with API later)
+
 var imagecolors = require('imagecolors');
 
 var imageRoutes = module.exports = express();
@@ -19,6 +23,7 @@ if (key == null || key == "")
     console.log("No API KEY (CANT CONNECT TO MS) - GET FROM JACOB/BEN");
 
 var image = "";
+var imageKey = "";
 
 //User Supplied Params -- global is bad
 var voices = 1;
@@ -135,6 +140,9 @@ var parseMSResponse = function (response) {
                     }
                 }
             }
+            
+            if(colorArray.length == 1)
+                colorArray.push(colorArray[0]);
 
 
             var generationParameters =
@@ -144,7 +152,8 @@ var parseMSResponse = function (response) {
                     "colorEntries": colorArray,
                     "chaos": chaos,
                     "pref": pref,
-                    "voices": voices
+                    "voices": voices,
+                    "imageKey": imageKey
                 }
                 //Use for saving json to disk for quick testing
                     //var file = 'cb.json'
@@ -176,6 +185,13 @@ imageRoutes.post('/process', function (req, res) {
             //console.log(req.file);
             //console.log(req);
             image = ".\\tmp\\" + req.file.filename;
+            console.log(req.body);
+            console.log(req.file);
+           // UNIX image = "./tmp/" + req.file.filename;
+            //console.log("USER: " + req.user);
+            imageKey = Date.now();
+            //aws.uploadImage(image, req.user.username, imageKey );
+
             pref = req.body.pref;
             voices = req.body.voices;
             chaos = req.body.chaos;
@@ -187,6 +203,9 @@ imageRoutes.post('/process', function (req, res) {
 //Send uploaded image to microsoft
 imageRoutes.get('/analyze', function (request, response) {
 
+        //SOrry
+        currentUser = request.user.username;
+        
         var req = https.request(options, parseMSResponse);
 
         var stream = fs.createReadStream(image);
@@ -228,6 +247,9 @@ function getColors(imagePath, numOfColors, callback) {
     console.log("ERRROR GETTING COLORS");
     console.log(err);
     });
+<<<<<<< HEAD
     req.write(JSON.stringify(params));
     req.end();
+=======
+>>>>>>> MusicAPI
 };

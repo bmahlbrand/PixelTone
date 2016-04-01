@@ -61,6 +61,7 @@ public class GeneticMotive{
 		Note currentNote = keySignature.getNote(Degree.numToDegree(step-1));
 		BeatDuration noteDuration = getNoteDuration(rhythm);
 		currentNote.setDuration(noteDuration);
+		currentNote.setOctave(new Octave(((octave-1)/4) + 3));
 		return currentNote;
 	}
 

@@ -1,4 +1,5 @@
 var http = require('http');
+var Image = require('./imageModel');
 
 module.exports = {
 
@@ -44,33 +45,26 @@ module.exports = {
 var saveReturn = function(returnData)
 {
     console.log(returnData);
+        var key = returnData.imageKey;
+        var sp = returnData.songPath;
 
-
-     /*User.findOne({ 'local.resetPasswordToken': req.body.token, 'local.resetPasswordExpires': { $gt: Date.now() } }, function (err, user) {
-        if (!user) {
-            req.flash('error', 'Password reset token is invalid or has expired.');
-            return res.redirect('back');
+     Image.findOne({ 'local.songKey': key }, function (err, img) {
+        if (!img) {
+            console.log("can't find key");
+            return;
         }
 
-        //Set new password
-        user.local.password = user.generateHash(req.body.resetpass);
-        //Unset info
-        user.local.resetPasswordToken = undefined;
-        user.local.resetPasswordExpires = undefined;
 
-        user.save(function (err) {
+        img.local.songPath = sp;
+
+        img.save(function (err) {
             if (err)
                 throw err;
             else {
-                console.log('RESET PASSWORD');
-                req.logIn(user, function (err) {
-                    if (err) { throw err; }
-                    return res.redirect('/test/upload');
-                });
+
+                    return ;
             }
         });
-    });*/
-
-    return returnData;
+    });
 
 }

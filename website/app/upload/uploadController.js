@@ -1,10 +1,10 @@
 angular.module("pixelTone")
     .controller('uploadController', ['$scope', 'Upload', '$http', function ($scope, Upload, $http) {
 
-        $scope.submit = function () {
+        $scope.submit = function() {
             if ($scope.form.file.$valid && $scope.file) {
-                      var param1 = $("#parameter1").val();
-                    var param2 = $("#parameter2").val();
+                var param1 = $("#parameter1").val();
+                var param2 = $("#parameter2").val();
                 var param3 = $("#parameter3").val();
                 $scope.upload($scope.file, param1, param2, param3);
             }

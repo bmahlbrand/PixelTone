@@ -8,8 +8,12 @@ import ImageAPI.Params.GenerationParams;
 
 import ImageAPI.Params.MusicParams;
 import MusicAPI.virtuouso.*;
+<<<<<<< HEAD
 import MusicAPI.structure.*;
 import com.google.gson.Gson;
+=======
+import  MusicAPI.virtuouso.models.genetic.GeneticSimpleComposition;
+>>>>>>> MusicAPI
 
 import ImageAPI.*;
 
@@ -28,9 +32,17 @@ public class main {
 
         post("/generateSong", (request, response) -> {
             System.out.println("Generate Parameter Request Received");
+<<<<<<< HEAD
             String status = handleParameters(request.body());
             Composition comp = Quill.createComposition();
             //Fake json this
+=======
+            String imageKey = handleParameters(request.body());
+            String songpath = "miditest.mid";
+
+            //Fake json this
+            String JSON = "{\"imageKey\":\"" + imageKey + "\",\"songPath\":\"" + songpath + "\"}";
+>>>>>>> MusicAPI
 
             Gson gson = new Gson();
             String json = gson.toJson(comp);
@@ -41,6 +53,7 @@ public class main {
     }
 
     public static String handleParameters(String params) throws Exception {
+
         try {
             Gson gson = new Gson();
             GenerationParams gp = gson.fromJson(params, GenerationParams.class);
@@ -73,17 +86,20 @@ public class main {
             MusicParams mp = moodToMusicFactory.TranslateParameters(gp);
 
             //Send to quill??
-
+            return gp.imageKey;
         } catch (Exception e) {
             throw new Exception("Invalid JSON", e);
         }
         //Ideally we want to return a status code based on processing status (200) for success
-        return "Sucessfully Processed Params";
+
     }
 
     private static void testMidiGeneration() {
 
-        Quill.createComposition();
+        GeneticSimpleComposition testComposition = new GeneticSimpleComposition();
+
+        MIDIGenerator.generateMidi(testComposition.getGeneratedSong());
+        //Quill.createComposition();
 
     }
 }
