@@ -45,7 +45,6 @@ public class Chord extends VoiceElement {
 
             } catch (Exception e) {}
         }
-
         return startingPosition;
     }
 

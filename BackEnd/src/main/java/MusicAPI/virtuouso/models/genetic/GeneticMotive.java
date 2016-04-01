@@ -59,8 +59,10 @@ public class GeneticMotive{
 	private Note makeNote (int rhythm, int step, int octave){
 		DiatonicScale keySignature = new DiatonicScale(key, mode);
 		Note currentNote = keySignature.getNote(Degree.numToDegree(step-1));
+		currentNote = new Note(currentNote.getTone().toString());
 		BeatDuration noteDuration = getNoteDuration(rhythm);
 		currentNote.setDuration(noteDuration);
+		currentNote.setOctave(new Octave(((octave-1)/4) + 3));
 		return currentNote;
 	}
 

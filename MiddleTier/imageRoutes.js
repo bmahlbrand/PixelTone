@@ -79,12 +79,9 @@ var parseMSResponse = function (response) {
 
         var parsed = JSON.parse(str);
         //console.log(parsed);
-       
- 
-       
         var totalFaces = 0;
         var faces = [];
-        
+
         //console.log("Top 3 Facial Traits");
         //Loop through all the faces returned from microsoft
         //Sort and parse results into object to send later
@@ -105,7 +102,7 @@ var parseMSResponse = function (response) {
             tmpEmo.sortOn("value");
 
             var emotionArray = [];
-                    
+
             //Get top 3 highest emotion values, and store in object
             for (var i = 7; i > 4; i--) {
                 var faceEntry = {};
@@ -117,15 +114,15 @@ var parseMSResponse = function (response) {
             var emotions = { 'emotions': emotionArray };
             faces.push(emotions);
         });
-     
-     
+
+
         //can be path or uRL! double bonus
         getColors(image, 5, function (colors) {
 
             var colorArray = [];
             //console.log(colors);
             var numberOfColors = colors.length >= 5 ? 5 : colors.length;
-            
+
             //TWEAK THESE VALUES
             //If dom color has <= 20, and next is within 5 then image is neutral
             if (numberOfColors > 1 && colors[0].percent <= 15 && (colors[0].percent - colors[1].percent <= 5)) {
@@ -150,7 +147,7 @@ var parseMSResponse = function (response) {
                     }
                 }
             }
-            
+
             if(colorArray.length == 1)
                 colorArray.push(colorArray[0]);
 
@@ -165,16 +162,15 @@ var parseMSResponse = function (response) {
                     "voices": voices,
                     "imageKey": imageKey
                 }
-                
                 //Use for saving json to disk for quick testing
                     //var file = 'cb.json'
                     //jsonfile.writeFile(file, generationParameters, function (err) {
                     //   console.error(err)
-                    //});   
+                    //});
             return sp.sendParameters(generationParameters);
            //var returnData = sp.sendParameters(generationParameters);
            //console.log("From send params" + returnData);
-           
+
         });
     });
 
@@ -221,7 +217,7 @@ imageRoutes.get('/analyze', function (request, response) {
 
         //SOrry
         currentUser = request.user.username;
-        
+
         var req = https.request(options, parseMSResponse);
 
         var stream = fs.createReadStream(image);
@@ -263,4 +259,6 @@ function getColors(imagePath, numOfColors, callback) {
     console.log("ERRROR GETTING COLORS");
     console.log(err);
     });
+    req.write(JSON.stringify(params));
+    req.end();
 };

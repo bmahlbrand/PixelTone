@@ -41,7 +41,7 @@ public class GeneticMotiveFitnessFunction implements FitnessFunction{
 
         }
 
-        score+= checkForALeap(noteList, totalNotes);
+        //score+= checkForALeap(noteList, totalNotes);
         score+= checkForRhytmicMonotony(noteList, totalNotes);
         score+= checkForTooBusyRhythm(totalNotes);
 
@@ -60,9 +60,9 @@ public class GeneticMotiveFitnessFunction implements FitnessFunction{
 
 		int score = 0;
 
-		if(currentRhytmicPosition == 4 || currentRhytmicPosition == 12 ){
+		/*if(currentRhytmicPosition == 4 || currentRhytmicPosition == 12 ){
 			score += isChordTone(noteList, position, currentRhytmicPosition);
-		}
+		}*/
 		if(currentRhytmicPosition == 0 || currentRhytmicPosition == 8 ){
 			score += 2*isChordTone( noteList,  position,  currentRhytmicPosition);
 		}
@@ -127,7 +127,7 @@ public class GeneticMotiveFitnessFunction implements FitnessFunction{
 
 	private int checkForTooBusyRhythm(int totalNotes){
 		double averageRhythm = 16.0/totalNotes;
-		if(averageRhythm<2)
+		if(averageRhythm<4)
 			return -50;
 		return 0;
 	}
@@ -159,7 +159,7 @@ public class GeneticMotiveFitnessFunction implements FitnessFunction{
 	private int isPassingNoteOrNeighborTone(int[] noteList, int position, int currentRhytmicPosition){
 		if (adjacentNotes(noteList[position*3 + 1], noteList[position*3 + 2], noteList[(position-1)*3 + 1], noteList[(position-1)*3 + 2])){
 			if (adjacentNotes(noteList[position*3 + 1], noteList[position*3 + 2], noteList[(position+1)*3 + 1], noteList[(position+1)*3 + 2]))
-				return 15;
+				return 30;
 		}	
 		return 0;
 	}

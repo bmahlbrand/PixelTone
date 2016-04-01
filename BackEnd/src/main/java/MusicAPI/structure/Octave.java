@@ -6,7 +6,7 @@ public class Octave implements Serializable {
     // TODO THERE'S GOT TO BE A BETTAH WAY
     private int octave;
 
-    Octave(int octave) {
+    public Octave(int octave) {
         if (octave > 10)
             throw new IllegalArgumentException();
 

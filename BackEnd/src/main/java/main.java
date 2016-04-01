@@ -7,8 +7,10 @@ import ImageAPI.Objects.Face;
 import ImageAPI.Params.GenerationParams;
 
 import ImageAPI.Params.MusicParams;
-import com.google.gson.Gson;
 import MusicAPI.virtuouso.*;
+import MusicAPI.structure.*;
+import com.google.gson.Gson;
+import  MusicAPI.virtuouso.models.genetic.GeneticSimpleComposition;
 
 import ImageAPI.*;
 
@@ -27,13 +29,13 @@ public class main {
 
         post("/generateSong", (request, response) -> {
             System.out.println("Generate Parameter Request Received");
-            String imageKey = handleParameters(request.body());
-            String songpath = "miditest.mid";
-
+            String status = handleParameters(request.body());
+            Composition comp = Quill.createComposition();
             //Fake json this
-            String JSON = "{\"imageKey\":\"" + imageKey + "\",\"songPath\":\"" + songpath + "\"}";
 
-            return JSON;
+            Gson gson = new Gson();
+            String json = gson.toJson(comp);
+            return json;
         });
 
         testMidiGeneration();
@@ -83,7 +85,10 @@ public class main {
 
     private static void testMidiGeneration() {
 
-        Quill.createComposition();
+        GeneticSimpleComposition testComposition = new GeneticSimpleComposition();
+
+        MIDIGenerator.generateMidi(testComposition.getGeneratedSong());
+        //Quill.createComposition();
 
     }
 }

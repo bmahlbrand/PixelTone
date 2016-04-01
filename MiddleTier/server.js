@@ -13,8 +13,6 @@ var localStrategy = require('passport-local' ).Strategy;
 var jsonfile = require('jsonfile');
 var sp = require('./sendParams');
 
-
-
 mongoose.connect(config.mongodb);
 
 //require('./config/passport')(passport);
@@ -28,12 +26,12 @@ app.use(morgan('dev')); // log every request to the console
 app.use(cookieParser()); // read cookies (needed for auth)
 app.use(bodyParser.json()); // get information from html forms
 app.use(bodyParser.urlencoded({ extended: false }));
-    
+
 // required for passport
-app.use(session({ 
+app.use(session({
                 secret: 'deadbeefisnumberone', // session secret
                 saveUninitialized: false,
-                resave: false })); 
+                resave: false }));
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash());
@@ -43,6 +41,7 @@ app.use(express.static(path.join(__dirname, '../website')));
 var userRoutes = require('./userRoutes');
 var imageRoutes = require('./imageRoutes');
 var testUpload = require('./testUpload');
+var songRoutes = require('./songRoutes');
 
 // configure passport
 passport.use(new localStrategy(User.authenticate()));
@@ -51,16 +50,16 @@ passport.deserializeUser(User.deserializeUser());
 
 
 //Check current session for authentication before proceeding
-var checkAuth = function(req, res, next) { 
-    if (!req.isAuthenticated())  
+var checkAuth = function(req, res, next) {
+    if (!req.isAuthenticated())
     {
         console.log('Not Authenticated');
-        res.sendStatus(401); 
+        res.sendStatus(401);
     }
-    else 
+    else
     {
         console.log('Authenticated');
-        next(); 
+        next();
     }
 };
 
@@ -68,6 +67,7 @@ var checkAuth = function(req, res, next) {
 app.use('/users' , userRoutes); //Login, Logout, Reset, Create
 app.use('/images' , checkAuth, imageRoutes); //Routes to handle generation
 app.use('/test' , checkAuth, testUpload); //Sample page to handle file uploads
+app.use('/songs', songRoutes);
 
 // routes
 app.use('/user/', userRoutes);
@@ -113,13 +113,7 @@ app.get('/deadbeef', function(req, res, next) {
 app.get('/solo', function(req, res, next) {
     var file = 'solo.json'
     jsonfile.readFile(file, function(err, obj) {
-        sp.sendParameters(obj);
-        res.send(
-            'Load PreCalculatedJson Without Auth<br><br>'
-            + '<a href=/solo>The Solos</a><br><br>'
-            + '<a href=/cb>Crying Baby</a><br><br>'
-            + '<a href=/leo>Leonidas</a><br><br>'
-        );
+        var ret = sp.sendParameters(obj, res);
     });
 });
 

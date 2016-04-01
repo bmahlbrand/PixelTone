@@ -45,12 +45,20 @@ public class Note extends VoiceElement implements Serializable {
         this.duration = duration;
     }
 
+    public void setOctave(Octave octave){
+        this.octave = octave;
+    }
+
     public Accidental getAccidental() {
         return tone.accidental;
     }
 
     public int getIndex() {
         return tone.index();
+    }
+
+    public Tone getTone(){
+        return tone;
     }
 
     public Note getHalfStep() {
@@ -128,7 +136,6 @@ public class Note extends VoiceElement implements Serializable {
             midiTrack.add(new MidiEvent(currentNote, startingPosition));
         }
         catch(Exception e){}
-        
         return startingPosition;
     }
 }
