@@ -1,13 +1,14 @@
 function getStudpidDurationForNotes(duration) {
+  if(duration == "Whole") return "w";
   if(duration == "Half") return "h";
-  if(duration == "DottedHalf") return "h";
+  if(duration == "DottedHalf") return "hd";
   if(duration == "Quarter") return "q";
   if(duration == "DottedQuarter") return "qd";
   if(duration == "Eighth") return "8";
   if(duration == "DottedEighth") return "8d";
   if(duration == "Sixteenth") return "16";
-  if(duration == "DottedSixteenth") return "16";
-  return "q";
+  if(duration == "DottedSixteenth") return "16d";
+  return "You Fucked Up";
 }
 
 var tone = function(other) {
@@ -103,7 +104,7 @@ triad.prototype.getKeysArray = function() {
   return keys;
 }
 triad.prototype.getDuration = function() {
-  return "q";
+  return getStudpidDurationForNotes(this.duration);
 }
 triad.prototype.getStaveNote = function() {
   var keys = this.getKeysArray();
