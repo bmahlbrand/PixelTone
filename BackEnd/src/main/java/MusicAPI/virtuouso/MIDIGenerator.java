@@ -7,7 +7,6 @@ import java.io.*;
 public class MIDIGenerator{
 
 	public static String generateMidi(String path, Composition generatedSong){
-
 		Sequence midiSequence;
 		try{
 			midiSequence = new Sequence(Sequence.PPQ, 96);
@@ -23,17 +22,12 @@ public class MIDIGenerator{
 
 			}
 
-
-
 			writeMidiToFile(midiSequence, path);
 			return path;
 
-
 		}
-		catch (Exception e){
-			midiSequence = null;
-		}
-		return midiSequence;
+		catch (Exception e){}
+		return null;
 	}
 
 	public static String generateMidi(String path, Composition generatedSong1, Composition generatedSong2){
@@ -107,13 +101,34 @@ public class MIDIGenerator{
 		MetaMessage tempoMsg = new MetaMessage();
 		try{
 			tempoMsg.setMessage(0x51,new byte[] {
-				(byte)(mpq>>16 & 0xff),
-				(byte)(mpq>>8 & 0xff),
-				(byte)(mpq & 0xff)
+					(byte)(mpq>>16 & 0xff),
+					(byte)(mpq>>8 & 0xff),
+					(byte)(mpq & 0xff)
 			},3);
 			MidiEvent tempoEvent = new MidiEvent(tempoMsg,0);
 			metaTrack.add(tempoEvent);
 		}
 		catch(Exception e){}
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

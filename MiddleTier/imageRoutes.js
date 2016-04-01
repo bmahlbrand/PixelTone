@@ -196,11 +196,13 @@ imageRoutes.post('/process', function (req, res) {
             console.log(req.file);
            // UNIX image = "./tmp/" + req.file.filename;
             //console.log("USER: " + req.user);
+            
+            imageKey = Date.now();
 
             if(hasAws)
                 aws.uploadImage(image, req.user.username,  imageKey);
 
-            imageKey = Date.now();
+            
             //aws.uploadImage(image, req.user.username, imageKey );
 
 
@@ -259,6 +261,8 @@ function getColors(imagePath, numOfColors, callback) {
     console.log("ERRROR GETTING COLORS");
     console.log(err);
     });
-    req.write(JSON.stringify(params));
-    req.end();
+    
+    
+    //req.write(JSON.stringify(params));
+    //req.end();
 };

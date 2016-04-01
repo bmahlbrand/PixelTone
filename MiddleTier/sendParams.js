@@ -42,7 +42,8 @@ module.exports = {
                 var response = JSON.parse(str);
                 
                     saveReturn(response);
-                    res.send(JSON.stringify(response));
+                    if(sv == 1)
+                        res.send(JSON.stringify(response));
             });
 
             response.on('error', function(err) {

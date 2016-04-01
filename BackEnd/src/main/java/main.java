@@ -33,12 +33,19 @@ public class main {
         post("/generateSong", (request, response) -> {
             System.out.println("Generate Parameter Request Received");
 
-            String status = handleParameters(request.body());
-            Composition comp = Quill.createComposition();
+            Gson gson = new Gson();
+            //GenerationParams gp = gson.fromJson(request.body(), GenerationParams.class);
+
+            //MusicParams mp = moodToMusicFactory.TranslateParameters(gp);
+            //String path =  "./songs/" + gp.imageKey.replaceAll("\\\\","\\\\\\\\") + ".mid";
+            //Composition comp = //Quill.createComposition(mp, path);
+            Composition comp = Quill.createCompositionOLD();
+            //String status = handleParameters(request.body());
+            // = Quill.createComposition();
 
             //Fake json this
 
-            Gson gson = new Gson();
+            //Gson gson = new Gson();
             String json = gson.toJson(comp);
             return json;
         });
@@ -47,7 +54,7 @@ public class main {
         post("/generateSongP", (request, response) -> {
             System.out.println("Generate Parameter Request Received");
 
-            String status = handleParameters(request.body());
+           // String status = handleParameters(request.body());
             //Composition comp = Quill.createComposition();
 
 
@@ -56,7 +63,6 @@ public class main {
 
             //Fake json this
             String JSON = "{\"imageKey\":\"" + imageKey + "\",\"songPath\":\"" + songpath + "\"}";
-            //Fake json this
 
 
             return JSON;
@@ -100,7 +106,8 @@ public class main {
             String path =  "./songs/" + gp.imageKey.replaceAll("\\\\","\\\\\\\\") + ".mid";
             Quill.createComposition(mp, path);
 
-            return gp.imageKey.replaceAll("\\\\","\\\\\\\\");
+            //return gp.imageKey.replaceAll("\\\\","\\\\\\\\");
+            return gp.imageKey;
         } catch (Exception e) {
             throw new Exception("Invalid JSON", e);
         }
