@@ -45,6 +45,10 @@ public class Note extends VoiceElement implements Serializable {
         this.duration = duration;
     }
 
+    public void setOctave(Octave octave){
+        this.octave = octave;
+    }
+
     public Accidental getAccidental() {
         return tone.accidental;
     }
