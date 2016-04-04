@@ -8,6 +8,7 @@ function getStudpidDurationForNotes(duration) {
   if(duration == "DottedEighth") return "8d";
   if(duration == "Sixteenth") return "16";
   if(duration == "DottedSixteenth") return "16d";
+  console.log(duration);
   return "You Fucked Up";
 }
 

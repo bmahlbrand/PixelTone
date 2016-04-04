@@ -30,8 +30,9 @@ angular.module("pixelTone")
 
           //draw notes
           formatter.joinVoices(voices).format(voices);
-          for(var i=0; i<voices.length; i++) {
+          for(var i=1; i<voices.length && i<2; i++) {
             voices[i].draw(ctx, stave);
+            console.log(voices[i]);
           }
         };
 
@@ -40,15 +41,10 @@ angular.module("pixelTone")
 		        soundfontUrl: "./assets/soundfont/",
 		        instrument: "acoustic_grand_piano",
 	          onprogress: function(state, progress) {
-              console.log("Loading..");
-			        console.log(state, progress);
 		        },
 		        onsuccess: function() {
-              console.log("Loaded!");
               player = MIDI.Player;
-              console.log(player);
 				      player.loadFile(songurl, function(){
-                console.log(player);
                 player.start();
                 player.stop();
                 player.start();
@@ -59,12 +55,12 @@ angular.module("pixelTone")
         };
 
         $scope.fetchSong = function (song) {
-          $http.get("/songs/notes/1234.mid.NTS")
+          $http.get("/songs/notes/testmidi.mid.NTS")
             .then(function(res) {
               comp = new composition(res.data);
               $scope.song = comp;
               $scope.displaySongOnCanvas();
-              $scope.playSong("/songs/song/1234.mid");
+              $scope.playSong("/songs/song/testmidi.mid");
             });
         };
 
