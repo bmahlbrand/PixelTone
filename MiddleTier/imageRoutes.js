@@ -7,6 +7,7 @@ var fs = require ('fs');
 var jsonfile = require('jsonfile');
 var sp = require('./sendParams');
 //Setup Image analyzer (replace with API later)
+
 var imagecolors = require('imagecolors');
 
 var aws; 
@@ -21,7 +22,6 @@ if(fs.existsSync('./config/awsConfig.json')) {
 var imageRoutes = module.exports = express();
 
 //Simplified color constants
-//var COLORS = [ "BLACK", "WHITE", "RED", "GREEN", "BLUE", "YELLOW", "ORANGE", "PURPLE", "GREY", "BROWN"];
 var NEWCOLORS = [ "brown", "pink", "red", "orange", "green", "yellow", "purple", "blue", "light", "neutral", "dark"];
 
 var key = config.MSEmotionPrimeKey;
@@ -30,6 +30,7 @@ if (key == null || key == "")
     console.log("No API KEY (CANT CONNECT TO MS) - GET FROM JACOB/BEN");
 
 var image = "";
+var imageKey = "";
 
 //User Supplied Params -- global is bad
 var voices = 1;
@@ -78,10 +79,9 @@ var parseMSResponse = function (response) {
 
         var parsed = JSON.parse(str);
         //console.log(parsed);
-       
         var totalFaces = 0;
         var faces = [];
-        
+
         //console.log("Top 3 Facial Traits");
         //Loop through all the faces returned from microsoft
         //Sort and parse results into object to send later
@@ -102,7 +102,7 @@ var parseMSResponse = function (response) {
             tmpEmo.sortOn("value");
 
             var emotionArray = [];
-                    
+
             //Get top 3 highest emotion values, and store in object
             for (var i = 7; i > 4; i--) {
                 var faceEntry = {};
@@ -114,15 +114,15 @@ var parseMSResponse = function (response) {
             var emotions = { 'emotions': emotionArray };
             faces.push(emotions);
         });
-     
-     
+
+
         //can be path or uRL! double bonus
         getColors(image, 5, function (colors) {
 
             var colorArray = [];
-            console.log(colors);
+            //console.log(colors);
             var numberOfColors = colors.length >= 5 ? 5 : colors.length;
-            
+
             //TWEAK THESE VALUES
             //If dom color has <= 20, and next is within 5 then image is neutral
             if (numberOfColors > 1 && colors[0].percent <= 15 && (colors[0].percent - colors[1].percent <= 5)) {
@@ -148,6 +148,9 @@ var parseMSResponse = function (response) {
                 }
             }
 
+            if(colorArray.length == 1)
+                colorArray.push(colorArray[0]);
+
 
             var generationParameters =
                 {
@@ -156,16 +159,18 @@ var parseMSResponse = function (response) {
                     "colorEntries": colorArray,
                     "chaos": chaos,
                     "pref": pref,
-                    "voices": voices
+                    "voices": voices,
+                    "imageKey": imageKey
                 }
-                
-                
-                //var file = 'cb.json'
-                //jsonfile.writeFile(file, generationParameters, function (err) {
-                 //   console.error(err)
-                //});
-            //console.log(generationParameters);      
+                //Use for saving json to disk for quick testing
+                    //var file = 'cb.json'
+                    //jsonfile.writeFile(file, generationParameters, function (err) {
+                    //   console.error(err)
+                    //});
             return sp.sendParameters(generationParameters);
+           //var returnData = sp.sendParameters(generationParameters);
+           //console.log("From send params" + returnData);
+
         });
     });
 
@@ -183,12 +188,23 @@ imageRoutes.post('/process', function (req, res) {
             console.error(err);
         }
         else if (req.file) {
+           // console.log(req.body);
+            //console.log(req.file);
+            //console.log(req);
+            image = ".\\tmp\\" + req.file.filename;
             console.log(req.body);
             console.log(req.file);
-            image = "./tmp/" + req.file.filename;
+           // UNIX image = "./tmp/" + req.file.filename;
             //console.log("USER: " + req.user);
+            
+            imageKey = Date.now();
+
             if(hasAws)
-                aws.uploadImage(image, req.user.username);
+                aws.uploadImage(image, req.user.username,  imageKey);
+
+            
+            //aws.uploadImage(image, req.user.username, imageKey );
+
 
             pref = req.body.pref;
             voices = req.body.voices;
@@ -200,6 +216,9 @@ imageRoutes.post('/process', function (req, res) {
 
 //Send uploaded image to microsoft
 imageRoutes.get('/analyze', function (request, response) {
+
+        //SOrry
+        currentUser = request.user.username;
 
         var req = https.request(options, parseMSResponse);
 
@@ -242,4 +261,8 @@ function getColors(imagePath, numOfColors, callback) {
     console.log("ERRROR GETTING COLORS");
     console.log(err);
     });
+    
+    
+    //req.write(JSON.stringify(params));
+    //req.end();
 };

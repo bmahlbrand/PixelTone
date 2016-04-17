@@ -1,7 +1,7 @@
 <!-- home.html -->
 <div class="jumbotron text-center">
     <h1>Welcome to PixelTone</h1>
-    <h3>Upload a picture and get a tailored made song!</h3>
+    <h3>Upload a picture and get a tailor made song!</h3>
     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Upload your picture!!!</button>
 </div>
 
@@ -14,9 +14,9 @@
             <h4 class="modal-title text-center" id="myModalLabel">Upload your picture</h4>
           </div>
 
-         
+
             <div class="modal-body">
-            
+
               <form id="form-signUp">
               <div style="margin:0 auto; width: 200px;">
                 <img style="width: 200px; height: 150px;" id="output"/>
@@ -42,23 +42,23 @@
                   <label for="parameter3">parameter3</label>
                   <input type="number" class="form-control" id="parameter3" min="1" max="10" placeholder="Number 1 -10">
                 </div>
-                
+
                 <div class="modal-footer">
                   <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                   <button ng-click="upLoadNewSong()" id="btnSubmit" type="submit" class="btn btn-primary">Upload</button>
                 </div>
               </form>
-            
+
             </div>
-           
+
 
       </div>
     </div>
 </div>
 
 <div class="container" ng-hide="songsCreated.length == 0">
-  <h2>Songs you created</h2>                                                                  
-  <div class="table-responsive">          
+  <h2>Songs you created</h2>
+  <div class="table-responsive">
   <table class="table">
     <thead>
       <tr>
@@ -89,22 +89,22 @@
 </div>
 
 <div class="container">
-  <h2>Recent Songs created</h2>                                                                  
-  <div class="table-responsive">          
+  <h2>Recent Songs created</h2>
+  <div class="table-responsive">
   <table class="table">
     <thead>
       <tr>
-        <th>Img</th>
-        <th>Author</th>
-        <th>Controls</th>
+        <th>Image</th>
+        <th>Upload Date</th>
+        <th>Song</th>
       </tr>
     </thead>
     <tbody>
         <tr ng-repeat="recentSong in recentSongs">
-      <td class="col-md-2" ><img ng-src="{{ recentSong.icon }}" height="75" width="75" > </td>
-      <td><h4>{{ recentSong.author }}</h4></td>
+      <td class="col-md-2" ><img ng-src="{{ recentSong.URL }}" height="75" width="75" > </td>
+      <td><h4>{{ recentSong.Date }}</h4></td>
       <td>
-        <audio controls ><source ng-src="{{ recentSong.music }}" type="audio/mpeg"></audio>
+       <h4> <a href="../BackEnd/songs/{{ recentSong.SongPath }}">{{ recentSong.SongPath }}</a></h4>
       </td>
     </tr>
   </tbody>

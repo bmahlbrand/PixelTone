@@ -31,10 +31,10 @@ public class DiatonicScale extends Scale {
             Note next = null;
             switch (intervals[i - 1]) {
                 case Semitone:
-                    next = scale.getLast().getHalfStep();
+                    next = scale.getLast().getHalfStep(root.duration);
                     break;
                 case Tone:
-                    next = scale.getLast().getWholeStep();
+                    next = scale.getLast().getWholeStep(root.duration);
                     break;
             }
 

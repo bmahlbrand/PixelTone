@@ -3,8 +3,18 @@ import static spark.Spark.*;
 import ImageAPI.Objects.ColorEntry;
 import ImageAPI.Objects.Emotion;
 import ImageAPI.Objects.Face;
-import ImageAPI.Objects.GenerationParams;
+
+import ImageAPI.Params.GenerationParams;
+
+import ImageAPI.Params.MusicParams;
+
+import MusicAPI.harmonicsKB.dynamics.Accent;
+import MusicAPI.harmonicsKB.rhythm.Tempo;
 import com.google.gson.Gson;
+
+import MusicAPI.virtuouso.*;
+import MusicAPI.structure.*;
+
 
 import ImageAPI.*;
 
@@ -14,22 +24,48 @@ public class main {
 
     public static void main(String[] args) {
 
-
         port(3001);
 
         get("/", (request, response) -> "PixelTone BackEnd Works");
 
-       // CommonChordProgFitFunc fitnessfunction = new CommonChordProgFitFunc();
-        //GeneticAlgorithm.geneticAlgorithm(1, 7, 100, fitnessfunction);
+        // CommonChordProgFitFunc fitnessfunction = new CommonChordProgFitFunc();
+        // GeneticAlgorithm.geneticAlgorithm(1, 7, 100, fitnessfunction);
 
         post("/generateSong", (request, response) -> {
             System.out.println("Generate Parameter Request Received");
 
-            return handleParameters(request.body());
+            Gson gson = new Gson();
+
+            Composition comp = Quill.createCompositionOLD();
+
+            String json = gson.toJson(comp);
+            return json;
         });
+
+
+        post("/generateSongP", (request, response) -> {
+            System.out.println("Generate Parameter Request Received");
+
+            // String status = handleParameters(request.body());
+            //Composition comp = Quill.createComposition();
+
+
+            String imageKey = handleParameters(request.body());
+            String songpath = imageKey + ".mid";
+
+            //Fake json this
+            String JSON = "{\"imageKey\":\"" + imageKey + "\",\"songPath\":\"" + songpath + "\"}";
+            System.out.println("Generation Complete!");
+
+            return JSON;
+        });
+
+        testMidiGeneration();
+
     }
 
     public static String handleParameters(String params) throws Exception {
+
         try {
             Gson gson = new Gson();
             GenerationParams gp = gson.fromJson(params, GenerationParams.class);
@@ -54,21 +90,54 @@ public class main {
 
             System.out.println("\nImage Color Information\n");
 
-            for( ColorEntry ce : gp.colorEntries)
-            {
+            for (ColorEntry ce : gp.colorEntries) {
                 System.out.println("Color:" + ce.Color + " Color Percent:" + ce.Percent);
             }
 
-            moodToMusicFactory.TranslateParameters(gp);
+            MusicParams mp = moodToMusicFactory.TranslateParameters(gp);
+            String path = "./songs/" + gp.imageKey.replaceAll("\\\\", "\\\\\\\\") + ".mid";
+            Quill.createComposition(mp, path);
 
+            //return gp.imageKey.replaceAll("\\\\","\\\\\\\\");
+            displayMP(mp);
 
-            //Store song in database?
-            //????? TBD
-
+            return gp.imageKey;
         } catch (Exception e) {
             throw new Exception("Invalid JSON", e);
         }
         //Ideally we want to return a status code based on processing status (200) for success
-        return "Sucessfully Processed Params";
+
     }
+
+    private static void testMidiGeneration() {
+
+//        GeneticSimpleComposition testComposition = new GeneticSimpleComposition();
+
+//        MIDIGenerator.generateMidi(testComposition.getGeneratedSong());
+
+        MusicParams mp = new MusicParams(Tempo.Largo, Tempo.Moderato, "Bb", "C", true);
+        Quill.createComposition(mp, "./songs/testmidi.mid");
+        System.out.println("song generated");
+
+    }
+
+    private static void displayMP(MusicParams mp)
+    {
+
+        System.out.println(mp.TempoLow);
+        System.out.println(mp.TempoHigh);
+        System.out.println(mp.Key1);
+        System.out.println(mp.Key2);
+        System.out.println(mp.RelativeMinor);
+        System.out.println(mp.AccentType1);
+        System.out.println(mp.AccentWeight1);
+        System.out.println(mp.AccentType2);
+        System.out.println(mp.AccentWeight2);
+
+        System.out.println(mp.numberOfVoices);
+        System.out.println(mp.chaosLevel);
+
+
+    }
+
 }

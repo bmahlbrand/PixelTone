@@ -11,13 +11,13 @@ AWS.config.loadFromPath('./config/awsConfig.json');
 //connect to mongodb
 //mongoose.connect("mongodb://127.0.0.1:27017/PixelTone");
 
-exports.uploadImage = function(file, user) {
+exports.uploadImage = function(file, user, imageKey) {
 	var s3bucket = new AWS.S3({params: {Bucket: 'pixeltone'}});
 	var body = fs.createReadStream(file);
 	var myKey = keygen.generateBase30(20) + '.jpg';
-	
+
 	s3bucket.createBucket(function() {
-		var params = {	
+		var params = {
 			Key: myKey,
 			Body: body,
 			ContentType: 'image/jpeg',
@@ -29,14 +29,15 @@ exports.uploadImage = function(file, user) {
 				console.log(Math.round((evt.loaded / evt.total) * 100) + '% uploaded');
 				//100% uploaded
 				if(evt.loaded == evt.total) {
-					
+
 					//console.log("Creating new image in database");
 
 					var newImage = new Image();
 					newImage.local.key = myKey;
 					newImage.local.user = user;
 					newImage.local.uploadDate = new Date();
-					newImage.local.songKey = null;
+					newImage.local.songKey = imageKey;
+                    newImage.local.songPath = null;
 					newImage.local.url = 'https://s3.amazonaws.com/pixeltone/' + myKey;
 
 					//console.log(newImage);
@@ -54,16 +55,14 @@ exports.uploadImage = function(file, user) {
 
 					console.log('Uploaded file to https://s3.amazonaws.com/pixeltone/' + myKey);
 				}
-			}).send(); 
+			}).send();
 	});
 };
 
 //uploadImage('./testImg2.jpg');
 //s3bucket.getObject({Key: myKey}, function(err, data) {
-//	if (err) 
+//	if (err)
 //		console.log(err, err.stack); // an error occurred
-//	else     
+//	else
 //		console.log(data);           // successful response
 //});
-
-

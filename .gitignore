@@ -6,5 +6,4 @@
 BackEnd/build/
 *.iml
 
-MiddleTier/config/awsConfig.json
-
+MiddleTier/node_modules

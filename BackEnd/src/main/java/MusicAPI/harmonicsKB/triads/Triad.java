@@ -18,7 +18,20 @@ public abstract class Triad {
 
     protected abstract LimitedQueue<Note> constructChordTones(Note root);
 
+    public LimitedQueue<Note> getNotes() {
+        return notes;
+    }
+
     protected abstract boolean noteInTriad(Note root, Note check);
+
+    public boolean noteInTriad(Note check){
+         for (Note note : notes) {
+            if (note.equalsIgnoreOctaveAndDuration(check))
+                return true;
+        }
+
+        return false;
+    }
 
     void inversion(Inversion inversion) {
         switch (inversion) {
