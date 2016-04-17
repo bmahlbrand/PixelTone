@@ -8,6 +8,7 @@ import ImageAPI.Params.GenerationParams;
 
 import ImageAPI.Params.MusicParams;
 
+import MusicAPI.harmonicsKB.dynamics.Accent;
 import MusicAPI.harmonicsKB.rhythm.Tempo;
 import com.google.gson.Gson;
 
@@ -27,8 +28,8 @@ public class main {
 
         get("/", (request, response) -> "PixelTone BackEnd Works");
 
-       // CommonChordProgFitFunc fitnessfunction = new CommonChordProgFitFunc();
-       // GeneticAlgorithm.geneticAlgorithm(1, 7, 100, fitnessfunction);
+        // CommonChordProgFitFunc fitnessfunction = new CommonChordProgFitFunc();
+        // GeneticAlgorithm.geneticAlgorithm(1, 7, 100, fitnessfunction);
 
         post("/generateSong", (request, response) -> {
             System.out.println("Generate Parameter Request Received");
@@ -45,7 +46,7 @@ public class main {
         post("/generateSongP", (request, response) -> {
             System.out.println("Generate Parameter Request Received");
 
-           // String status = handleParameters(request.body());
+            // String status = handleParameters(request.body());
             //Composition comp = Quill.createComposition();
 
 
@@ -89,15 +90,17 @@ public class main {
 
             System.out.println("\nImage Color Information\n");
 
-            for( ColorEntry ce : gp.colorEntries) {
+            for (ColorEntry ce : gp.colorEntries) {
                 System.out.println("Color:" + ce.Color + " Color Percent:" + ce.Percent);
             }
 
             MusicParams mp = moodToMusicFactory.TranslateParameters(gp);
-            String path =  "./songs/" + gp.imageKey.replaceAll("\\\\","\\\\\\\\") + ".mid";
+            String path = "./songs/" + gp.imageKey.replaceAll("\\\\", "\\\\\\\\") + ".mid";
             Quill.createComposition(mp, path);
 
             //return gp.imageKey.replaceAll("\\\\","\\\\\\\\");
+            displayMP(mp);
+
             return gp.imageKey;
         } catch (Exception e) {
             throw new Exception("Invalid JSON", e);
@@ -117,4 +120,24 @@ public class main {
         System.out.println("song generated");
 
     }
+
+    private static void displayMP(MusicParams mp)
+    {
+
+        System.out.println(mp.TempoLow);
+        System.out.println(mp.TempoHigh);
+        System.out.println(mp.Key1);
+        System.out.println(mp.Key2);
+        System.out.println(mp.RelativeMinor);
+        System.out.println(mp.AccentType1);
+        System.out.println(mp.AccentWeight1);
+        System.out.println(mp.AccentType2);
+        System.out.println(mp.AccentWeight2);
+
+        System.out.println(mp.numberOfVoices);
+        System.out.println(mp.chaosLevel);
+
+
+    }
+
 }

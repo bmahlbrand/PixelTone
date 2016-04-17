@@ -113,7 +113,7 @@ app.get('/deadbeef', function(req, res, next) {
 app.get('/solo', function(req, res, next) {
     var file = 'solo.json'
     jsonfile.readFile(file, function(err, obj) {
-        var ret = sp.sendParameters(obj, res, 1);
+        var ret = sp.sendParameters(obj, res, 0);
     });
 });
 
@@ -121,7 +121,7 @@ app.get('/solo', function(req, res, next) {
 app.get('/cb', function(req, res, next) {
     var file = 'cb.json'
     jsonfile.readFile(file, function(err, obj) {
-        sp.sendParameters(obj);
+        var ret = sp.sendParameters(obj, res, 0);
         res.send(
             'Load PreCalculatedJson Without Auth<br><br>'
             + '<a href=/solo>The Solos</a><br><br>'
@@ -135,7 +135,7 @@ app.get('/cb', function(req, res, next) {
 app.get('/leo', function(req, res, next) {
     var file = 'leo.json'
     jsonfile.readFile(file, function(err, obj) {
-        sp.sendParameters(obj);
+        var ret = sp.sendParameters(obj, res, 0);
         res.send(
             'Load PreCalculatedJson Without Auth<br><br>'
             + '<a href=/solo>The Solos</a><br><br>'

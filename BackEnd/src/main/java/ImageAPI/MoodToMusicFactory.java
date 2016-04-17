@@ -37,10 +37,10 @@ public class MoodToMusicFactory {
                 colorTranslationFactory.translate(gp.colorEntries)
         );
 
-        return MergeParams(translatedParams);
+        return MergeParams(translatedParams, gp.chaos, gp.voices, gp.prefs);
     }
 
-    private MusicParams MergeParams(TranslatedParams translatedParams) {
+    private MusicParams MergeParams(TranslatedParams translatedParams,int chaos, int voices, int prefs) {
         //From faces we have
         //Weight of this emotion compared to others
         // Two Keys
@@ -147,7 +147,7 @@ public class MoodToMusicFactory {
         Tempo t1 = Tempo.Moderato.getTempo((int) calcedTempo);
         Tempo t2 = Tempo.Moderato.getTempo((int) (calcedTempo + 10));
 
-        MusicParams mp = new MusicParams(t1, t2, k1, k2, relativeMinor, AT1, AW1, AT2, AW2);
+        MusicParams mp = new MusicParams(t1, t2, k1, k2, relativeMinor, AT1, AW1, AT2, AW2, chaos, voices);
 
         return mp;
     }
