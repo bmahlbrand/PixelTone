@@ -114,6 +114,12 @@ app.get('/solo', function(req, res, next) {
     var file = 'solo.json'
     jsonfile.readFile(file, function(err, obj) {
         var ret = sp.sendParameters(obj, res, 0);
+        res.send(
+            'Load PreCalculatedJson Without Auth<br><br>'
+            + '<a href=/solo>The Solos</a><br><br>'
+            + '<a href=/cb>Crying Baby</a><br><br>'
+            + '<a href=/leo>Leonidas</a><br><br>'
+        );
     });
 });
 

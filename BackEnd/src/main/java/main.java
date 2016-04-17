@@ -80,10 +80,10 @@ public class main {
 
                 System.out.println("Face #" + i++ + ":\n");
 
-                for (Emotion e : f.emotions) {
-                    System.out.println("Facial Emotion:" + e.emotion);
-                    System.out.println("Emotion Value:" + e.value);
-                }
+              //  for (Emotion e : f.emotions) {
+                    System.out.println("Facial Emotion:" + f.emotions.get(0).emotion);
+                    System.out.println("Emotion Value:" + f.emotions.get(0).value);
+              //  }
 
                 System.out.println("------------------------------------");
             }
@@ -103,7 +103,7 @@ public class main {
 
             return gp.imageKey;
         } catch (Exception e) {
-            throw new Exception("Invalid JSON", e);
+            throw new Exception("Exception", e);
         }
         //Ideally we want to return a status code based on processing status (200) for success
 
