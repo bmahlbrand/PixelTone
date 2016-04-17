@@ -73,7 +73,7 @@ public class EmotionTranslationFactory {
         }
         //Sort mappings base on cumulative weights per emotion from all faces
         //Lambda baby - Austin Powers
-        Arrays.sort(m, (a, b) -> Double.compare(a.weight, b.weight));
+        Arrays.sort(m, (b, a) -> Double.compare(a.weight, b.weight));
 
         //m is now an array with mappings, where the most weighted emotion is in element 0
         //Get the combined weight of the top 3 emotions
