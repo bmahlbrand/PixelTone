@@ -163,7 +163,7 @@ var parseMSResponse = function (response) {
                     "imageKey": imageKey
                 }
                 //Use for saving json to disk for quick testing
-                    //var file = 'cb.json'
+                    //var file = 'happy.json'
                     //jsonfile.writeFile(file, generationParameters, function (err) {
                     //   console.error(err)
                     //});

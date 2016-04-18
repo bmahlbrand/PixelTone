@@ -49,7 +49,7 @@ public class main {
 
             Gson gson = new Gson();
             String json = gson.toJson(handleParameters(request.body()));
-            
+
             System.out.println("Generation Complete!");
             return json;
         });

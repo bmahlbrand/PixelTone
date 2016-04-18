@@ -199,7 +199,7 @@ public class MoodToMusicFactory {
         //This is okay
         k1 = translatedParams.fromEmotion[0].key1;
         k2 = translatedParams.fromEmotion[0].key2;
-        relativeMinor = !translatedParams.fromColor[0].major;
+        relativeMinor = translatedParams.fromColor[0].relativeMinor;
 
 
         //Calculate Accent Type, Accent Weight
