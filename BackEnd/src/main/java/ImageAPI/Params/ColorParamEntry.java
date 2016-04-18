@@ -10,7 +10,7 @@ public class ColorParamEntry {
     public double Tempo;
     public Accent AccentType;
     public double AccentPercent;
-    public boolean major;
+    public boolean relativeMinor;
     public double overallWeight;
 
     //Tempo, Accent, Flat, Major
@@ -18,6 +18,6 @@ public class ColorParamEntry {
         this.Tempo = t;
         this.AccentType = w;
         this.AccentPercent = f;
-        this.major = major;
+        this.relativeMinor = major;
     }
 }
