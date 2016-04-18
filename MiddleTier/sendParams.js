@@ -64,7 +64,12 @@ var saveReturn = function(returnData)
     console.log(returnData);
         var key = returnData.imageKey;
         var sp = returnData.songPath;
-
+        var faces = returnData.numberOfFaces;
+        var proCo = returnData.prominantColor;
+        var songkey = returnData.chosenKey;
+        var temp = returnData.chosenTempo;
+        var rm = returnData.relativeMinor;
+        
      Image.findOne({ 'local.songKey': key }, function (err, img) {
         if (!img) {
             console.log("can't find key");
@@ -73,6 +78,11 @@ var saveReturn = function(returnData)
 
 
         img.local.songPath = sp;
+        img.local.numberOfFaces = faces;
+        img.local.prominantColor = proCo;
+        img.local.chosenKey = songkey;
+        img.local.chosenTempo = temp;
+        img.local.relativeMinor = rm;
 
         img.save(function (err) {
             if (err)

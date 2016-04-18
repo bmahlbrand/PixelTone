@@ -163,7 +163,7 @@ public class MoodToMusicFactory {
             //Modifier:0.7502972143648953
             //Loop through all tempos,
             for (TempoM t : tm) {
-                System.out.println(t.tempo +   "  " + t.weight + " " + t.color);
+                //System.out.println(t.tempo +   "  " + t.weight + " " + t.color);
                 double temp;
                 if (t.tempo < 1) { //if < 1, get difference from 1 and negify it
                     temp = -1*(2 - t.tempo);
@@ -181,22 +181,21 @@ public class MoodToMusicFactory {
                 tempSum += temp * t.weight;
             }
 
-            System.out.println("PreModifier:" + tempSum);
+            //System.out.println("PreModifier:" + tempSum);
             tempSum = tempSum * 100;
             tempSum = (100 + tempSum) / 100;
-            System.out.println("FinalModtoTempo:" + tempSum);
-            System.out.println("High:" + TempoHigh);
-            System.out.println("Low:" + TempoLow);
+            //System.out.println("FinalModtoTempo:" + tempSum);
+            //System.out.println("High:" + TempoHigh);
+            //System.out.println("Low:" + TempoLow);
 
 
         calcedTempo *= tempSum;
-        System.out.println("FINALTEMPO:" + calcedTempo);
+        //System.out.println("FINALTEMPO:" + calcedTempo);
 
         String k1;
         String k2;
         boolean relativeMinor;
 
-        //Change this for sprint 3...
         //This is okay
         k1 = translatedParams.fromEmotion[0].key1;
         k2 = translatedParams.fromEmotion[0].key2;
@@ -226,8 +225,17 @@ public class MoodToMusicFactory {
             AW2 = translatedParams.fromColor[1].AccentPercent;
         }
 
-        Tempo t1 = Tempo.Moderato.getTempo((int) calcedTempo);
-        Tempo t2 = Tempo.Moderato.getTempo((int) (calcedTempo + 10));
+        Tempo t1;
+        Tempo t2;
+        if(tempSum < 1) {
+            t1 = Tempo.Moderato.getTempo((int) calcedTempo);
+            t2 = Tempo.Moderato.getTempo((int) (calcedTempo + 20));
+        }
+        else {
+            t1 = Tempo.Moderato.getTempo((int) (calcedTempo - 20));
+            t2 = Tempo.Moderato.getTempo((int) calcedTempo);
+        }
+
 
         MusicParams mp = new MusicParams(t1, t2, k1, k2, relativeMinor, AT1, AW1, AT2, AW2, chaos, voices);
 
