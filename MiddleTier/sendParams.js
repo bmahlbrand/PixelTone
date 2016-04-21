@@ -69,7 +69,8 @@ var saveReturn = function(returnData)
         var songkey = returnData.chosenKey;
         var temp = returnData.chosenTempo;
         var rm = returnData.relativeMinor;
-        
+        var np = returnData.notePath;
+
      Image.findOne({ 'local.songKey': key }, function (err, img) {
         if (!img) {
             console.log("can't find key");

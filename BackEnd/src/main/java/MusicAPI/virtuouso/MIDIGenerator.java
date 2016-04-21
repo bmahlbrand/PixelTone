@@ -3,6 +3,7 @@ package MusicAPI.virtuouso;
 import MusicAPI.structure.*;
 import javax.sound.midi.*;
 import java.io.*;
+import com.google.gson.Gson;
 
 public class MIDIGenerator{
 
@@ -21,13 +22,32 @@ public class MIDIGenerator{
 				voiceNumber++;
 
 			}
-
+			writeNotesToFile(generatedSong, path);
 			writeMidiToFile(midiSequence, path);
 			return path;
-
 		}
-		catch (Exception e){}
+		catch (Exception e){
+			midiSequence = null;
+		}
 		return null;
+	}
+
+	private static void writeNotesToFile(Composition notes, String filename) {
+		filename = filename + ".NTS";
+		System.out.println(filename);
+		Gson gson = new Gson();
+		String json = gson.toJson(notes);
+		File outputFile = new File(filename);
+		try{
+			FileOutputStream outputStream = new FileOutputStream(outputFile);
+  		outputStream.write(json.getBytes());
+  		outputStream.close();
+		}
+		catch (Exception e){
+			System.out.println("failure to write notes");
+		}
+
+
 	}
 
 	public static String generateMidi(String path, Composition generatedSong1, Composition generatedSong2){
@@ -110,25 +130,4 @@ public class MIDIGenerator{
 		}
 		catch(Exception e){}
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

@@ -45,4 +45,5 @@ public class MusicParams {
         Key2 = k2;
         RelativeMinor = rm;
     }
+
 }

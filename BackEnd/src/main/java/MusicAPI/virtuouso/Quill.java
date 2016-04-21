@@ -25,6 +25,7 @@ public class Quill {
     }
 
     public static void createComposition(MusicParams musicParams, String path) {
+/*<<<<<<< HEAD
         GeneticSimpleComposition testComposition1, testComposition2;
         Mode mode = musicParams.RelativeMinor ? Mode.Ionian.relativeMinor() : Mode.Ionian;
 
@@ -34,7 +35,19 @@ public class Quill {
         MIDIGenerator.generateMidi(path, testComposition1.getGeneratedSong());
 
 //        MIDIGenerator.generateMidi(path, testComposition1.getGeneratedSong(), testComposition2.getGeneratedSong());
-    }
+  //  }
+=======*/
+            GeneticSimpleComposition testComposition1, testComposition2;
+            Mode mode = musicParams.RelativeMinor ? Mode.Ionian.relativeMinor() : Mode.Ionian;
+
+    //        testComposition2 = new GeneticSimpleComposition(new Note(musicParams.Key1), mode, musicParams.TempoLow.getBpm());
+            testComposition1 = new GeneticSimpleComposition(new Note(musicParams.Key2), mode, musicParams.TempoHigh.getBpm());
+
+            MIDIGenerator.generateMidi(path, testComposition1.getGeneratedSong());
+
+    //        MIDIGenerator.generateMidi(path, testComposition1.getGeneratedSong(), testComposition2.getGeneratedSong());
+        }
+
 
     public static Section scaleExercise() {
         Note quarterNote = new Note("A", BeatDuration.Quarter);
