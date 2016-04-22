@@ -96,6 +96,10 @@ app.use('/upload', function(req, res) {
   res.sendFile(path.join(__dirname, '../website', 'index.html'));
 });
 
+app.use('/songViewer', function(req, res) {
+  res.sendFile(path.join(__dirname, '../website', 'index.html'));
+});
+
 
 
 

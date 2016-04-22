@@ -14,7 +14,8 @@ var imageSchema = mongoose.Schema({
         chosenTempo:    String,
         chosenKey:      String,
         relativeMinor:  Boolean,
-        url:            String
+        url:            String,
+        notePath:   String
     }
 });
 

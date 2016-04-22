@@ -1,11 +1,16 @@
 angular.module('pixelTone').factory('AuthService',
     ['$q', '$timeout', '$http',
-        function($q, $timeout, $http) {
+        function ($q, $timeout, $http) {
+            
+            //path to songs, change when s3 upload works
+            var path = "../BackEnd/songs/";
 
             // create user variable
             var user = null;
             var userName = null;
             var userData = null;
+            var playSong = null;
+            
 
             // return available functions for use in the controllers
             return ({
@@ -15,19 +20,37 @@ angular.module('pixelTone').factory('AuthService',
                 login: login,
                 logout: logout,
                 register: register,
+                getData: getData,
+                getUserData: getUserData,
+                getSong: getSong,
+                setSong: setSong,
                 getRecentData: getRecentData
             });
 
             function getUserName() {
                 return userName;
             }
+            
+            function getSong() {
+                return playSong;
+            }
+            
+            function setSong(songKey) {
+                playSong = path + songKey;
+            }
 
             function getRecentData() {
-                if (isLoggedIn) {
+                if (isLoggedIn()) {
                     getData();
                     return userData;
                 }
             }
+
+            function getUserData() {
+                if (isLoggedIn())
+                    return userData;
+            }
+
 
             function isLoggedIn() {
                 if (user) {
@@ -40,7 +63,7 @@ angular.module('pixelTone').factory('AuthService',
             function getUserStatus() {
                 $http.get('/user/status')
                     // handle success
-                    .success(function(data) {
+                    .success(function (data) {
                         if (data.status) {
                             user = true;
                         } else {
@@ -48,7 +71,7 @@ angular.module('pixelTone').factory('AuthService',
                         }
                     })
                     // handle error
-                    .error(function(data) {
+                    .error(function (data) {
                         user = false;
                     });
             }
@@ -62,7 +85,7 @@ angular.module('pixelTone').factory('AuthService',
                 $http.post('/user/login',
                     { username: username, password: password })
                     // handle success
-                    .success(function(data, status) {
+                    .success(function (data, status) {
                         if (status === 200 && data.status) {
                             userName = username;
                             user = true;
@@ -73,7 +96,7 @@ angular.module('pixelTone').factory('AuthService',
                         }
                     })
                     // handle error
-                    .error(function(data) {
+                    .error(function (data) {
                         user = false;
                         deferred.reject();
                     });
@@ -91,12 +114,13 @@ angular.module('pixelTone').factory('AuthService',
                 // send a get request to the server
                 $http.get('/user/logout')
                     // handle success
-                    .success(function(data) {
+                    .success(function (data) {
                         user = false;
+                        userData = null;
                         deferred.resolve();
                     })
                     // handle error
-                    .error(function(data) {
+                    .error(function (data) {
                         user = false;
                         deferred.reject();
                     });
@@ -115,15 +139,16 @@ angular.module('pixelTone').factory('AuthService',
                 $http.post('/user/register',
                     { username: username, password: password })
                     // handle success
-                    .success(function(data, status) {
+                    .success(function (data, status) {
                         if (status === 200 && data.status) {
                             deferred.resolve();
                         } else {
                             deferred.reject();
                         }
                     })
+
                     // handle error
-                    .error(function(data) {
+                    .error(function (data) {
                         deferred.reject();
                     });
 
@@ -132,29 +157,28 @@ angular.module('pixelTone').factory('AuthService',
 
             }
 
-
             function getData() {
-
                 // create a new instance of deferred
                 var deferred = $q.defer();
 
+                if (!isLoggedIn())
+                    deferred.reject("not logged in");
                 // send a post request to the server
                 $http.get('/user/images')
                     // handle success
-                    .success(function(data, status) {
+                    .success(function (data, status) {
                         if (status === 200) {
                             userData = data;
                             console.log(userData);
-                            deferred.resolve();
+                            deferred.resolve(data);
                         } else {
-                            deferred.reject();
+                            deferred.reject(status);
                         }
                     })
                     // handle error
-                    .error(function(data) {
-                        deferred.reject();
+                    .error(function (data) {
+                        deferred.reject("HTTP ERROR");
                     });
-
                 // return promise object
                 return deferred.promise;
             }
