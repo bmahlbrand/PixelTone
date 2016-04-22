@@ -1,12 +1,16 @@
 angular.module('pixelTone').factory('AuthService',
     ['$q', '$timeout', '$http',
         function ($q, $timeout, $http) {
+            
+            //path to songs, change when s3 upload works
+            var path = "../BackEnd/songs/";
 
             // create user variable
             var user = null;
             var userName = null;
             var userData = null;
             var playSong = null;
+            
 
             // return available functions for use in the controllers
             return ({
@@ -32,7 +36,7 @@ angular.module('pixelTone').factory('AuthService',
             }
             
             function setSong(songKey) {
-                playSong = songKey;
+                playSong = path + songKey;
             }
 
             function getRecentData() {
