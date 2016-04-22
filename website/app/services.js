@@ -141,7 +141,6 @@ angular.module('pixelTone').factory('AuthService',
 
             }
 
-
             function getData() {
                 // create a new instance of deferred
                 var deferred = $q.defer();
@@ -155,26 +154,16 @@ angular.module('pixelTone').factory('AuthService',
                         if (status === 200) {
                             userData = data;
                             console.log(userData);
-
-                            deferred.resolve("hello");
-                            console.log("GOOD");
-                            return true;
-
+                            deferred.resolve(data);
                         } else {
-                            console.log("WTF");
-                            // return false;
-                            deferred.reject("wtf");
+                            deferred.reject(status);
                         }
                     })
                     // handle error
                     .error(function (data) {
-                        console.log("WTF");
-                        // return false;
-                        deferred.reject("hello");
+                        deferred.reject("HTTP ERROR");
                     });
-
                 // return promise object
-                console.log("BLARG");
                 return deferred.promise;
             }
         }]);

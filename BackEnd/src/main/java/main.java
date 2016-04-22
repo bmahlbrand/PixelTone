@@ -45,20 +45,8 @@ public class main {
           }
         });
 
-        post("/generateSong", (request, response) -> {
-          System.out.println("Generate Parameter Request Received");
-          String imageKey = handleParameters(request.body()).imageKey;
-          String songpath = (imageKey + ".mid").replaceAll("\\\\","\\\\\\\\");;
-          String notepath = songpath + ".NTS";
-          //Fake json this
-          String JSON = "{\"imageKey\":\"" + imageKey +
-                        "\",\"songPath\":\"" + songpath +
-                        "\",\"notePath\":\"" + notepath + "\"}";
 
-          return JSON;
-        });
-        
-        post("/generateSongP", (request, response) -> {
+        post("/generateSong", (request, response) -> {
             System.out.println("Generate Parameter Request Received");
 
             Gson gson = new Gson();

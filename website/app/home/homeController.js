@@ -5,24 +5,20 @@ angular.module("pixelTone")
 
             AuthService.getData()
                 // handle success
-                .then(function () {
+                .then(function (data) {
                     $scope.recentSongs = AuthService.getUserData().imageData;
                     $scope.isDataBack = true;
                 })
                 // handle error
-                .catch(function () {
-                    console.log("ERRORWTF");
+                .catch(function (data) {
+                    console.log("ERROR");
+                    console.log(data);
                     $scope.error = true;
                     $scope.isDataBack = false;
                 });
-
 
             /*$scope.addSong = function (author, img) {
                 $scope.songsCreated.push({ 'icon': img, 'author': author });
             }*/
                  $scope.songsCreated = [];
-                 
-
-       
-
         }]);

@@ -221,8 +221,10 @@ userRoutes.get('/images', function (req, res) {
             status: false
         });
     }
+    
+    console.log(req.user);
     //Find all images uploaded by specific user
-    Image.collection.find({}, { 'local.user': req.body.username }).toArray(function (err, docs) {
+    Image.collection.find( { 'local.user': req.user.username }).toArray(function (err, docs) {
         if (!docs) {
             // console.log("No uploads");
             return res.status(200).json({
@@ -235,7 +237,7 @@ userRoutes.get('/images', function (req, res) {
         docs.forEach(function (value) {
             imageData.push(value.local);
         });
-
+        imageData.reverse();
         var jsonString = JSON.stringify(imageData);
 
         res.status(200).json({
