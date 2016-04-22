@@ -1,6 +1,6 @@
 angular.module('pixelTone').factory('AuthService',
     ['$q', '$timeout', '$http',
-        function($q, $timeout, $http) {
+        function ($q, $timeout, $http) {
 
             // create user variable
             var user = null;
@@ -15,6 +15,8 @@ angular.module('pixelTone').factory('AuthService',
                 login: login,
                 logout: logout,
                 register: register,
+                getData: getData,
+                 getUserData: getUserData,
                 getRecentData: getRecentData
             });
 
@@ -23,11 +25,17 @@ angular.module('pixelTone').factory('AuthService',
             }
 
             function getRecentData() {
-                if (isLoggedIn) {
+                if (isLoggedIn()) {
                     getData();
                     return userData;
                 }
             }
+            
+             function getUserData() {
+                 if(isLoggedIn())
+                    return userData;
+                }
+            
 
             function isLoggedIn() {
                 if (user) {
@@ -40,7 +48,7 @@ angular.module('pixelTone').factory('AuthService',
             function getUserStatus() {
                 $http.get('/user/status')
                     // handle success
-                    .success(function(data) {
+                    .success(function (data) {
                         if (data.status) {
                             user = true;
                         } else {
@@ -48,7 +56,7 @@ angular.module('pixelTone').factory('AuthService',
                         }
                     })
                     // handle error
-                    .error(function(data) {
+                    .error(function (data) {
                         user = false;
                     });
             }
@@ -62,7 +70,7 @@ angular.module('pixelTone').factory('AuthService',
                 $http.post('/user/login',
                     { username: username, password: password })
                     // handle success
-                    .success(function(data, status) {
+                    .success(function (data, status) {
                         if (status === 200 && data.status) {
                             userName = username;
                             user = true;
@@ -73,7 +81,7 @@ angular.module('pixelTone').factory('AuthService',
                         }
                     })
                     // handle error
-                    .error(function(data) {
+                    .error(function (data) {
                         user = false;
                         deferred.reject();
                     });
@@ -91,12 +99,12 @@ angular.module('pixelTone').factory('AuthService',
                 // send a get request to the server
                 $http.get('/user/logout')
                     // handle success
-                    .success(function(data) {
+                    .success(function (data) {
                         user = false;
                         deferred.resolve();
                     })
                     // handle error
-                    .error(function(data) {
+                    .error(function (data) {
                         user = false;
                         deferred.reject();
                     });
@@ -115,15 +123,16 @@ angular.module('pixelTone').factory('AuthService',
                 $http.post('/user/register',
                     { username: username, password: password })
                     // handle success
-                    .success(function(data, status) {
+                    .success(function (data, status) {
                         if (status === 200 && data.status) {
                             deferred.resolve();
                         } else {
                             deferred.reject();
                         }
                     })
+
                     // handle error
-                    .error(function(data) {
+                    .error(function (data) {
                         deferred.reject();
                     });
 
@@ -134,28 +143,38 @@ angular.module('pixelTone').factory('AuthService',
 
 
             function getData() {
-
                 // create a new instance of deferred
                 var deferred = $q.defer();
 
+                if (!isLoggedIn())
+                    deferred.reject("not logged in");
                 // send a post request to the server
                 $http.get('/user/images')
                     // handle success
-                    .success(function(data, status) {
+                    .success(function (data, status) {
                         if (status === 200) {
                             userData = data;
                             console.log(userData);
-                            deferred.resolve();
+
+                            deferred.resolve("hello");
+                            console.log("GOOD");
+                            return true;
+
                         } else {
-                            deferred.reject();
+                            console.log("WTF");
+                            // return false;
+                            deferred.reject("wtf");
                         }
                     })
                     // handle error
-                    .error(function(data) {
-                        deferred.reject();
+                    .error(function (data) {
+                        console.log("WTF");
+                        // return false;
+                        deferred.reject("hello");
                     });
 
                 // return promise object
+                console.log("BLARG");
                 return deferred.promise;
             }
         }]);
