@@ -24,12 +24,9 @@ module.exports = {
             });
 
             response.on('end', function () {
-                console.log("Response from BackEnd:");
+                console.log("Generation Finished on BackEnd");
                 var response = JSON.parse(str);
-
                 saveReturn(response);
-                if (sv == 1)
-                    res.send(JSON.stringify(response));
             });
 
             response.on('error', function (err) {

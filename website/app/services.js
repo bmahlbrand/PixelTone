@@ -101,6 +101,7 @@ angular.module('pixelTone').factory('AuthService',
                     // handle success
                     .success(function (data) {
                         user = false;
+                        userData = null;
                         deferred.resolve();
                     })
                     // handle error

@@ -57,38 +57,6 @@
     </div>
 </div>
 
-<div class="container" ng-hide="songsCreated.length == 0">
-  <h2>Songs you created</h2>
-  <div class="table-responsive">
-  <table class="table">
-    <thead>
-      <tr>
-        <th>Img</th>
-        <th>Author</th>
-        <th>Controls</th>
-      </tr>
-    </thead>
-    <tbody>
-        <tr ng-repeat="songCreated in songsCreated">
-      <td class="col-md-2" ><img ng-src="{{ songCreated.icon }}" height="75" width="75" > </td>
-      <td><h4>{{ songCreated.author }}</h4></td>
-      <td>
-        <button type="button" class="btn btn-default" aria-label="Left Align">
-            <span class="glyphicon glyphicon glyphicon-play" aria-hidden="true"></span>
-        </button>
-        <button type="button" class="btn btn-default" aria-label="Left Align">
-            <span class="glyphicon glyphicon-pause" aria-hidden="true"></span>
-        </button>
-        <button type="button" class="btn btn-default" aria-label="Left Align">
-            <span class="glyphicon glyphicon-backward" aria-hidden="true"></span>
-        </button>
-      </td>
-    </tr>
-  </tbody>
-  </table>
-  </div>
-</div>
-
 <div class="container" ng-show="isDataBack">
   <h2>Songs you created</h2>
   <div class="table-responsive">
