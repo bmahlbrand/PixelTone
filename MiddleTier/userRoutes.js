@@ -222,7 +222,7 @@ userRoutes.get('/images', function (req, res) {
         });
     }
     
-    console.log(req.user);
+    //console.log(req.user);
     //Find all images uploaded by specific user
     Image.collection.find( { 'local.user': req.user.username }).toArray(function (err, docs) {
         if (!docs) {

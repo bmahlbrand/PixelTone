@@ -74,6 +74,7 @@
       <td><h4>{{ recentSong.uploadDate }}</h4></td>
       <td>
        <h4> <a href="../BackEnd/songs/{{ recentSong.songPath }}">{{ recentSong.songPath }}</a></h4>
+       <button ng-click="playSong(recentSong.songKey)" id="btnSubmit" type="submit" class="btn btn-primary">PlaySong</button>
       </td>
     </tr>
   </tbody>

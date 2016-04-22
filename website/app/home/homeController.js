@@ -17,8 +17,11 @@ angular.module("pixelTone")
                     $scope.isDataBack = false;
                 });
 
-            /*$scope.addSong = function (author, img) {
-                $scope.songsCreated.push({ 'icon': img, 'author': author });
-            }*/
-                 $scope.songsCreated = [];
+            $scope.songsCreated = [];
+
+            $scope.playSong = function (songKey) {
+                AuthService.setSong(songKey);
+                $location.path('/songViewer');
+
+            }
         }]);

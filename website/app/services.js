@@ -6,6 +6,7 @@ angular.module('pixelTone').factory('AuthService',
             var user = null;
             var userName = null;
             var userData = null;
+            var playSong = null;
 
             // return available functions for use in the controllers
             return ({
@@ -17,11 +18,21 @@ angular.module('pixelTone').factory('AuthService',
                 register: register,
                 getData: getData,
                 getUserData: getUserData,
+                getSong: getSong,
+                setSong: setSong,
                 getRecentData: getRecentData
             });
 
             function getUserName() {
                 return userName;
+            }
+            
+            function getSong() {
+                return playSong;
+            }
+            
+            function setSong(songKey) {
+                playSong = songKey;
             }
 
             function getRecentData() {
