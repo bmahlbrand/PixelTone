@@ -6,6 +6,7 @@
 </div>
 
 <!-- Modal -->
+
 <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
     <div class="modal-dialog" role="document">
       <div class="modal-content">
@@ -89,7 +90,7 @@
 </div>
 
 <div class="container" ng-show="isDataBack">
-  <h2>Recent Songs created</h2>
+  <h2>Songs you created</h2>
   <div class="table-responsive">
   <table class="table">
     <thead>
@@ -101,10 +102,10 @@
     </thead>
     <tbody>
         <tr ng-repeat="recentSong in recentSongs">
-      <td class="col-md-2" ><img ng-src="{{ recentSong.URL }}" height="75" width="75" > </td>
-      <td><h4>{{ recentSong.Date }}</h4></td>
+      <td class="col-md-2" ><img ng-src="{{ recentSong.url }}" height="75" width="75" > </td>
+      <td><h4>{{ recentSong.uploadDate }}</h4></td>
       <td>
-       <h4> <a href="../BackEnd/songs/{{ recentSong.SongPath }}">{{ recentSong.SongPath }}</a></h4>
+       <h4> <a href="../BackEnd/songs/{{ recentSong.songPath }}">{{ recentSong.songPath }}</a></h4>
       </td>
     </tr>
   </tbody>

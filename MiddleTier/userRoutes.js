@@ -214,36 +214,29 @@ userRoutes.get('/status', function(req, res) {
 });
 
 //Get list of images and songs for user
-userRoutes.get('/images', function(req, res) {
+userRoutes.get('/images', function (req, res) {
     if (!req.isAuthenticated()) {
-       // console.log("Not authed");
+        // console.log("Not authed");
         return res.status(200).json({
             status: false
         });
     }
     //Find all images uploaded by specific user
-    Image.collection.find({}, { 'local.user': req.body.username }).toArray(function(err, docs) {
+    Image.collection.find({}, { 'local.user': req.body.username }).toArray(function (err, docs) {
         if (!docs) {
-           // console.log("No uploads");
+            // console.log("No uploads");
             return res.status(200).json({
                 status: false
             });
         }
-           // console.log("UPloads");
-           var imageData = [];
-           
-           docs.forEach(function(value){
-                var key = "URL";
-                var key2 = "Date";
-                var key3 = "SongPath"
-                var entry = {};
-                entry[key] = value.local.url;
-                entry[key2] = value.local.uploadDate;
-                entry[key3] = value.local.songPath;
-                imageData.push(entry);
-            });
-            
-            var jsonString = JSON.stringify(imageData);
+        // console.log("UPloads");
+        var imageData = [];
+
+        docs.forEach(function (value) {
+            imageData.push(value.local);
+        });
+
+        var jsonString = JSON.stringify(imageData);
 
         res.status(200).json({
             imageData

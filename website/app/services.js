@@ -16,7 +16,7 @@ angular.module('pixelTone').factory('AuthService',
                 logout: logout,
                 register: register,
                 getData: getData,
-                 getUserData: getUserData,
+                getUserData: getUserData,
                 getRecentData: getRecentData
             });
 
@@ -30,12 +30,12 @@ angular.module('pixelTone').factory('AuthService',
                     return userData;
                 }
             }
-            
-             function getUserData() {
-                 if(isLoggedIn())
+
+            function getUserData() {
+                if (isLoggedIn())
                     return userData;
-                }
-            
+            }
+
 
             function isLoggedIn() {
                 if (user) {

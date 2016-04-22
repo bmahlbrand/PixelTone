@@ -13,40 +13,24 @@ import MusicAPI.virtuouso.models.genetic.GeneticSimpleComposition;
 
 /**
  * Created by ben on 3/5/2016.
- *
+ * <p>
  * The idea here is to create a class to interface the creation of a composition and its associated components with
  * the generative process
- *
  */
 public class Quill {
 
     public static void createPhrase() {
-
     }
 
     public static void createComposition(MusicParams musicParams, String path) {
-/*<<<<<<< HEAD
-        GeneticSimpleComposition testComposition1, testComposition2;
+
+        GeneticSimpleComposition testComposition1;
         Mode mode = musicParams.RelativeMinor ? Mode.Ionian.relativeMinor() : Mode.Ionian;
 
-//        testComposition2 = new GeneticSimpleComposition(new Note(musicParams.Key1), mode, musicParams.TempoLow.getBpm());
         testComposition1 = new GeneticSimpleComposition(new Note(musicParams.Key2), mode, musicParams.TempoHigh.getBpm());
 
         MIDIGenerator.generateMidi(path, testComposition1.getGeneratedSong());
-
-//        MIDIGenerator.generateMidi(path, testComposition1.getGeneratedSong(), testComposition2.getGeneratedSong());
-  //  }
-=======*/
-            GeneticSimpleComposition testComposition1, testComposition2;
-            Mode mode = musicParams.RelativeMinor ? Mode.Ionian.relativeMinor() : Mode.Ionian;
-
-    //        testComposition2 = new GeneticSimpleComposition(new Note(musicParams.Key1), mode, musicParams.TempoLow.getBpm());
-            testComposition1 = new GeneticSimpleComposition(new Note(musicParams.Key2), mode, musicParams.TempoHigh.getBpm());
-
-            MIDIGenerator.generateMidi(path, testComposition1.getGeneratedSong());
-
-    //        MIDIGenerator.generateMidi(path, testComposition1.getGeneratedSong(), testComposition2.getGeneratedSong());
-        }
+    }
 
 
     public static Section scaleExercise() {
@@ -62,20 +46,20 @@ public class Quill {
         thisSection.addMeasure(thisMeasure);
 
         Beat b = new Beat();
-        Chord chord = new Chord(new Diminished7thTriad(new Note("C")),BeatDuration.Half);
+        Chord chord = new Chord(new Diminished7thTriad(new Note("C")), BeatDuration.Half);
         b.addChord(chord);
         Measure m = new Measure();
         m.addBeat(b);
         //thisSection.addMeasure(m);
 
         Beat b2 = new Beat();
-        Chord chord2 = new Chord(new Major7ThTriad(new Note("C")),BeatDuration.Half);
+        Chord chord2 = new Chord(new Major7ThTriad(new Note("C")), BeatDuration.Half);
         b2.addChord(chord2);
         m.addBeat(b2);
         //thisSection.addMeasure(m);
 
         Beat b3 = new Beat();
-        Chord chord3 = new Chord(new Minor7ThTriad(new Note("A")),BeatDuration.Half);
+        Chord chord3 = new Chord(new Minor7ThTriad(new Note("A")), BeatDuration.Half);
         b3.addChord(chord3);
         m.addBeat(b);
         //thisSection.addMeasure(m);
@@ -86,7 +70,7 @@ public class Quill {
         m2.addBeat(b5);
 
         Beat b4 = new Beat();
-        Chord chord4 = new Chord(new Augmented7thTriad(new Note("C")),BeatDuration.Half); //look into correctness of this one
+        Chord chord4 = new Chord(new Augmented7thTriad(new Note("C")), BeatDuration.Half); //look into correctness of this one
         b4.addChord(chord4);
         m2.addBeat(b);
         thisSection.addMeasure(m2);
@@ -143,9 +127,6 @@ public class Quill {
         return thisSection;
     }
 
-
-
-
     public static Composition createCompositionOLD() {
         Composition composition = new Composition();
 
@@ -190,23 +171,4 @@ public class Quill {
         thisComposition.addVoice(thisVoice);
         return thisComposition;
     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

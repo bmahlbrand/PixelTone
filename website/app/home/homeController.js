@@ -17,10 +17,12 @@ angular.module("pixelTone")
                 });
 
 
-            $scope.addSong = function (author, img) {
+            /*$scope.addSong = function (author, img) {
                 $scope.songsCreated.push({ 'icon': img, 'author': author });
-            }
+            }*/
+                 $scope.songsCreated = [];
+                 
 
-            $scope.songsCreated = [];
+       
 
         }]);
