@@ -1,6 +1,7 @@
 angular.module("pixelTone")
     .controller('songViewerController', ['$scope', '$http', function ($scope, $http) {
         $scope.song = new composition();
+        $scope.isPlaying = false;
         // get specific song
         $scope.displaySongOnCanvas = function() {
           //delete the stupid canvas
@@ -36,23 +37,33 @@ angular.module("pixelTone")
           }
         };
 
-        $scope.playSong = function(songurl) {
-          MIDI.loadPlugin({
-		        soundfontUrl: "./assets/soundfont/",
-		        instrument: "acoustic_grand_piano",
-	          onprogress: function(state, progress) {
-		        },
-		        onsuccess: function() {
-              player = MIDI.Player;
-				      player.loadFile(songurl, function(){
-                player.start();
-                player.stop();
-                player.start();
-                player.resume();
-              });
-		          }
-	       });
+        $scope.loadSong = function(songurl) {
+            MIDI.loadPlugin({
+  		        soundfontUrl: "./assets/soundfont/",
+  		        instrument: "acoustic_grand_piano",
+  	          onprogress: function(state, progress) {
+  		        },
+  		        onsuccess: function() {
+                player = MIDI.Player;
+  				      player.loadFile(songurl, function(){
+                  player.start();
+                  player.stop();
+                });
+  		          }
+  	       });
         };
+
+        $scope.pausePlayButton = function() {
+          if($scope.isPlaying) {
+            MIDI.Player.pause(true);
+            $("#pausePlayIcon").addClass('glyphicon-play').removeClass('glyphicon-pause');
+            $scope.isPlaying = false;
+          }else{
+            player.resume();
+            $("#pausePlayIcon").addClass('glyphicon-pause').removeClass('glyphicon-play');
+            $scope.isPlaying = true;
+          }
+        }
 
         $scope.fetchSong = function (song) {
           $http.get("/songs/notes/testmidi.mid.NTS")
@@ -60,7 +71,7 @@ angular.module("pixelTone")
               comp = new composition(res.data);
               $scope.song = comp;
               $scope.displaySongOnCanvas();
-              $scope.playSong("/songs/song/testmidi.mid");
+              $scope.loadSong("/songs/song/testmidi.mid");
             });
         };
 
