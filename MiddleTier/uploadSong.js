@@ -11,10 +11,10 @@ AWS.config.loadFromPath('./config/awsConfig.json');
 //connect to mongodb
 //mongoose.connect("mongodb://127.0.0.1:27017/PixelTone");
 
-exports.uploadMidi = function(file, user, songKey) {
+exports.uploadSong = function(file, user, songKey) {
 	var s3bucket = new AWS.S3({params: {Bucket: 'pixeltone-midi'}});
 	var body = fs.createReadStream(file);
-	var filename = keygen.generateBase30(20) + '.midi';
+	var filename = keygen.generateBase30(20) + '.mid';
 
 	s3bucket.createBucket(function() {
 		var params = {
