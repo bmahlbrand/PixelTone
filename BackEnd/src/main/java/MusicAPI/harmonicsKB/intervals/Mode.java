@@ -35,8 +35,11 @@ public enum Mode {
         ArrayList<Interval> values = new ArrayList(Arrays.asList(steps));
 
         Collections.rotate(values, -getIndex());
-        steps = values.toArray(steps);
-        return steps;
+        Interval[] stepsCopy = {Interval.Tone, Interval.Tone, Interval.Semitone, Interval.Tone, Interval.Tone,
+            Interval.Tone, Interval.Semitone};
+        stepsCopy = values.toArray(stepsCopy);
+
+        return stepsCopy;
     }
 
     public Mode relativeMinor() {//TODO FINISH

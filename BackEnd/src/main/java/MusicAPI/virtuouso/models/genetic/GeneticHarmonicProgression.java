@@ -60,6 +60,7 @@ public class GeneticHarmonicProgression{
 		Measure currentMeasure = new Measure();
 		Beat currentBeat = new Beat();
 		Triad currentTriad = makeTriadFromChord(chord);
+		
 		currentBeat.addChord (new Chord(currentTriad, BeatDuration.Whole));
 
 		currentMeasure.addBeat(currentBeat);
@@ -77,11 +78,12 @@ public class GeneticHarmonicProgression{
 			case 3:
 			case 6:
 			case 5:
+			case 7:
 			return makeMajorTriadFromKeyScale(chord);
 			case 4:
-			return makeMajorTriadFromKeyScale(chord);
+			case 1:
+			return makeMinorTriadFromKeyScale(chord);
 			case 2:
-			case 7:
 			return makeDiminishedTriadFromKeyScale(chord);
 		}
 		return makeMajorTriadFromKeyScale(chord);
@@ -104,6 +106,7 @@ public class GeneticHarmonicProgression{
 	private Triad makeMajorTriadFromKeyScale(int degree){
 		DiatonicScale currentKey = new DiatonicScale(key, mode);
 		Note rootNote = currentKey.getNote(Degree.numToDegree(degree - 1));
+		rootNote = new Note(rootNote.getTone().toString());
 
 		return new MajorTriad(rootNote);
 	}
@@ -111,6 +114,7 @@ public class GeneticHarmonicProgression{
 	private Triad makeMinorTriadFromKeyScale(int degree){
 		DiatonicScale currentKey = new DiatonicScale(key, mode);
 		Note rootNote = currentKey.getNote(Degree.numToDegree(degree - 1));
+		rootNote = new Note(rootNote.getTone().toString());
 
 		return new MinorTriad(rootNote);
 
@@ -119,6 +123,7 @@ public class GeneticHarmonicProgression{
 	private Triad makeDiminishedTriadFromKeyScale(int degree){
 		DiatonicScale currentKey = new DiatonicScale(key, mode);
 		Note rootNote = currentKey.getNote(Degree.numToDegree(degree - 1));
+		rootNote = new Note(rootNote.getTone().toString());
 
 		return new DiminishedTriad(rootNote);
 
