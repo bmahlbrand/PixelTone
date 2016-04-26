@@ -1,27 +1,28 @@
 angular.module("pixelTone")
-  .controller('songViewerController', ['$scope', '$http', 'AuthService', function ($scope, $http, AuthService) {
-    $scope.song = new composition();
-    // get specific song
-    $scope.displaySongOnCanvas = function () {
-      //delete the stupid canvas
-      var canvasDiv = document.getElementById("vexflow-canvas-div");
-      canvasDiv.innerHTML = "";
+.controller('songViewerController', ['$scope', '$http', 'AuthService', function ($scope, $http, AuthService) {
+  $scope.song = new composition();
+  $scope.isPlaying = false;
+  // get specific song
+  $scope.displaySongOnCanvas = function () {
+    //delete the stupid canvas
+    var canvasDiv = document.getElementById("vexflow-canvas-div");
+    canvasDiv.innerHTML = "";
 
-      //get voices
-      var voices = $scope.song.getVoices();
+    //get voices
+    var voices = $scope.song.getVoices();
 
-      //find the width necessary for the voices
-      var formatter = new Vex.Flow.Formatter();
-      var width = formatter.preCalculateMinTotalWidth(voices) * 1.15;
+    //find the width necessary for the voices
+    var formatter = new Vex.Flow.Formatter();
+    var width = formatter.preCalculateMinTotalWidth(voices) * 1.15;
 
-      //create new canvas to actually fit this stuff
-      var newCanvasHTML = "<canvas height='200' width='" + width + "'id='vexflow-canvas'></canvas>";
-      canvasDiv.innerHTML = newCanvasHTML;
-      var canvas = $("#vexflow-canvas")[0];
+    //create new canvas to actually fit this stuff
+    var newCanvasHTML = "<canvas height='200' width='" + width + "'id='vexflow-canvas'></canvas>";
+    canvasDiv.innerHTML = newCanvasHTML;
+    var canvas = $("#vexflow-canvas")[0];
 
-      //get renderer and context
-      var renderer = new Vex.Flow.Renderer(canvas,
-        Vex.Flow.Renderer.Backends.CANVAS);
+    //get renderer and context
+    var renderer = new Vex.Flow.Renderer(canvas,
+      Vex.Flow.Renderer.Backends.CANVAS);
 
       //make treble cleff and draw
       var ctx = renderer.getContext();
@@ -36,34 +37,45 @@ angular.module("pixelTone")
       }
     };
 
-    $scope.playSong = function (songurl) {
+    $scope.loadSong = function(songurl) {
       MIDI.loadPlugin({
         soundfontUrl: "./assets/soundfont/",
         instrument: "acoustic_grand_piano",
-        onprogress: function (state, progress) {
+        onprogress: function(state, progress) {
         },
-        onsuccess: function () {
+        onsuccess: function() {
           player = MIDI.Player;
-				      player.loadFile(songurl, function () {
+          player.loadFile(songurl, function(){
             player.start();
             player.stop();
-            player.start();
-            player.resume();
           });
         }
       });
     };
 
-    $scope.fetchSong = function (song) {
+    $scope.pausePlayButton = function() {
+      if($scope.isPlaying) {
+        MIDI.Player.pause(true);
+        $("#pausePlayIcon").addClass('glyphicon-play').removeClass('glyphicon-pause');
+        $scope.isPlaying = false;
+      }else{
+        player.resume();
+        $("#pausePlayIcon").addClass('glyphicon-pause').removeClass('glyphicon-play');
+        $scope.isPlaying = true;
+      }
+    }
 
-      $http.get(song + ".mid.NTS")
-        .then(function (res) {
-          comp = new composition(res.data);
-          $scope.song = comp;
-          $scope.displaySongOnCanvas();
-          $scope.playSong(song + ".mid");
-        });
+    $scope.fetchSong = function (song) {
+      $http.get("/songs/notes/"+song+".mid.NTS")
+      .then(function(res) {
+        console.log(res.data);
+        comp = new composition(res.data);
+        $scope.song = comp;
+        $scope.displaySongOnCanvas();
+        $scope.loadSong("/songs/song/"+song+".mid");
+      });
     };
+
     var songId = AuthService.getSong();
-    $scope.fetchSong(songId);
+    $scope.fetchSong("testmidi");
   }]);
