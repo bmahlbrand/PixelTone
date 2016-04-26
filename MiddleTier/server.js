@@ -110,14 +110,57 @@ app.get('/deadbeef', function(req, res, next) {
         + '<a href=/solo>The Solos</a><br><br>'
         + '<a href=/cb>Crying Baby</a><br><br>'
         + '<a href=/leo>Leonidas</a><br><br>'
+        + '<a href=/sad>SAD</a><br><br>'
+        + '<a href=/happy>HAPPY</a><br><br>'
     );
 });
+
+app.get('/sad', function(req, res, next) {
+    var file = 'sad.json'
+    jsonfile.readFile(file, function(err, obj) {
+        var ret = sp.sendParameters(obj, res, 0);
+        res.send(
+            'Load PreCalculatedJson Without Auth<br><br>'
+            + '<a href=/solo>The Solos</a><br><br>'
+            + '<a href=/cb>Crying Baby</a><br><br>'
+            + '<a href=/leo>Leonidas</a><br><br>'
+            + '<a href=/sad>SAD</a><br><br>'
+            + '<a href=/happy>HAPPY</a><br><br>'
+        );
+    });
+});
+
+
+app.get('/happy', function(req, res, next) {
+    var file = 'happy.json'
+    jsonfile.readFile(file, function(err, obj) {
+        var ret = sp.sendParameters(obj, res, 0);
+        res.send(
+            'Load PreCalculatedJson Without Auth<br><br>'
+            + '<a href=/solo>The Solos</a><br><br>'
+            + '<a href=/cb>Crying Baby</a><br><br>'
+            + '<a href=/leo>Leonidas</a><br><br>'
+            + '<a href=/sad>SAD</a><br><br>'
+            + '<a href=/happy>HAPPY</a><br><br>'
+        );
+    });
+});
+
+
 
 
 app.get('/solo', function(req, res, next) {
     var file = 'solo.json'
     jsonfile.readFile(file, function(err, obj) {
-        var ret = sp.sendParameters(obj, res);
+        var ret = sp.sendParameters(obj, res, 0);
+        res.send(
+            'Load PreCalculatedJson Without Auth<br><br>'
+            + '<a href=/solo>The Solos</a><br><br>'
+            + '<a href=/cb>Crying Baby</a><br><br>'
+            + '<a href=/leo>Leonidas</a><br><br>'
+            + '<a href=/sad>SAD</a><br><br>'
+            + '<a href=/happy>HAPPY</a><br><br>'
+        );
     });
 });
 
@@ -125,12 +168,14 @@ app.get('/solo', function(req, res, next) {
 app.get('/cb', function(req, res, next) {
     var file = 'cb.json'
     jsonfile.readFile(file, function(err, obj) {
-        sp.sendParameters(obj);
+        var ret = sp.sendParameters(obj, res, 0);
         res.send(
             'Load PreCalculatedJson Without Auth<br><br>'
             + '<a href=/solo>The Solos</a><br><br>'
             + '<a href=/cb>Crying Baby</a><br><br>'
             + '<a href=/leo>Leonidas</a><br><br>'
+            + '<a href=/sad>SAD</a><br><br>'
+            + '<a href=/happy>HAPPY</a><br><br>'
         );
     });
 
@@ -139,12 +184,14 @@ app.get('/cb', function(req, res, next) {
 app.get('/leo', function(req, res, next) {
     var file = 'leo.json'
     jsonfile.readFile(file, function(err, obj) {
-        sp.sendParameters(obj);
+        var ret = sp.sendParameters(obj, res, 0);
         res.send(
             'Load PreCalculatedJson Without Auth<br><br>'
             + '<a href=/solo>The Solos</a><br><br>'
             + '<a href=/cb>Crying Baby</a><br><br>'
             + '<a href=/leo>Leonidas</a><br><br>'
+            + '<a href=/sad>SAD</a><br><br>'
+            + '<a href=/happy>HAPPY</a><br><br>'
         );
     });
 });

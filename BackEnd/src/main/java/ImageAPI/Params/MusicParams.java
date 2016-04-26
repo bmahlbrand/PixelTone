@@ -19,13 +19,12 @@ public class MusicParams {
     public Accent AccentType2;
     public double AccentWeight2;
 
-    //Sprint 3
-    //double Dynamic1;
-    //double DynamicWeight1;
-    //double Dynamic2;
-    //double DynamicWeight2;
+    public int numberOfVoices;
+    public int chaosLevel;
 
-    public MusicParams(Tempo tl, Tempo th, String k1, String k2, boolean rm, Accent at1, double aw1, Accent at2, double aw2) {
+
+
+    public MusicParams(Tempo tl, Tempo th, String k1, String k2, boolean rm, Accent at1, double aw1, Accent at2, double aw2, int chaos, int voices) {
         TempoLow = tl;
         TempoHigh = th;
         Key1 = k1;
@@ -35,6 +34,8 @@ public class MusicParams {
         AccentType2 = at2;
         AccentWeight1 = aw1;
         AccentWeight2 = aw2;
+        numberOfVoices = voices;
+        chaosLevel = chaos;
     }
 
     public MusicParams(Tempo tl, Tempo th, String k1, String k2, boolean rm) {
@@ -44,4 +45,5 @@ public class MusicParams {
         Key2 = k2;
         RelativeMinor = rm;
     }
+
 }

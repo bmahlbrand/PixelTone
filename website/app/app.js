@@ -2,57 +2,56 @@
 //var Firebase = require("firebase");
 var pixelTone = angular.module('pixelTone', ['ngRoute', 'ngFileUpload']);
 //Routes
-pixelTone.config(['$routeProvider', '$locationProvider', function($routeProvider,$locationProvider){
+pixelTone.config(['$routeProvider', '$locationProvider', function ($routeProvider, $locationProvider) {
 	$routeProvider
-	//home page
-	.when('/', {
-		templateUrl: 'app/home/home.html',
-		controller: 'homeController',
-		access: {restricted: false}
-	})
-	.when('/profile', {
-		templateUrl: 'app/profile/profile.html',
-		controller: 'profileController',
-		access: {restricted: true}
-	})
-	// route for about
-	.when('/about', {
-		templateUrl: 'app/about/about.html',
-		controller: 'aboutController',
-		access: {restricted: false}
-	})
-	//route for the login page
-	.when('/login', {
-		templateUrl: 'app/login/login.html',
-		controller: 'loginController',
-		access: {restricted: false}
-	})
-	//route for the register page
-	.when('/register', {
-		templateUrl: 'app/register/register.html',
-		controller: 'registerController',
-		access: {restricted: false}
-	})
-	//route for the logout page
-	.when('/logout', {
-		controller: 'logoutController',
-		access: {restricted: true}
-	})
+		//home page
+		.when('/', {
+			templateUrl: 'app/home/home.html',
+			controller: 'homeController',
+			access: { restricted: false }
+		})
+		.when('/profile', {
+			templateUrl: 'app/profile/profile.html',
+			controller: 'profileController',
+			access: { restricted: true }
+		})
+		// route for about
+		.when('/about', {
+			templateUrl: 'app/about/about.html',
+			controller: 'aboutController',
+			access: { restricted: false }
+		})
+		//route for the login page
+		.when('/login', {
+			templateUrl: 'app/login/login.html',
+			controller: 'loginController',
+			access: { restricted: false }
+		})
+		//route for the register page
+		.when('/register', {
+			templateUrl: 'app/register/register.html',
+			controller: 'registerController',
+			access: { restricted: false }
+		})
+		//route for the logout page
+		.when('/logout', {
+			controller: 'logoutController',
+			access: { restricted: true }
+		})
 
-
-	.when('/upload', {
+		.when('/upload', {
 			templateUrl: 'app/upload/upload.html',
 						controller: 'uploadController',
-						access: {restricted: false}
+						access: { restricted: false }
 		})
 
-        .when('/songViewer', {
+		.when('/songViewer', {
 			templateUrl: 'app/songViewer/songViewer.html',
 			controller: 'songViewerController',
-			access: {restricted: false}
+			access: { restricted: false }
 		})
 
-	.otherwise({
+		.otherwise({
       redirectTo: '/'
     });
 
@@ -65,9 +64,9 @@ pixelTone.run(function ($rootScope, $location, $route, AuthService) {
     function (event, next, current) {
       AuthService.getUserStatus();
       if (next.access.restricted &&
-          !AuthService.isLoggedIn()) {
+				!AuthService.isLoggedIn()) {
         $location.path('/login');
         $route.reload();
       }
-  });
+		});
 });

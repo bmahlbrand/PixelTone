@@ -1,1 +1,1 @@
-{"numberOfFaces":1,"faces":[{"emotions":[{"emotion":"anger","value":0.978089},{"emotion":"surprise","value":0.015863888},{"emotion":"happiness","value":0.005072676}]}],"colorEntries":[{"Percent":54.56,"Color":"neutral"}, {"Percent":54.56,"Color":"neutral"}]}
+{"numberOfFaces":1,"faces":[{"emotions":[{"emotion":"anger","value":0.978089},{"emotion":"surprise","value":0.015863888},{"emotion":"happiness","value":0.005072676}]}],"colorEntries":[{"Percent":54.56,"Color":"neutral"}, {"Percent":54.56,"Color":"neutral"}], "chaos": 5, "prefs": 5, "voices": 1, "imageKey": 1}

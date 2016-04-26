@@ -73,13 +73,13 @@ public class EmotionTranslationFactory {
         }
         //Sort mappings base on cumulative weights per emotion from all faces
         //Lambda baby - Austin Powers
-        Arrays.sort(m, (a, b) -> Double.compare(a.weight, b.weight));
+        Arrays.sort(m, (b, a) -> Double.compare(a.weight, b.weight));
 
         //m is now an array with mappings, where the most weighted emotion is in element 0
         //Get the combined weight of the top 3 emotions
         double weightTotal = 0;
         int x;
-        for (x = 0; x < 3 || x < m.length; x++)
+        for (x = 0; x < 3 && x < m.length; x++)
             weightTotal += m[x].weight;
 
         EmotionParamEntry[] e = new EmotionParamEntry[x];
@@ -87,6 +87,9 @@ public class EmotionTranslationFactory {
         for (int q = 0; q < x; q++) {
             //get percent of current emotion from the total weightage
             double w1 = m[q].weight / weightTotal;
+
+            if(w1 == 0)
+                continue;
 
             //switch on that emotion
             switch (m[q].ec) {

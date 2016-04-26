@@ -18,7 +18,7 @@ angular.module("pixelTone")
                 data: { image: file, chaos: param2, voices: param3, pref: param1}
             }).then(function (resp) {
                 console.log('Success ');
-                $scope.name = "Sucessfully uploaded:" + file.name;
+                $scope.name = "Sucessfully uploaded! Ready for Generation, Press Process to Continue";
             }, function (resp) {
                 console.log('Error status: ' + resp.status);
             }, function (evt) {
@@ -37,4 +37,5 @@ angular.module("pixelTone")
                 $scope.name = "Generation Request Failure";
             });
         };
+        
     }]);

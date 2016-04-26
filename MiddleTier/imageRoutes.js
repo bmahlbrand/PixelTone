@@ -6,11 +6,18 @@ var http = require('http');
 var fs = require ('fs');
 var jsonfile = require('jsonfile');
 var sp = require('./sendParams');
-
-var aws = require('./uploadImage.js');
 //Setup Image analyzer (replace with API later)
 
 var imagecolors = require('imagecolors');
+
+var aws; 
+var hasAws = false;
+if(fs.existsSync('./config/awsConfig.json')) {
+    aws = require('./uploadImage.js');
+    hasAws = true;
+} else {
+    console.log("No API KEY (CANT CONNECT TO AWS)");
+}
 
 var imageRoutes = module.exports = express();
 
@@ -156,7 +163,7 @@ var parseMSResponse = function (response) {
                     "imageKey": imageKey
                 }
                 //Use for saving json to disk for quick testing
-                    //var file = 'cb.json'
+                    //var file = 'happy.json'
                     //jsonfile.writeFile(file, generationParameters, function (err) {
                     //   console.error(err)
                     //});
@@ -189,8 +196,15 @@ imageRoutes.post('/process', function (req, res) {
             console.log(req.file);
            // UNIX image = "./tmp/" + req.file.filename;
             //console.log("USER: " + req.user);
+            
             imageKey = Date.now();
+
+            if(hasAws)
+                aws.uploadImage(image, req.user.username,  imageKey);
+
+            
             //aws.uploadImage(image, req.user.username, imageKey );
+
 
             pref = req.body.pref;
             voices = req.body.voices;
@@ -247,6 +261,8 @@ function getColors(imagePath, numOfColors, callback) {
     console.log("ERRROR GETTING COLORS");
     console.log(err);
     });
-    req.write(JSON.stringify(params));
-    req.end();
+    
+    
+    //req.write(JSON.stringify(params));
+    //req.end();
 };
