@@ -191,7 +191,7 @@ imageRoutes.post('/process', function (req, res) {
            // console.log(req.body);
             //console.log(req.file);
             //console.log(req);
-            image = ".\\tmp\\" + req.file.filename;
+            image = "./tmp/" + req.file.filename;
             console.log(req.body);
             console.log(req.file);
            // UNIX image = "./tmp/" + req.file.filename;
