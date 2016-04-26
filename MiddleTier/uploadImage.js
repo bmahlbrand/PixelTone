@@ -26,7 +26,7 @@ exports.uploadImage = function(file, user, imageKey) {
 		console.log('Uploading image to S3...');
 		s3bucket.upload(params).on('httpUploadProgress', function(evt) {
 				//console.log(evt);
-				console.log(Math.round((evt.loaded / evt.total) * 100) + '% uploaded');
+				//console.log(Math.round((evt.loaded / evt.total) * 100) + '% uploaded');
 				//100% uploaded
 				if(evt.loaded == evt.total) {
 

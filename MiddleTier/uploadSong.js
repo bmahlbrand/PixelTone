@@ -20,7 +20,7 @@ exports.uploadSong = function(file, user, songKey) {
 		var params = {
 			Key: filename,
 			Body: body,
-			//ContentType: 'image/jpeg',
+			//ContentType: 'audio/midi',
 			ACL: 'public-read'
 		};
 		console.log('Uploading midi to S3...');
@@ -37,10 +37,10 @@ exports.uploadSong = function(file, user, songKey) {
 					newSong.local.url = 'https://s3.amazonaws.com/pixeltone-midi/' + filename;
 
 					//console.log(newImage);
-
+					console.log("Saving to db: " + newSong);
 					newSong.save(function(err) {
 						if (err) {
-							//console.log("Error occurred");
+							console.log("Error occurred");
                             throw err;
                         }
                         else {
