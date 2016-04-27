@@ -16,6 +16,8 @@ public class main {
 
     public static void main(String[] args) {
 
+        testMidiGeneration();
+
         port(3001);
 
         get("/", (request, response) -> "PixelTone BackEnd Works");
@@ -86,7 +88,7 @@ public class main {
     }
 
     private static void testMidiGeneration() {
-              MusicParams mp = new MusicParams(Tempo.Largo, Tempo.Moderato, "Bb", "C", true);
+              MusicParams mp = new MusicParams(Tempo.Largo, Tempo.Allegro, "Bb", "C", true);
               Quill.createComposition(mp, "./songs/testmidi.mid");
     }
 

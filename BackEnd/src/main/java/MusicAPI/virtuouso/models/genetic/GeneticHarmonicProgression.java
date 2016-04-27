@@ -3,6 +3,7 @@ package MusicAPI.virtuouso.models.genetic;
 
 import MusicAPI.virtuouso.models.genetic.fitness.CommonChordProgFitFunc;
 import MusicAPI.virtuouso.models.genetic.GeneticAlgorithm;
+import MusicAPI.virtuouso.models.genetic.AccompanimentRhythm;
 import org.jenetics.Genotype;
 import org.jenetics.Phenotype;
 import org.jenetics.IntegerGene;
@@ -39,7 +40,7 @@ public class GeneticHarmonicProgression{
 	private void generateGeneticHarmonicProgression(Note key, Mode mode, Cadence cadence){
 		CommonChordProgFitFunc fitnessFunction = new CommonChordProgFitFunc(cadence);
 
-		harmonicProgression = phenotypeToSection(GeneticAlgorithm.geneticAlgorithm(1, 7, 8, fitnessFunction));
+		harmonicProgression = phenotypeToSection(GeneticAlgorithm.geneticAlgorithm(1, 7, 16, fitnessFunction));
 	}
 
 	public Section getHarmonicProgression(){
@@ -50,18 +51,25 @@ public class GeneticHarmonicProgression{
 		final int[] sectionContent = GeneticAlgorithm.phenotypeToIntArray(phenotypeSection);
 
 		Section thisSection = new Section();
-		for(int i=0; i< 8; i++){
-			thisSection.addMeasure(makeMeasureOfChord(sectionContent[i]));
+		for(int i=0; i< 16; i+=2){
+			thisSection.addMeasure(makeMeasureOfChords(sectionContent[i], sectionContent[i+1]));
 		}
 		return thisSection;
 	}
 
-	private Measure makeMeasureOfChord(int chord){
+	private Measure makeMeasureOfChords(int chord1, int chord2){
 		Measure currentMeasure = new Measure();
 		Beat currentBeat = new Beat();
-		Triad currentTriad = makeTriadFromChord(chord);
+		Triad currentTriad = makeTriadFromChord(chord1);
 		
-		currentBeat.addChord (new Chord(currentTriad, BeatDuration.Whole));
+		currentBeat.addChord (new Chord(currentTriad, BeatDuration.Half));
+
+		currentMeasure.addBeat(currentBeat);
+
+		currentBeat = new Beat();
+		currentTriad = makeTriadFromChord(chord2);
+		
+		currentBeat.addChord (new Chord(currentTriad, BeatDuration.Half));
 
 		currentMeasure.addBeat(currentBeat);
 		return currentMeasure;
