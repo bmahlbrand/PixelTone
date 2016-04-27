@@ -88,7 +88,7 @@ public class main {
     }
 
     private static void testMidiGeneration() {
-              MusicParams mp = new MusicParams(Tempo.Largo, Tempo.Moderato, "Bb", "C", false);
+              MusicParams mp = new MusicParams(Tempo.Largo, Tempo.Allegro, "Bb", "C", true);
               Quill.createComposition(mp, "./songs/testmidi.mid");
     }
 

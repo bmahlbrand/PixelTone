@@ -134,7 +134,7 @@ public class GeneticSimpleComposition{
 
 	private Section setChordProgressionRhythm(Section chordProgression){
 		Random rng = new Random();
-		int randomBoolean = rng.nextBoolean();
+		boolean randomBoolean = rng.nextBoolean();
 		if (tempo <= SAD_TEMPO){
 			if (randomBoolean)
 				return makeAccompanimentArpeggiated(chordProgression);
