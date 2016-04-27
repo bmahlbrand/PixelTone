@@ -8,6 +8,7 @@ import MusicAPI.harmonicsKB.intervals.Degree;
 import MusicAPI.harmonicsKB.rhythm.*;
 import MusicAPI.harmonicsKB.phrasing.Cadence;
 import MusicAPI.virtuouso.models.genetic.GeneticMotive;
+import MusicAPI.virtuouso.models.genetic.AccompanimentRhythm;
 import MusicAPI.virtuouso.models.genetic.GeneticHarmonicProgression;
 
 public class GeneticSimpleComposition{
@@ -89,5 +90,21 @@ public class GeneticSimpleComposition{
 		}
 
 		return melody;
+	}
+
+	private Section makeAccompanimentArpeggiated(Section chordProgression){
+		Section newSection = new Section();
+		for (Measure currentMeasure: chordProgression.getMeasures()){
+			newSection.addMeasure(AccompanimentRhythm.arpegiattedBass(currentMeasure));
+		}
+		return newSection;
+	}
+
+	private Section makeAccompanimentAlbertiBass(Section chordProgression){
+		Section newSection = new Section();
+		for (Measure currentMeasure: chordProgression.getMeasures()){
+			newSection.addMeasure(AccompanimentRhythm.albertiBass(currentMeasure));
+		}
+		return newSection;
 	}
 }
