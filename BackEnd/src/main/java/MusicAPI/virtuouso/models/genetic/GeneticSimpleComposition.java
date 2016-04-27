@@ -107,4 +107,20 @@ public class GeneticSimpleComposition{
 		}
 		return newSection;
 	}
+
+	private Section makeAccompanimentQuarterNotes(Section chordProgression){
+		Section newSection = new Section();
+		for (Measure currentMeasure: chordProgression.getMeasures()){
+			newSection.addMeasure(AccompanimentRhythm.quarterNoteBass(currentMeasure));
+		}
+		return newSection;
+	}
+
+	private Section makeAccompanimentEighthNotes(Section chordProgression){
+		Section newSection = new Section();
+		for (Measure currentMeasure: chordProgression.getMeasures()){
+			newSection.addMeasure(AccompanimentRhythm.eighthNoteBass(currentMeasure));
+		}
+		return newSection;
+	}
 }

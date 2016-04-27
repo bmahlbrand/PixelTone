@@ -31,13 +31,31 @@ public class AccompanimentRhythm{
 		return newMeasure;
 	}
 
-	public static Measure eigthNoteBass(Measure sustainedChords){
-		return new Measure();
+	public static Measure eighthNoteBass(Measure sustainedChords){
+		Measure newMeasure = new Measure();
+		for(Beat currentBeat: sustainedChords.getBeats()){
+			for (VoiceElement currentChord: currentBeat.getVoiceElements()){
+				Beat newBeat = new Beat();
+				newBeat.addChord(new Chord(((Chord)currentChord).getTriad(), BeatDuration.Eighth));
+				for (int i=0; i<4; i++)
+					newMeasure.addBeat(newBeat);
+			}
+		}
+		return newMeasure;
 
 	}
 
 	public static Measure quarterNoteBass(Measure sustainedChords){
-		return new Measure();
+		Measure newMeasure = new Measure();
+		for(Beat currentBeat: sustainedChords.getBeats()){
+			for (VoiceElement currentChord: currentBeat.getVoiceElements()){
+				Beat newBeat = new Beat();
+				newBeat.addChord(new Chord(((Chord)currentChord).getTriad(), BeatDuration.Quarter));
+				for (int i=0; i<2; i++)
+					newMeasure.addBeat(newBeat);
+			}
+		}
+		return newMeasure;
 	}
 
 	private static void addAlbertiBass(Measure currentMeasure, Chord currentChord){
