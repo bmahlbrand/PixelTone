@@ -12,6 +12,20 @@ function getStudpidDurationForNotes(duration) {
   return "You Fucked Up";
 }
 
+function getStaveNotesFromMeasures(measureGroup) {
+  var staves = [];
+  var measures = this.measures;
+  for(var i=0; i<measureGroup.length; i++) {
+    var temp = measureGroup[i].getStaveNotes();
+    for(var j=0; j<temp.length; j++) {
+      staves.push(temp[j]);
+    }
+    if(i != measureGroup.length-1)
+      staves.push( new Vex.Flow.BarNote());
+  }
+  return staves;
+}
+
 var tone = function(other) {
   if(other != null){
     this.accidental = other.accidental;
@@ -207,6 +221,10 @@ section.prototype.getStaveNotes = function(){
   return staves;
 }
 
+section.prototype.getMeasures = function(){
+  return this.measures;
+}
+
 var voice = function(other) {
   if(other != null) {
     this.clef = other.clef;
@@ -238,6 +256,50 @@ voice.prototype.getStaveNotes = function(){
   }
   return staves;
 }
+voice.prototype.getMeasures = function(){
+  var measures = [];
+  var sections = this.sections;
+  for(var i =0; i<sections.length; i++) {
+    var temp = sections[i].getMeasures();
+    for(var j=0; j<temp.length; j++) {
+      measures.push(temp[j]);
+    }
+  }
+  return measures;
+}
+voice.prototype.getMeasuresInGroupsOf = function(n){
+  var measures = this.getMeasures();
+  var numGroups = measures.length/n;
+  var measureGroups = [];
+  for(var i=0; i<numGroups; i++) {
+    var start = i*n;
+    var end = (i+1)*n;
+    measureGroups[i] = measures.slice(start, end);
+  }
+  return measureGroups;
+}
+
+voice.prototype.getVoiceInGroupsOf = function(n){
+  var voices = [];
+  var measureGroups = this.getMeasuresInGroupsOf(n);
+  for(var i=0; i<measureGroups.length; i++) {
+    var staveNotes = getStaveNotesFromMeasures(measureGroups[i]);
+    var num_beats = this.getNumBeats();
+    var beat_value = this.getBeatValue();
+    var resolution = Vex.Flow.RESOLUTION;
+    var voiceParams = {
+      num_beats : num_beats,
+      beat_value : beat_value,
+      resolution : resolution
+    };
+    var ret = new Vex.Flow.Voice(voiceParams);
+    ret.setMode(Vex.Flow.Voice.Mode.SOFT);
+    ret.addTickables(staveNotes);
+    voices[i] = ret;
+  }
+  return voices;
+}
+
 voice.prototype.getVoice = function() {
   var staveNotes = this.getStaveNotes();
   var num_beats = this.getNumBeats();
