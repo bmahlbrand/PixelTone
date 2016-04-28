@@ -14,8 +14,8 @@ AWS.config.loadFromPath('./config/awsConfig.json');
 exports.uploadImage = function(file, user, imageKey) {
 	var s3bucket = new AWS.S3({params: {Bucket: 'pixeltone'}});
 	var body = fs.createReadStream(file);
-	var myKey = keygen.generateBase30(20) + '.jpg';
-
+	//var myKey = keygen.generateBase30(20) + '.jpg';
+	var myKey = imageKey + '.jpg';
 	s3bucket.createBucket(function() {
 		var params = {
 			Key: myKey,
@@ -26,7 +26,7 @@ exports.uploadImage = function(file, user, imageKey) {
 		console.log('Uploading image to S3...');
 		s3bucket.upload(params).on('httpUploadProgress', function(evt) {
 				//console.log(evt);
-				console.log(Math.round((evt.loaded / evt.total) * 100) + '% uploaded');
+				//console.log(Math.round((evt.loaded / evt.total) * 100) + '% uploaded');
 				//100% uploaded
 				if(evt.loaded == evt.total) {
 
@@ -66,3 +66,4 @@ exports.uploadImage = function(file, user, imageKey) {
 //	else
 //		console.log(data);           // successful response
 //});
+

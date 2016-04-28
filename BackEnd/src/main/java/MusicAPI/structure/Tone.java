@@ -97,7 +97,7 @@ public class Tone implements Serializable {
         return new Tone(tone, accidental);
     }
 
-    int index() {
+    public int index() {
         switch (tone) {
             case 'C':
                 switch (accidental) {

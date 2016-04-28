@@ -18,12 +18,13 @@ public class GeneticMotiveFitnessFunction implements FitnessFunction{
 	Measure harmonicPattern;
 	Note key;
 	Mode mode;
+	int chaos;
 
-
-	public GeneticMotiveFitnessFunction(Note key, Mode mode, Measure harmonicPattern){
+	public GeneticMotiveFitnessFunction(Note key, Mode mode, Measure harmonicPattern, int chaos){
 		this.harmonicPattern = harmonicPattern;
 		this.key = key;
 		this.mode = mode;
+		this.chaos = chaos;
 	}
 
 	@Override
@@ -126,9 +127,8 @@ public class GeneticMotiveFitnessFunction implements FitnessFunction{
 	}
 
 	private int checkForTooBusyRhythm(int totalNotes){
-		double averageRhythm = 16.0/totalNotes;
-		if(averageRhythm<4)
-			return -50;
+		if(totalNotes>chaos + 2 || totalNotes<chaos - 2)
+			return -200;
 		return 0;
 	}
 
