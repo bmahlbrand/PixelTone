@@ -15,7 +15,7 @@ exports.uploadSong = function(file, user, songKey) {
 	var s3bucket = new AWS.S3({params: {Bucket: 'pixeltone-midi'}});
 	var body = fs.createReadStream(file);
 	//var filename = keygen.generateBase30(20) + '.mid';
-	var filename = songKey;
+	var filename = songKey + ".mid";
 	s3bucket.createBucket(function() {
 		var params = {
 			Key: filename,
