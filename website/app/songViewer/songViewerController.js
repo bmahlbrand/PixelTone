@@ -66,16 +66,21 @@ angular.module("pixelTone")
     }
 
     $scope.fetchSong = function (song) {
-      $http.get("/songs/notes/"+song+".mid.NTS")
+      //$http.get("/songs/notes/"+song+".mid.NTS")
+      $http.get(song + ".mid.NTS")
       .then(function(res) {
         console.log(res.data);
         comp = new composition(res.data);
         $scope.song = comp;
         $scope.displaySongOnCanvas();
-        $scope.loadSong("/songs/song/"+song+".mid");
+        //$scope.loadSong("/songs/song/"+song+".mid");
+        $scope.loadSong(song + ".mid");
       });
     };
 
     var songId = AuthService.getSong();
-    $scope.fetchSong("testmidi");
+    //var songFname = songId.substr(songId.lastIndexOf("/")+1);
+    //console.log(songFname);
+    //$scope.fetchSong("testmidi");
+    $scope.fetchSong(songId);
   }]);

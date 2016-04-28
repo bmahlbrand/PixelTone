@@ -3,6 +3,7 @@ import ImageAPI.Objects.ReturnParams;
 import ImageAPI.Params.GenerationParams;
 import ImageAPI.Params.MusicParams;
 import MusicAPI.harmonicsKB.rhythm.Tempo;
+import MusicAPI.harmonicsKB.dynamics.Accent;
 import com.google.gson.Gson;
 import MusicAPI.virtuouso.*;
 import ImageAPI.*;
@@ -15,6 +16,8 @@ public class main {
     public static MoodToMusicFactory moodToMusicFactory = new MoodToMusicFactory();
 
     public static void main(String[] args) {
+
+        testMidiGeneration();
 
         port(3001);
 
@@ -77,7 +80,7 @@ public class main {
             String songpath = imageKey + ".mid";
             String np =  songpath + ".NTS";
 
-            ReturnParams rp = new ReturnParams(gp.imageKey, gp.numberOfFaces, gp.colorEntries.get(0).Color, mp.Key1, mp.TempoLow,mp.RelativeMinor, songpath, np );
+            ReturnParams rp = new ReturnParams(gp.imageKey, gp.numberOfFaces, gp.colorEntries.get(0).Color, mp.Key1, mp.TempoLow,mp.RelativeMinor, songpath, np, gp.name );
 
             return rp;
         } catch (Exception e) {
@@ -86,7 +89,7 @@ public class main {
     }
 
     private static void testMidiGeneration() {
-              MusicParams mp = new MusicParams(Tempo.Largo, Tempo.Moderato, "Bb", "C", true);
+              MusicParams mp = new MusicParams(Tempo.Largo, Tempo.Allegro, "Bb", "C", true, Accent.Accent, 2.1, Accent.Unaccented, 2.1, 10, 3, "test");
               Quill.createComposition(mp, "./songs/testmidi.mid");
     }
 

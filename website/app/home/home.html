@@ -73,14 +73,13 @@
       </div>
     </div>
 </div>
-
-
 <div class="container" ng-show="isDataBack">
   <h2>Songs you created</h2>
   <div class="table-responsive">
   <table class="table">
     <thead>
       <tr>
+        <th>Name</th>
         <th>Image</th>
         <th>Upload Date</th>
         <th>Song</th>
@@ -88,11 +87,12 @@
     </thead>
     <tbody>
         <tr ng-repeat="recentSong in recentSongs">
+          <td><h4>{{ recentSong.CHname }}</h4></td>
       <td class="col-md-2" ><img ng-src="{{ recentSong.url }}" height="75" width="75" > </td>
       <td><h4>{{ recentSong.uploadDate }}</h4></td>
       <td>
-       <h4> <a href="../BackEnd/songs/{{ recentSong.songPath }}">{{ recentSong.songPath }}</a></h4>
-       <button ng-click="playSong(recentSong.songKey)" id="btnSubmit" type="submit" class="btn btn-primary">PlaySong</button>
+       <h4> Faces:{{ recentSong.numberOfFaces }} Color:{{ recentSong.topColor}} Key: {{ recentSong.chosenKey }} Tempo: {{ recentSong.chosenTempo }} </h4>
+       <button ng-click="playSong(recentSong.songKey)" id="btnSubmit" type="submit" class="btn btn-primary">Play Your Song!</button>
       </td>
     </tr>
   </tbody>

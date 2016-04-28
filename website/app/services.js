@@ -3,7 +3,7 @@ angular.module('pixelTone').factory('AuthService',
         function ($q, $timeout, $http) {
             
             //path to songs, change when s3 upload works
-            var path = "../BackEnd/songs/";
+            var path = "https://s3.amazonaws.com/pixeltone-midi/";
 
             // create user variable
             var user = null;

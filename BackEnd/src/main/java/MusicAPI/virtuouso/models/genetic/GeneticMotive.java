@@ -18,6 +18,7 @@ public class GeneticMotive{
 	Measure motiveContent;
 	Note key;
 	Mode mode;
+	int chaos;
 
 	public GeneticMotive(){
 		key = new Note("C");
@@ -25,9 +26,10 @@ public class GeneticMotive{
 		generateGeneticMotive(key, mode, new Measure());
 	}
 
-	public GeneticMotive(Note key, Mode mode, Measure harmonicPattern){
+	public GeneticMotive(Note key, Mode mode, Measure harmonicPattern, int chaos){
 		this.key = key;
 		this.mode = mode;
+		this.chaos = chaos;
 
 		generateGeneticMotive(key, mode, harmonicPattern);
 	}
@@ -37,7 +39,7 @@ public class GeneticMotive{
 	}
 
 	private void generateGeneticMotive(Note key, Mode mode, Measure harmonicPattern){
-		GeneticMotiveFitnessFunction fitnessFunction = new GeneticMotiveFitnessFunction(key, mode, harmonicPattern);
+		GeneticMotiveFitnessFunction fitnessFunction = new GeneticMotiveFitnessFunction(key, mode, harmonicPattern, chaos);
 
 		motiveContent = phenotypeToMeasure(GeneticAlgorithm.geneticAlgorithm(1, 8, 48, fitnessFunction));
 
@@ -62,7 +64,7 @@ public class GeneticMotive{
 		currentNote = new Note(currentNote.getTone().toString());
 		BeatDuration noteDuration = getNoteDuration(rhythm);
 		currentNote.setDuration(noteDuration);
-		currentNote.setOctave(new Octave(((octave-1)/4) + 3));
+		currentNote.setOctave(new Octave(((octave-1)/4) + 4));
 		return currentNote;
 	}
 

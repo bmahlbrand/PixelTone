@@ -9,7 +9,8 @@ var clone = function (o) {
 function Replayer(midiFile, timeWarp, eventProcessor, bpm) {
 	var trackStates = [];
 	var beatsPerMinute = bpm ? bpm : 120;
-	var bpmOverride = bpm ? true : false;
+	//var bpmOverride = bpm ? true : false;
+	var bpmOverride = false;
 
 	var ticksPerBeat = midiFile.header.ticksPerBeat;
 	
@@ -74,6 +75,7 @@ function Replayer(midiFile, timeWarp, eventProcessor, bpm) {
 		function processNext() {
 		    if (!bpmOverride && midiEvent.event.type == "meta" && midiEvent.event.subtype == "setTempo" ) {
 				// tempo change events can occur anywhere in the middle and affect events that follow
+				//console.log(midiEvent.event.microsecondsPerBeat);
 				beatsPerMinute = 60000000 / midiEvent.event.microsecondsPerBeat;
 			}
 			///

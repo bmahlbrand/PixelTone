@@ -98,6 +98,13 @@ public class MIDIGenerator {
     private static void addTrackToMidi(Voice instrument, Sequence midiSequence) {
         Track currentTrack = midiSequence.createTrack();
 
+        try{
+            ShortMessage sustain = new ShortMessage();
+            sustain.setMessage(ShortMessage.CONTROL_CHANGE, 0, 64, 127);
+            MidiEvent sustainEvent = new MidiEvent(sustain, 0);
+            currentTrack.add(sustainEvent);
+        } catch(Exception e){}
+
         int currentPosition = 0;
         for (Section phrase : instrument.getSections()) {
             for (Measure currentMeasure : phrase.getMeasures()) {
@@ -106,7 +113,18 @@ public class MIDIGenerator {
                         currentPosition = currentNote.addToMidiTrack(currentTrack, currentPosition);
                     }
                 }
-            }
+                try{
+                ShortMessage sustain = new ShortMessage();
+                sustain.setMessage(ShortMessage.CONTROL_CHANGE, 0, 64, 0);
+                MidiEvent sustainEvent = new MidiEvent(sustain, currentPosition);
+                currentTrack.add(sustainEvent);
+
+                sustain = new ShortMessage();
+                sustain.setMessage(ShortMessage.CONTROL_CHANGE, 0, 64, 127);
+                sustainEvent = new MidiEvent(sustain, currentPosition);
+                currentTrack.add(sustainEvent);
+                } catch (Exception e){}
+            }         
         }
     }
 
