@@ -27,7 +27,7 @@ public class Quill {
         GeneticSimpleComposition testComposition1;
         Mode mode = musicParams.RelativeMinor ? Mode.Ionian.relativeMinor() : Mode.Ionian;
 
-        testComposition1 = new GeneticSimpleComposition(new Note(musicParams.Key2), mode, musicParams.TempoHigh.getBpm());
+        testComposition1 = new GeneticSimpleComposition(new Note(musicParams.Key2), mode, musicParams.TempoHigh.getBpm(), musicParams.chaosLevel, musicParams.numberOfVoices);
 
         MIDIGenerator.generateMidi(path, testComposition1.getGeneratedSong());
     }
@@ -127,7 +127,7 @@ public class Quill {
         return thisSection;
     }
 
-    public static Composition createCompositionOLD() {
+    /*public static Composition createCompositionOLD() {
         Composition composition = new Composition();
 
 
@@ -170,5 +170,5 @@ public class Quill {
         thisVoice.addSection(Quill.scaleExercise());
         thisComposition.addVoice(thisVoice);
         return thisComposition;
-    }
+    }*/
 }

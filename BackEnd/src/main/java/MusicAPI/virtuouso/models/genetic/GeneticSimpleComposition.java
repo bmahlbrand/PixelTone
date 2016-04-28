@@ -17,6 +17,8 @@ public class GeneticSimpleComposition{
 	Note key;
 	Mode mode;
 	int tempo;
+	int chaos;
+	int numVoices;
 	Composition generatedSong;
 
 	final int SAD_TEMPO = 70;
@@ -31,10 +33,12 @@ public class GeneticSimpleComposition{
 		composeSong();
 	}
 
-	public GeneticSimpleComposition(Note key, Mode mode, int tempo){
+	public GeneticSimpleComposition(Note key, Mode mode, int tempo, int chaos, int numVoices){
 		this.key = key;
 		this.mode = mode;
 		this.tempo = tempo;
+		this.chaos = chaos;
+		this.numVoices = numVoices;
 
 		composeSong();
 	}
@@ -93,7 +97,7 @@ public class GeneticSimpleComposition{
 		Section melody = new Section();
 		GeneticMotive currentMotive;
 		for (Measure currentMeasure: chordProgression.getMeasures()){
-			currentMotive = new GeneticMotive(key, mode, currentMeasure);
+			currentMotive = new GeneticMotive(key, mode, currentMeasure, chaos);
 			melody.addMeasure(currentMotive.getMotiveContent());
 		}
 
