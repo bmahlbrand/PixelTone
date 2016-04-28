@@ -1,9 +1,26 @@
-<div class="container" style="overflow-x: scroll" id="vexflow-canvas-div">
+<div id="vexflow-container">
+  <div class="container" style="overflow-x: scroll" id="vexflow-canvas-div">
     <canvas height="200" width="1000" id="vexflow-canvas"></canvas>
+  </div>
 </div>
-<button type="button" class="btn btn-default btn-sm" ng-click="pausePlayButton()">
-  <span id="pausePlayIcon" class="glyphicon glyphicon-play"></span>
-</button>
-<button type="button" class="btn btn-default btn-sm" ng-click="stopButton()">
-  <span class="glyphicon glyphicon-stop"></span>
-</button>
+
+<div id="player-controls">
+  <div id="music-bar-outer">
+    <div id="music-bar-inner"></div>
+  </div>
+  <div id="player-controls-left">
+    <span id="time-played"></span>
+  </div>
+  <div id="player-controls-middle">
+    <button type="button" class="btn btn-default btn-sm" ng-click="pausePlayButton()">
+      <span id="pausePlayIcon" class="glyphicon glyphicon-play"></span>
+    </button>
+    <button type="button" class="btn btn-default btn-sm" ng-click="stopButton()">
+      <span class="glyphicon glyphicon-stop"></span>
+    </button>
+  </div>
+    <div id="player-controls-right">
+      <span id="time-left"></span>
+    </div>
+  </div>
+</div>
