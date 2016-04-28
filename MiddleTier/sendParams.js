@@ -84,7 +84,7 @@ var saveReturn = function (returnData) {
                 throw err;
             else {
                 //Upload song to S3
-                path = "../BackEnd/songs/" + sp;
+                path = "../BackEnd/songs/" + sp; //Might need to be changed for windows
                 if(hasAws)
                     aws.uploadSong(path, null,  key);
                 return;
