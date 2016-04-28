@@ -14,8 +14,9 @@ public class ReturnParams {
     public String songPath;
     public String chosenTempo;
     public boolean relativeMinor;
+    public String name;
 
-    public ReturnParams(String ik, int n,  Colors c, String k, Tempo t, boolean r, String sp, String np)
+    public ReturnParams(String ik, int n,  Colors c, String k, Tempo t, boolean r, String sp, String np, String na)
     {
         imageKey = ik;
         numberOfFaces = n;
@@ -25,6 +26,7 @@ public class ReturnParams {
         chosenTempo = t.toString();
         relativeMinor = r;
         songPath = sp;
+        name = na;
     }
 
 }

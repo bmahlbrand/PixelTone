@@ -62,6 +62,7 @@ var saveReturn = function (returnData) {
     var temp = returnData.chosenTempo;
     var rm = returnData.relativeMinor;
     var np = returnData.notePath;
+    var name = returnData.name;
 
     //console.log("found song at: " + sp);
 
@@ -73,11 +74,13 @@ var saveReturn = function (returnData) {
 
         img.local.songPath = sp;
         img.local.numberOfFaces = faces;
-        img.local.prominantColor = proCo;
+        img.local.topColor = proCo;
+       // img.local.topEmotion = 
         img.local.chosenKey = songkey;
         img.local.chosenTempo = temp;
         img.local.relativeMinor = rm;
         img.local.notePath = np;
+        img.local.CHname = name;
 
         img.save(function (err) {
             if (err)

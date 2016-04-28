@@ -21,10 +21,11 @@ public class MusicParams {
 
     public int numberOfVoices;
     public int chaosLevel;
+    public String name;
 
 
 
-    public MusicParams(Tempo tl, Tempo th, String k1, String k2, boolean rm, Accent at1, double aw1, Accent at2, double aw2, int chaos, int voices) {
+    public MusicParams(Tempo tl, Tempo th, String k1, String k2, boolean rm, Accent at1, double aw1, Accent at2, double aw2, int chaos, int voices, String n) {
         TempoLow = tl;
         TempoHigh = th;
         Key1 = k1;
@@ -36,6 +37,7 @@ public class MusicParams {
         AccentWeight2 = aw2;
         numberOfVoices = voices;
         chaosLevel = chaos;
+        name = n;
     }
 
     public MusicParams(Tempo tl, Tempo th, String k1, String k2, boolean rm) {
