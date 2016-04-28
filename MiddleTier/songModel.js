@@ -4,7 +4,8 @@ var mongoose = require('mongoose');
 var songSchema = mongoose.Schema({
     local: {
         key: String,
-        url: String
+        url: String,
+		ntsurl: String
     }
 });
 
