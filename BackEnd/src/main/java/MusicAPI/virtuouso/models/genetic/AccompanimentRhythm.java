@@ -58,6 +58,31 @@ public class AccompanimentRhythm{
 		return newMeasure;
 	}
 
+	public static Measure halfNoteRoot(Measure sustainedChords){
+		Measure newMeasure = new Measure();
+		for(Beat currentBeat: sustainedChords.getBeats()){
+			for (VoiceElement currentChord: currentBeat.getVoiceElements()){
+				addHalfNoteBass(newMeasure, (Chord) currentChord);
+			}
+		}
+		return newMeasure;
+	}
+
+	private static void addHalfNoteBass(Measure currentMeasure, Chord currentChord){
+		Triad currentTriad = currentChord.getTriad();
+		Note[] triad = new Note[3];
+		triad = currentTriad.getNotes().toArray(triad);
+
+		int[] noteOctaves = getNoteOctaves(triad);
+
+		Beat newBeat = new Beat();
+		Note currentNote = new Note(triad[0].getTone().toString(), BeatDuration.Half);
+		currentNote.setOctave(new Octave(noteOctaves[0]  - 1));
+		newBeat.addNote(currentNote);
+		currentMeasure.addBeat(newBeat);
+
+	}
+
 	private static void addAlbertiBass(Measure currentMeasure, Chord currentChord){
 		Triad currentTriad = currentChord.getTriad();
 		Note[] triad = new Note[3];
