@@ -66,3 +66,4 @@ exports.uploadImage = function(file, user, imageKey) {
 //	else
 //		console.log(data);           // successful response
 //});
+
