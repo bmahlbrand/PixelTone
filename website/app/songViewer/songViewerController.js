@@ -9,18 +9,10 @@ angular.module("pixelTone")
     canvasDiv.innerHTML = "";
 
     //get voices
-    var voices = $scope.song.getVoices();
-    var measures = $scope.song.voices[0].getMeasures();
-    var measureGroups = $scope.song.voices[0].getMeasuresInGroupsOf(4);
-    var voices = $scope.song.voices[0].getVoiceInGroupsOf(4);
-    console.log(measures);
-    console.log(measureGroups);
-    console.log(voices);
-
-    //find the width necessary for the voices
+    var voices = $scope.song.getVoicesInGroupsOf(4);
 
     //create new canvas to actually fit this stuff
-    var height = 250 * measureGroups.length;
+    var height = 250 * voices.length;
     var width = 600;
     var newCanvasHTML = "<canvas height='"+ height + "' width='" + width + "'id='vexflow-canvas'></canvas>";
     canvasDiv.innerHTML = newCanvasHTML;
@@ -30,32 +22,25 @@ angular.module("pixelTone")
     var renderer = new Vex.Flow.Renderer(canvas,
     Vex.Flow.Renderer.Backends.CANVAS);
 
-    // for every voice group
+    //find the width necessary for the voices
     for(var i=0; i<voices.length; i++) {
       //make treble cleff and draw
       var ctx = renderer.getContext();
       var stave = new Vex.Flow.Stave(10, i*250, width);
       stave.addClef("treble").setContext(ctx).draw();
 
-      var stave = new Vex.Flow.Stave(10, i*250 + 100, width);
-      stave.addClef("bass").setContext(ctx).draw();
+      //var stave = new Vex.Flow.Stave(10, i*250 + 100, width);
+      //stave.addClef("bass").setContext(ctx).draw();
 
-      var voice = voices[i]
+
       var formatter = new Vex.Flow.Formatter().
-      joinVoices([voice]).format([voice], width-50);
-
-      // Render voice
-      voice.draw(ctx, stave);
+      joinVoices(voices[i]).format(voices[i], width-50);
+      for(var j=0; j<voices[i].length; j++) {
+        voices[i][j].draw(ctx, stave);
+      }
     }
 
 
-
-    //draw notes
-    //formatter.joinVoices(voices).format(voices);
-    //for (var i = 1; i < voices.length && i < 2; i++) {
-    //  voices[i].draw(ctx, stave);
-    //  console.log(voices[i]);
-    //}
     };
 
     $scope.loadSong = function(songurl) {

@@ -340,3 +340,20 @@ composition.prototype.getVoices = function() {
   }
   return ret;
 }
+composition.prototype.getVoicesInGroupsOf = function(n) {
+  var voices = this.voices;
+  var allVoices = [];
+  for(var i=0; i<voices.length; i++) {
+    allVoices.push(voices[i].getVoiceInGroupsOf(n));
+  }
+  var ret = [];
+  for(var i=0; i<allVoices.length; i++) {
+    var voice = allVoices[i];
+    for(var j=0; j<voice.length; j++) {
+      if(ret[j] == null) ret[j] = [];
+      ret[j].push(voice[j]);
+    }
+  }
+  console.log(ret);
+  return ret;
+}
