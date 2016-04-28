@@ -14,8 +14,8 @@ AWS.config.loadFromPath('./config/awsConfig.json');
 exports.uploadImage = function(file, user, imageKey) {
 	var s3bucket = new AWS.S3({params: {Bucket: 'pixeltone'}});
 	var body = fs.createReadStream(file);
-	var myKey = keygen.generateBase30(20) + '.jpg';
-
+	//var myKey = keygen.generateBase30(20) + '.jpg';
+	var myKey = imageKey;
 	s3bucket.createBucket(function() {
 		var params = {
 			Key: myKey,
