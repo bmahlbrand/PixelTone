@@ -38,10 +38,10 @@ public class MoodToMusicFactory {
                 colorTranslationFactory.translate(gp.colorEntries)
         );
 
-        return MergeParams(translatedParams, gp.chaos, gp.voices, gp.prefs);
+        return MergeParams(translatedParams, gp.chaos, gp.voices, gp.prefs, gp.name);
     }
 
-    private MusicParams MergeParams(TranslatedParams translatedParams,int chaos, int voices, int prefs) {
+    private MusicParams MergeParams(TranslatedParams translatedParams,int chaos, int voices, int prefs, String name) {
         //From faces we have
         //Weight of this emotion compared to others
         // Two Keys
@@ -237,7 +237,7 @@ public class MoodToMusicFactory {
         }
 
 
-        MusicParams mp = new MusicParams(t1, t2, k1, k2, relativeMinor, AT1, AW1, AT2, AW2, chaos, voices);
+        MusicParams mp = new MusicParams(t1, t2, k1, k2, relativeMinor, AT1, AW1, AT2, AW2, chaos, voices, name);
 
         return mp;
     }

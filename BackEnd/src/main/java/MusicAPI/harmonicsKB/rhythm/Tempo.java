@@ -29,8 +29,8 @@ public enum Tempo {
     }
 
     public Tempo getTempo(int bpm) {
-        if(bpm < 35)
-            return Larghissimo;
+        //if(bpm < 35)
+        //    return Larghissimo;
 
         if(bpm < 50)
             return Grave;
