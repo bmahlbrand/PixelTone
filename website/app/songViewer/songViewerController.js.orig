@@ -126,8 +126,12 @@ angular.module("pixelTone")
     };
 
     var songId = AuthService.getSong();
+<<<<<<< HEAD
+    var songFname = songId.substr(songId.lastIndexOf("/")+1);
+=======
     //var songFname = songId.substr(songId.lastIndexOf("/")+1);
     //console.log(songFname);
+>>>>>>> master
     //$scope.fetchSong("testmidi");
     $scope.fetchSong(songId);
   }]);

@@ -2,8 +2,50 @@
 
 .marginForNav {
   margin-top: 50px;
-} 
+}
 
 .containerMaxWidth{
 	max-width: 900px;
+}
+
+#music-bar-outer {
+  width: 100%;
+  position:absolute;
+  height: 10px;
+  top: -10px;
+  overflow: hidden;
+  background-color: black;
+}
+
+#music-bar-inner{
+  height: 10px;
+  background-color: green;
+}
+
+#player-controls{
+  width:100%;
+  background-color: grey;
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50px;
+}
+
+#player-controls-left{
+  flex: 1;
+  display:flex;
+}
+
+#player-controls-right{
+  display:flex;
+  justify-content: flex-end;
+}
+
+
+#player-controls-middle{
+  flex: 1;
+  display:flex;
+  align-items: center;
 }

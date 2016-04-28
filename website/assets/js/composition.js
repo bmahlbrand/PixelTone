@@ -1,15 +1,30 @@
 function getStudpidDurationForNotes(duration) {
-  if(duration == "Whole") return "w";
-  if(duration == "Half") return "h";
-  if(duration == "DottedHalf") return "hd";
-  if(duration == "Quarter") return "q";
-  if(duration == "DottedQuarter") return "qd";
+  if(duration == "Whole") return "1";
+  if(duration == "Half") return "2";
+  if(duration == "DottedHalf") return "2d";
+  if(duration == "Quarter") return "4";
+  if(duration == "DottedQuarter") return "4d";
   if(duration == "Eighth") return "8";
   if(duration == "DottedEighth") return "8d";
   if(duration == "Sixteenth") return "16";
   if(duration == "DottedSixteenth") return "16d";
   console.log(duration);
   return "You Fucked Up";
+}
+
+function getStaveNotesFromMeasures(measureGroup) {
+  var staves = [];
+  var measures = this.measures;
+  for(var i=0; i<measureGroup.length; i++) {
+    var temp = measureGroup[i].getStaveNotes();
+    for(var j=0; j<temp.length; j++) {
+      staves.push(temp[j]);
+    }
+    if(i != measureGroup.length-1){
+      staves.push( new Vex.Flow.BarNote());
+    }
+  }
+  return staves;
 }
 
 var tone = function(other) {
@@ -207,6 +222,10 @@ section.prototype.getStaveNotes = function(){
   return staves;
 }
 
+section.prototype.getMeasures = function(){
+  return this.measures;
+}
+
 var voice = function(other) {
   if(other != null) {
     this.clef = other.clef;
@@ -238,6 +257,50 @@ voice.prototype.getStaveNotes = function(){
   }
   return staves;
 }
+voice.prototype.getMeasures = function(){
+  var measures = [];
+  var sections = this.sections;
+  for(var i =0; i<sections.length; i++) {
+    var temp = sections[i].getMeasures();
+    for(var j=0; j<temp.length; j++) {
+      measures.push(temp[j]);
+    }
+  }
+  return measures;
+}
+voice.prototype.getMeasuresInGroupsOf = function(n){
+  var measures = this.getMeasures();
+  var numGroups = measures.length/n;
+  var measureGroups = [];
+  for(var i=0; i<numGroups; i++) {
+    var start = i*n;
+    var end = (i+1)*n;
+    measureGroups[i] = measures.slice(start, end);
+  }
+  return measureGroups;
+}
+
+voice.prototype.getVoiceInGroupsOf = function(n){
+  var voices = [];
+  var measureGroups = this.getMeasuresInGroupsOf(n);
+  for(var i=0; i<measureGroups.length; i++) {
+    var staveNotes = getStaveNotesFromMeasures(measureGroups[i]);
+    var num_beats = this.getNumBeats();
+    var beat_value = this.getBeatValue();
+    var resolution = Vex.Flow.RESOLUTION;
+    var voiceParams = {
+      num_beats : num_beats,
+      beat_value : beat_value,
+      resolution : resolution
+    };
+    var ret = new Vex.Flow.Voice(voiceParams);
+    ret.setMode(Vex.Flow.Voice.Mode.SOFT);
+    ret.addTickables(staveNotes);
+    voices[i] = ret;
+  }
+  return voices;
+}
+
 voice.prototype.getVoice = function() {
   var staveNotes = this.getStaveNotes();
   var num_beats = this.getNumBeats();
@@ -256,7 +319,6 @@ voice.prototype.getVoice = function() {
 
 var composition = function(other) {
   if(other != null) {
-    this.metadata = other.metadata;
     this.tempo = other.tempo;
     this.voices = [];
     for(var i=0; i<other.voices.length; i++) {
@@ -264,7 +326,6 @@ var composition = function(other) {
       this.voices.push(new voice(otherVoice));
     }
   }else{
-    this.metadata = "";
     this.tempo = "";
     this.voices = [];
   }
@@ -275,6 +336,22 @@ composition.prototype.getVoices = function() {
   var ret = [];
   for(var i=0; i<voices.length; i++) {
     ret.push(voices[i].getVoice());
+  }
+  return ret;
+}
+composition.prototype.getVoicesInGroupsOf = function(n) {
+  var voices = this.voices;
+  var allVoices = [];
+  for(var i=0; i<voices.length; i++) {
+    allVoices.push(voices[i].getVoiceInGroupsOf(n));
+  }
+  var ret = [];
+  for(var i=0; i<allVoices.length; i++) {
+    var voice = allVoices[i];
+    for(var j=0; j<voice.length; j++) {
+      if(ret[j] == null) ret[j] = [];
+      ret[j].push(voice[j]);
+    }
   }
   return ret;
 }
