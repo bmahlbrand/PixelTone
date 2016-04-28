@@ -1,5 +1,15 @@
 var http = require('http');
 var Image = require('./imageModel');
+var fs = require('fs');
+
+var aws; 
+var hasAws = false;
+if(fs.existsSync('./config/awsConfig.json')) {
+    aws = require('./uploadSong.js');
+    hasAws = true;
+} else {
+    console.log("No API KEY (CANT CONNECT TO AWS) for song upload");
+}
 
 module.exports = {
 
@@ -43,7 +53,7 @@ module.exports = {
 
 
 var saveReturn = function (returnData) {
-    //console.log(returnData);
+    console.log(returnData);
     var key = returnData.imageKey;
     var sp = returnData.songPath;
     var faces = returnData.numberOfFaces;
@@ -53,12 +63,13 @@ var saveReturn = function (returnData) {
     var rm = returnData.relativeMinor;
     var np = returnData.notePath;
 
+    //console.log("found song at: " + sp);
+
     Image.findOne({ 'local.songKey': key }, function (err, img) {
         if (!img) {
             console.log("can't find key");
             return;
         }
-
 
         img.local.songPath = sp;
         img.local.numberOfFaces = faces;
@@ -72,7 +83,10 @@ var saveReturn = function (returnData) {
             if (err)
                 throw err;
             else {
-
+                //Upload song to S3
+                path = "../BackEnd/songs/" + sp; //Might need to be changed for windows
+                if(hasAws)
+                    aws.uploadSong(path, null,  key);
                 return;
             }
         });
