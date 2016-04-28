@@ -15,7 +15,7 @@ exports.uploadImage = function(file, user, imageKey) {
 	var s3bucket = new AWS.S3({params: {Bucket: 'pixeltone'}});
 	var body = fs.createReadStream(file);
 	//var myKey = keygen.generateBase30(20) + '.jpg';
-	var myKey = imageKey;
+	var myKey = imageKey + '.jpg';
 	s3bucket.createBucket(function() {
 		var params = {
 			Key: myKey,
