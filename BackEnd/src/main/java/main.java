@@ -9,11 +9,14 @@ import ImageAPI.*;
 import java.io.*;
 import java.nio.file.Files;
 
+
 public class main {
 
     public static MoodToMusicFactory moodToMusicFactory = new MoodToMusicFactory();
 
     public static void main(String[] args) {
+
+        testMidiGeneration();
 
         port(3001);
 
@@ -85,7 +88,7 @@ public class main {
     }
 
     private static void testMidiGeneration() {
-              MusicParams mp = new MusicParams(Tempo.Largo, Tempo.Moderato, "Bb", "C", true);
+              MusicParams mp = new MusicParams(Tempo.Largo, Tempo.Allegro, "Bb", "C", true);
               Quill.createComposition(mp, "./songs/testmidi.mid");
     }
 

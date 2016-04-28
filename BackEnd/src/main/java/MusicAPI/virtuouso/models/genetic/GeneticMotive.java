@@ -62,7 +62,7 @@ public class GeneticMotive{
 		currentNote = new Note(currentNote.getTone().toString());
 		BeatDuration noteDuration = getNoteDuration(rhythm);
 		currentNote.setDuration(noteDuration);
-		currentNote.setOctave(new Octave(((octave-1)/4) + 3));
+		currentNote.setOctave(new Octave(((octave-1)/4) + 4));
 		return currentNote;
 	}
 

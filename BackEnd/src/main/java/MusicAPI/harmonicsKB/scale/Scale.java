@@ -13,7 +13,7 @@ public abstract class Scale {
     Interval intervals[] = null;
 
     Scale(Note root, Mode mode) {
-        this.root = root;
+        this.root = new Note(root.getTone().toString());
         this.mode = mode;
         this.intervals = buildIntervals();
         this.scale = buildScale();

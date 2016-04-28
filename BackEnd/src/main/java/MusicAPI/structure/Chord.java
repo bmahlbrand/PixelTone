@@ -28,7 +28,7 @@ public class Chord extends VoiceElement {
             int midiNoteFrequency = MIDIGenerator.getNoteFrequency(note.tone.index(), note.octave.getOctaveMidi());
             try {
 
-                ShortMessage currentNote = new ShortMessage(ShortMessage.NOTE_ON, 0, midiNoteFrequency, note.dynamics.getVolume());
+                ShortMessage currentNote = new ShortMessage(ShortMessage.NOTE_ON, 0, midiNoteFrequency, note.dynamics.getVolume() - 30);
                 midiTrack.add(new MidiEvent(currentNote, startingPosition));
 
             } catch (Exception e) {}
