@@ -48,35 +48,63 @@ public class GeneticSimpleComposition{
 
 		Section aSectionChordProgression = null;
 		Section aSectionMelody = null;
+		Section aChordRoots = null;
 
 		Voice chordProgressions = new Voice();
 		Section currentChordProgression;
+
+		Voice chordRoots = new Voice();
+		Section currentChordRoots;
+
 		Voice melody = new Voice();
 		Section currentMelody;
 		for (int i=0; i<2; i++){
 			currentChordProgression = generateChordProgression(i);
 			currentMelody = generateMelody(currentChordProgression);
+			currentChordRoots = generateChordRoots(currentChordProgression);
 
 			currentChordProgression = setChordProgressionRhythm(currentChordProgression);
 
 			if (i==0){
 				aSectionMelody = currentMelody;
 				aSectionChordProgression = currentChordProgression;
+				aChordRoots  = currentChordRoots;
 			}
 
-			chordProgressions.addSection(currentChordProgression);
-			chordProgressions.addSection(currentChordProgression);
 			melody.addSection(currentMelody);
 			melody.addSection(currentMelody);
+
+			if (numVoices >=2){
+				chordProgressions.addSection(currentChordProgression);
+				chordProgressions.addSection(currentChordProgression);
+			}
+
+			if (numVoices>= 3){
+				chordRoots.addSection(currentChordRoots);
+				chordRoots.addSection(currentChordRoots);
+
+			}
+			
 		}
 
-		chordProgressions.addSection(aSectionChordProgression);
-		chordProgressions.addSection(aSectionChordProgression);
 		melody.addSection(aSectionMelody);
 		melody.addSection(aSectionMelody);
+
+		if (numVoices >=2){
+			chordProgressions.addSection(aSectionChordProgression);
+			chordProgressions.addSection(aSectionChordProgression);
+		}
+
+		if (numVoices>= 3){
+				chordRoots.addSection(aChordRoots);
+				chordRoots.addSection(aChordRoots);
+
+			}
+
 
 		generatedSong.addVoice(chordProgressions);
 		generatedSong.addVoice(melody);
+		generatedSong.addVoice(chordRoots);
 	}
 
 	public Composition getGeneratedSong(){
@@ -102,6 +130,15 @@ public class GeneticSimpleComposition{
 		}
 
 		return melody;
+	}
+
+	private Section generateChordRoots(Section chordProgression){
+		Section roots = new Section();
+		for (Measure currentMeasure: chordProgression.getMeasures()){
+			roots.addMeasure(AccompanimentRhythm.halfNoteRoot(currentMeasure));
+		}
+
+		return roots;
 	}
 
 	private Section makeAccompanimentArpeggiated(Section chordProgression){
