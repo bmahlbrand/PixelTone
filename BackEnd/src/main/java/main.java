@@ -80,7 +80,7 @@ public class main {
             String songpath = imageKey + ".mid";
             String np =  songpath + ".NTS";
 
-            ReturnParams rp = new ReturnParams(gp.imageKey, gp.numberOfFaces, gp.colorEntries.get(0).Color, mp.Key1, mp.TempoLow,mp.RelativeMinor, songpath, np );
+            ReturnParams rp = new ReturnParams(gp.imageKey, gp.numberOfFaces, gp.colorEntries.get(0).Color, mp.Key1, mp.TempoLow,mp.RelativeMinor, songpath, np, gp.name );
 
             return rp;
         } catch (Exception e) {
@@ -89,7 +89,7 @@ public class main {
     }
 
     private static void testMidiGeneration() {
-              MusicParams mp = new MusicParams(Tempo.Largo, Tempo.Allegro, "Bb", "C", true, Accent.Accent, 2.1, Accent.Unaccented, 2.1, 10, 3);
+              MusicParams mp = new MusicParams(Tempo.Largo, Tempo.Allegro, "Bb", "C", true, Accent.Accent, 2.1, Accent.Unaccented, 2.1, 10, 3, "test");
               Quill.createComposition(mp, "./songs/testmidi.mid");
     }
 

@@ -16,4 +16,5 @@ public class GenerationParams {
     public int chaos;
     public int voices;
     public String imageKey;
+    public String name;
 }

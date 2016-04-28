@@ -6,16 +6,17 @@ angular.module("pixelTone")
                 var param1 = $("#parameter1").val();
                 var param2 = $("#parameter2").val();
                 var param3 = $("#parameter3").val();
-                $scope.upload($scope.file, param1, param2, param3);
+                var nameOfSong  = $("#nameOfSong").val();
+                $scope.upload($scope.file, param1, param2, param3, nameOfSong);
             }
         };
 
         // upload on file select
-        $scope.upload = function (file, param1, param2, param3) {
+        $scope.upload = function (file, param1, param2, param3, nameOfSong) {
 
             Upload.upload({
                 url: '/images/process',
-                data: { image: file, chaos: param2, voices: param3, pref: param1}
+                data: { image: file, chaos: param2, voices: param3, pref: param1, name: nameOfSong}
             }).then(function (resp) {
                 console.log('Success ');
                 $scope.name = "Sucessfully uploaded! Ready for Generation, Press Process to Continue";

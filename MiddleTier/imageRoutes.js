@@ -33,9 +33,10 @@ var image = "";
 var imageKey = "";
 
 //User Supplied Params -- global is bad
-var voices = 1;
-var chaos = 1;
+var voices = 3;
+var chaos = 4;
 var pref = 5;
+var name = "Composition";
 
 //Setup for saving image to disk
 //Put into ./tmp folder, rename it with date on the end
@@ -150,7 +151,7 @@ var parseMSResponse = function (response) {
 
             if(colorArray.length == 1)
                 colorArray.push(colorArray[0]);
-
+              
 
             var generationParameters =
                 {
@@ -160,7 +161,8 @@ var parseMSResponse = function (response) {
                     "chaos": chaos,
                     "pref": pref,
                     "voices": voices,
-                    "imageKey": imageKey
+                    "imageKey": imageKey,
+                    "name": name
                 }
                 //Use for saving json to disk for quick testing
                     //var file = 'happy.json'
@@ -208,7 +210,8 @@ imageRoutes.post('/process', function (req, res) {
 
             pref = req.body.pref;
             voices = req.body.voices;
-            chaos = req.body.chaos;
+            chaos = req.body.chaos;          
+            name = req.body.name;
         }
     });
     res.status(204).end();
