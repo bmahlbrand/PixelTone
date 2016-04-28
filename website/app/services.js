@@ -24,7 +24,8 @@ angular.module('pixelTone').factory('AuthService',
                 getUserData: getUserData,
                 getSong: getSong,
                 setSong: setSong,
-                getRecentData: getRecentData
+                getRecentData: getRecentData,
+                resetPassword: resetPassword 
             });
 
             function getUserName() {
@@ -98,6 +99,35 @@ angular.module('pixelTone').factory('AuthService',
                     // handle error
                     .error(function (data) {
                         user = false;
+                        deferred.reject();
+                    });
+
+                // return promise object
+                return deferred.promise;
+
+            }
+
+            function resetPassword(email) {
+
+                // create a new instance of deferred
+                var deferred = $q.defer();
+
+                // send a post request to the server
+                $http.post('/forgot',
+                    { email: email })
+                    // handle success
+                    .success(function (data, status) {
+                        if (status === 200 && data.status) {
+                            console.log(status);
+                            deferred.resolve();
+                        } else {
+                            console.log(status);
+                            deferred.reject();
+                        }
+                    })
+                    // handle error
+                    .error(function (data) {
+                        console.log(data);
                         deferred.reject();
                     });
 

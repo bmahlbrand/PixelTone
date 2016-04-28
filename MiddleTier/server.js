@@ -1,4 +1,5 @@
 var express      = require('express');
+var crypto = require('crypto');
 var config       = require('config-node')();
 var morgan       = require('morgan');
 var cookieParser = require('cookie-parser');
@@ -9,6 +10,7 @@ var passport     = require('passport');
 var flash        = require('connect-flash');
 var path         = require('path');
 var util         = require('util');
+var nodemailer = require('nodemailer');
 var localStrategy = require('passport-local' ).Strategy;
 var jsonfile = require('jsonfile');
 var sp = require('./sendParams');
@@ -100,6 +102,154 @@ app.use('/songViewer', function(req, res) {
   res.sendFile(path.join(__dirname, '../website', 'index.html'));
 });
 
+app.post('/forgot', function(req, res, next) {
+    console.log(req.body.email);
+    User.findOne({ username: req.body.email }, function (err, user) {
+        // if there are any errors, return the error
+        if (err) {
+            console.log("Other Error");
+            return res.redirect('/');
+        }
+                
+        // check to see if theres already a user with that email
+        console.log(user);
+
+        if (user) {
+            //Create token
+            var token = crypto.randomBytes(32).toString('hex');
+
+            user.local.resetPasswordToken = token;
+            console.log(token);
+            user.local.resetPasswordExpires = Date.now() + 3600000; // 1 hour
+                
+            console.log('Created Token');
+            console.log(user.username);
+            user.save(function (err) {
+                if (err)
+                    throw err;
+                else {
+                    console.log('Saved Token Creation');
+                        
+             
+                    var smtpTransport = nodemailer.createTransport('smtps://pixeltonepassreset%40gmail.com:PUTPASSWORDHERE@smtp.gmail.com');
+                  var mailOptions = {
+                      to: user.username,
+                      from: 'pixeltonepassreset@gmail.com',
+                      subject: 'Node.js Password Reset',
+                      text: 'You are receiving this because you (or someone else) have requested the reset of the password for your account.\n\n' +
+                        'Please click on the following link, or paste this into your browser to complete the process:\n\n' +
+                        'http://' + req.headers.host + '/reset/' + token + '\n\n' +
+                        'If you did not request this, please ignore this email and your password will remain unchanged.\n'
+                    };
+                    smtpTransport.sendMail(mailOptions, function(error, info) {
+                      if(error){
+                        return console.log(error);
+                    }
+                    console.log('Message sent: ' + info.response);
+                    });
+                    
+                    
+                    return res.send('Token Created for One Hour:' + token
+                        + '<br>Click here to continue: <a href=/users/reset/' + token + '>Here</a>');
+                }
+            });
+
+
+        } else {
+            console.log('user does not exist');
+            return res.redirect('/');
+        }
+    });
+});
+
+app.get('/reset/:token', function(req, res) {
+    
+    console.log(req.params.token);
+    
+  User.findOne({ 'local.resetPasswordToken': req.params.token, 'local.resetPasswordExpires': { $gt: Date.now() } }, function(err, user) {
+    if (!user) {
+      console.log('error', 'Password reset token is invalid or has expired.');
+      return res.redirect('/users/forgot');
+    }
+    
+    req.flash('user', user);
+    //console.log('Found user to reset:' + req.user);
+    return res.redirect('/resetUI');   
+  });
+});
+
+//If token is legit, setup reset password UI
+app.get('/resetUI', function (req, res) {
+    var userREQ = req.flash('user');
+    if (userREQ == null) {
+        console.log('USER IS NULL');
+        return res.redirect('/login');
+    }
+
+    User.findOne({ 'local.resetPasswordToken': userREQ[0].local.resetPasswordToken, 'local.resetPasswordExpires': { $gt: Date.now() } }, function (err, user) {
+        if (!user) {
+            console.log('error', 'Password reset token is invalid or has expired.');
+            return res.redirect('/users/forgot');
+        }
+        else {
+            return res.send('<form action="/reset" method="post">'
+                + '<p>Email: <input type="text" name="resetpass" placeholder="newpass" /></p>'
+                + '<p><input type="submit" value="reset" /></p>'
+                + '<input type="hidden" name="token" value="' + user.local.resetPasswordToken + '" />'
+                + '</form>'
+                );
+
+        }
+    });
+
+});
+
+//Receives token and password
+//Make sure token hasn't expired
+//update users password
+app.post('/reset', function (req, res) {
+
+
+    if (req.isAuthenticated()) {
+        //user is alreay logged in
+        return res.redirect('/');
+    }
+
+    User.findOne({ 'local.resetPasswordToken': req.body.token, 'local.resetPasswordExpires': { $gt: Date.now() } }, function (err, user) {
+        if (!user) {
+            req.flash('error', 'Password reset token is invalid or has expired.');
+            return res.redirect('back');
+        }
+
+        //Set new password
+        user.setPassword(req.body.resetpass, function(err) {
+            if (err) //handle error
+                console.log(err);
+            user.save(function(err) {
+                if (err){ //handle error
+                    console.log(err);
+                }
+                else {//handle success
+                    console.log("Password saved succesfully");
+                }
+            });
+        });
+        
+        //Unset info
+        user.local.resetPasswordToken = undefined;
+        user.local.resetPasswordExpires = undefined;
+
+        user.save(function (err) {
+            if (err)
+                throw err;
+            else {
+                console.log('RESET PASSWORD');
+                return res.redirect('/login');
+            
+            }
+        });
+    });
+});
 
 
 
