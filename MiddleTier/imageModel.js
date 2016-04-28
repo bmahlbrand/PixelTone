@@ -15,7 +15,7 @@ var imageSchema = mongoose.Schema({
         chosenKey:      String,
         relativeMinor:  Boolean,
         url:            String,
-        notePath:   String
+        notePath:       String
     }
 });
 
