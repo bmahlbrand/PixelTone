@@ -1,6 +1,6 @@
 var http = require('http');
 var Image = require('./imageModel');
-
+var fs = require('fs');
 
 var aws; 
 var hasAws = false;
@@ -53,7 +53,7 @@ module.exports = {
 
 
 var saveReturn = function (returnData) {
-    //console.log(returnData);
+    console.log(returnData);
     var key = returnData.imageKey;
     var sp = returnData.songPath;
     var faces = returnData.numberOfFaces;
@@ -63,13 +63,14 @@ var saveReturn = function (returnData) {
     var rm = returnData.relativeMinor;
     var np = returnData.notePath;
 
+    //console.log("found song at: " + sp);
+
     Image.findOne({ 'local.songKey': key }, function (err, img) {
         if (!img) {
             console.log("can't find key");
             return;
         }
 
-        Console.log("found song at: " + sp);
         img.local.songPath = sp;
         img.local.numberOfFaces = faces;
         img.local.prominantColor = proCo;
@@ -82,14 +83,13 @@ var saveReturn = function (returnData) {
             if (err)
                 throw err;
             else {
-
+                //Upload song to S3
+                path = "../BackEnd/songs/" + sp;
+                if(hasAws)
+                    aws.uploadSong(path, null,  key);
                 return;
             }
         });
     });
-
-    //Upload song to S3
-    if(hasAws)
-        aws.uploadImage(image, req.user.username,  imageKey);
 
 }
