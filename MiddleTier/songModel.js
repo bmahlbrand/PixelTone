@@ -3,7 +3,8 @@ var mongoose = require('mongoose');
 // define the schema for our image model
 var songSchema = mongoose.Schema({
     local: {
-        key: String
+        key: String,
+        url: String
     }
 });
 
