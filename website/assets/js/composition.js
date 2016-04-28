@@ -1,9 +1,9 @@
 function getStudpidDurationForNotes(duration) {
-  if(duration == "Whole") return "w";
-  if(duration == "Half") return "h";
-  if(duration == "DottedHalf") return "hd";
-  if(duration == "Quarter") return "q";
-  if(duration == "DottedQuarter") return "qd";
+  if(duration == "Whole") return "1";
+  if(duration == "Half") return "2";
+  if(duration == "DottedHalf") return "2d";
+  if(duration == "Quarter") return "4";
+  if(duration == "DottedQuarter") return "4d";
   if(duration == "Eighth") return "8";
   if(duration == "DottedEighth") return "8d";
   if(duration == "Sixteenth") return "16";
@@ -20,8 +20,9 @@ function getStaveNotesFromMeasures(measureGroup) {
     for(var j=0; j<temp.length; j++) {
       staves.push(temp[j]);
     }
-    if(i != measureGroup.length-1)
+    if(i != measureGroup.length-1){
       staves.push( new Vex.Flow.BarNote());
+    }
   }
   return staves;
 }
@@ -318,7 +319,6 @@ voice.prototype.getVoice = function() {
 
 var composition = function(other) {
   if(other != null) {
-    this.metadata = other.metadata;
     this.tempo = other.tempo;
     this.voices = [];
     for(var i=0; i<other.voices.length; i++) {
@@ -326,7 +326,6 @@ var composition = function(other) {
       this.voices.push(new voice(otherVoice));
     }
   }else{
-    this.metadata = "";
     this.tempo = "";
     this.voices = [];
   }
@@ -354,6 +353,5 @@ composition.prototype.getVoicesInGroupsOf = function(n) {
       ret[j].push(voice[j]);
     }
   }
-  console.log(ret);
   return ret;
 }

@@ -1,3 +1,13 @@
+<div id="voice-control" ng-repeat="check in checks">
+
+      <input type="checkbox" name="checked"
+
+           ng-change="displaySongOnCanvas()"
+           ng-model="check.enabled">
+
+           Voice number {{check.voice}}
+      <br/>
+  </div>
 <div id="vexflow-container">
   <div class="container" style="overflow-x: scroll" id="vexflow-canvas-div">
     <canvas height="200" width="1000" id="vexflow-canvas"></canvas>

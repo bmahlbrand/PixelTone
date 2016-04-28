@@ -3,7 +3,19 @@ angular.module("pixelTone")
   $scope.song = new composition();
   // get specific song
 
+  $scope.refreshCheckboxes = function(){
+    $scope.checks = [];
+    var numVoices = $scope.song.voices.length;
+    for(var i=0; i<numVoices; i++) {
+      $scope.checks[i] = {
+        voice: i,
+        enabled: true
+      };
+    }
+  }
+
   $scope.displaySongOnCanvas = function () {
+    console.log("triggered");
     //delete the stupid canvas
     var canvasDiv = document.getElementById("vexflow-canvas-div");
     canvasDiv.innerHTML = "";
@@ -28,15 +40,18 @@ angular.module("pixelTone")
       var ctx = renderer.getContext();
       var stave = new Vex.Flow.Stave(10, i*250, width);
       stave.addClef("treble").setContext(ctx).draw();
+      stave.setTempo($scope.song.tempo);
 
       //var stave = new Vex.Flow.Stave(10, i*250 + 100, width);
       //stave.addClef("bass").setContext(ctx).draw();
 
 
-      var formatter = new Vex.Flow.Formatter().
-      joinVoices(voices[i]).format(voices[i], width-50);
+      var formatter = new Vex.Flow.Formatter();
+      formatter.joinVoices(voices[i]).format(voices[i], width-50);
       for(var j=0; j<voices[i].length; j++) {
-        voices[i][j].draw(ctx, stave);
+        if($scope.checks[j].enabled){
+          voices[i][j].draw(ctx, stave);
+        }
       }
     }
 
@@ -101,9 +116,9 @@ angular.module("pixelTone")
       //$http.get("/songs/notes/"+song+".mid.NTS")
       $http.get("https://s3.amazonaws.com/pixeltone-midi/"+song+".mid.NTS")
       .then(function(res) {
-        console.log(res.data);
         comp = new composition(res.data);
         $scope.song = comp;
+        $scope.refreshCheckboxes();
         $scope.displaySongOnCanvas();
         //$scope.loadSong("/songs/song/"+song+".mid");
         $scope.loadSong("https:s3.amazonaws.com/pixeltone-midi/"+song+".mid");
@@ -112,7 +127,6 @@ angular.module("pixelTone")
 
     var songId = AuthService.getSong();
     var songFname = songId.substr(songId.lastIndexOf("/")+1);
-    console.log(songFname);
     //$scope.fetchSong("testmidi");
     $scope.fetchSong(songFname);
   }]);
