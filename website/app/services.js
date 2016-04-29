@@ -25,7 +25,8 @@ angular.module('pixelTone').factory('AuthService',
                 getSong: getSong,
                 setSong: setSong,
                 getRecentData: getRecentData,
-                resetPassword: resetPassword 
+                resetPassword: resetPassword,
+                getCurrentUsername: getCurrentUsername 
             });
 
             function getUserName() {
@@ -119,6 +120,36 @@ angular.module('pixelTone').factory('AuthService',
                     .success(function (data, status) {
                         if (status === 200 && data.status) {
                             console.log(status);
+                            deferred.resolve();
+                        } else {
+                            console.log(status);
+                            deferred.reject();
+                        }
+                    })
+                    // handle error
+                    .error(function (data) {
+                        console.log(data);
+                        deferred.reject();
+                    });
+
+                // return promise object
+                return deferred.promise;
+
+            }
+
+            function getCurrentUsername() {
+
+                // create a new instance of deferred
+                var deferred = $q.defer();
+
+                // send a post request to the server
+                $http.get('/user/getCurrentUser')
+                    // handle success
+                    .success(function (data, status) {
+                        if (status === 200) {
+                            console.log(status);
+                            //console.log(data.username);
+                            userName = data.username;
                             deferred.resolve();
                         } else {
                             console.log(status);

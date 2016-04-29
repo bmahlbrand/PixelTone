@@ -62,6 +62,7 @@ pixelTone.config(['$routeProvider', '$locationProvider', function ($routeProvide
 pixelTone.run(function ($rootScope, $location, $route, AuthService) {
   $rootScope.$on('$routeChangeStart',
     function (event, next, current) {
+      AuthService.getCurrentUsername();
       AuthService.getUserStatus();
       if (next.access.restricted &&
 				!AuthService.isLoggedIn()) {

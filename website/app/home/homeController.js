@@ -1,11 +1,10 @@
 angular.module("pixelTone")
-    .controller('homeController', ['$scope', '$location', 'AuthService',
-        function ($scope, $location, AuthService) {
+    .controller('homeController', ['$scope', '$location', 'AuthService', 'Upload', '$http',
+        function ($scope, $location, AuthService, Upload, $http) {
             
             $scope.goToLogin = function(){
                 $location.path('/login');
             }
-            $scope.userName = null;
             $scope.userName = AuthService.getUserName();
             console.log($scope.userName);
 
@@ -36,6 +35,22 @@ angular.module("pixelTone")
                     $scope.isDataBack = false;
                 });
 
+            $scope.reloadSongs = function(){
+                AuthService.getData()
+                // handle success
+                .then(function (data) {
+                    $scope.recentSongs = AuthService.getUserData().imageData;
+                    $scope.isDataBack = true;
+                })
+                // handle error
+                .catch(function (data) {
+                    console.log("ERROR");
+                    console.log(data);
+                    $scope.error = true;
+                    $scope.isDataBack = false;
+                });
+            }
+
             $scope.songsCreated = [];
 
             $scope.playSong = function (songKey) {
@@ -49,16 +64,17 @@ angular.module("pixelTone")
                     var param1 = $("#parameter1").val();
                     var param2 = $("#parameter2").val();
                     var param3 = $("#parameter3").val();
-                    $scope.upload($scope.file, param1, param2, param3);
+                    var nameOfSong  = $("#nameOfSong").val();
+                    $scope.upload($scope.file, param1, param2, param3, nameOfSong);
                 }
             };
 
             // upload on file select
-            $scope.upload = function (file, param1, param2, param3) {
+            $scope.upload = function (file, param1, param2, param3, nameOfSong) {
 
                 Upload.upload({
                     url: '/images/process',
-                    data: { image: file, chaos: param2, voices: param3, pref: param1}
+                    data: { image: file, chaos: param2, voices: param3, pref: param1, name: nameOfSong}
                 }).then(function (resp) {
                     console.log('Success ');
                     $scope.name = "Sucessfully uploaded! Ready for Generation, Press Process to Continue";
@@ -76,8 +92,11 @@ angular.module("pixelTone")
                     url: '/images/analyze'
                 }).success(function () {
                     $scope.name = "Generation Request Success";
+                    $('#profileModalUpload').modal('hide');
+                    $scope.upload();
                 }).error(function () {
                     $scope.name = "Generation Request Failure";
                 });
             };
+            
         }]);

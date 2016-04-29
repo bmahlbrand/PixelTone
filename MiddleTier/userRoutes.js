@@ -65,6 +65,17 @@ userRoutes.get('/status', function(req, res) {
   });
 });
 
+userRoutes.get('/getCurrentUser', function(req, res) {
+  if (!req.isAuthenticated()) {
+    return res.status(200).json({
+      status: false
+    });
+  }
+  res.status(200).json({ username: req.user.username })
+});
+
+
+
 //Get list of images and songs for user
 userRoutes.get('/images', function (req, res) {
     if (!req.isAuthenticated()) {
