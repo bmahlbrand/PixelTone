@@ -26,6 +26,34 @@ angular.module('pixelTone').controller('loginController',
 
     };
 
+    $scope.resetPass = function () {
+      // initial values
+      $scope.messageEmail = false;
+      $scope.disabled = true;
+
+      // call reset from service
+      AuthService.resetPassword($scope.passReset.email)
+        // handle success
+        .then(function () {
+          $location.path('/');
+          $scope.disabled = false;
+          $scope.passReset = {};
+        })
+        // handle error
+        .catch(function () {
+          $scope.errorEmail = true;
+          
+          $scope.disabled = false;
+          $scope.passReset = {};
+        });
+
+        $scope.inputEmail = true;
+        $scope.disabled = false;
+        $scope.messageEmail = "Sent Email with instructions to: "+$scope.passReset.email;
+        $scope.passReset = {};
+        $('#passReset').modal('hide');
+    };
+
 }]);
 
 
