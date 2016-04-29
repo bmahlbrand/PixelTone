@@ -1,6 +1,20 @@
 angular.module("pixelTone")
-    .controller('uploadController', ['$scope', 'Upload', '$http', function ($scope, Upload, $http) {
+    .controller('uploadController', ['$scope', 'Upload', '$http','facebookFactory', function ($scope, Upload, $http, facebookFactory) {
+      $scope.facebookPhotos = [];
+      $scope.getUsersPhotos = function(){
+        facebookFactory.login().then(function(response){
+          facebookFactory.getUsersPhotos().then(function(response){
+            photos = response.data;
+            console.log(photos);
+            $scope.facebookPhotos = photos;
+          })
+        })
+      };
 
+      $scope.toggleFacebookModal = function(){
+        $("#facebookModal").modal();
+        $scope.getUsersPhotos();
+      }
         $scope.submit = function() {
             if ($scope.form.file.$valid && $scope.file) {
                 var param1 = $("#parameter1").val();
@@ -26,7 +40,7 @@ angular.module("pixelTone")
                 // console.log('progress: ' + progressPercentage + '% ' + evt.config.data.file.name);
             });
         };
-        
+
         // upload on file select
         $scope.process = function () {
             $http({
@@ -38,5 +52,5 @@ angular.module("pixelTone")
                 $scope.name = "Generation Request Failure";
             });
         };
-        
+
     }]);
