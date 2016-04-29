@@ -6,11 +6,22 @@ var http = require('http');
 var fs = require ('fs');
 var jsonfile = require('jsonfile');
 var sp = require('./sendParams');
+var graph = require('fbgraph');
+var request = require('request');
+
+var download = function(uri, filename, callback){
+  request.head(uri, function(err, res, body){
+    console.log('content-type:', res.headers['content-type']);
+    console.log('content-length:', res.headers['content-length']);
+
+    request(uri).pipe(fs.createWriteStream(filename)).on('close', callback);
+  });
+};
 //Setup Image analyzer (replace with API later)
 
 var imagecolors = require('imagecolors');
 
-var aws; 
+var aws;
 var hasAws = false;
 if(fs.existsSync('./config/awsConfig.json')) {
     aws = require('./uploadImage.js');
@@ -18,6 +29,7 @@ if(fs.existsSync('./config/awsConfig.json')) {
 } else {
     console.log("No API KEY (CANT CONNECT TO AWS)");
 }
+
 
 var imageRoutes = module.exports = express();
 
@@ -151,7 +163,7 @@ var parseMSResponse = function (response) {
 
             if(colorArray.length == 1)
                 colorArray.push(colorArray[0]);
-              
+
 
             var generationParameters =
                 {
@@ -198,20 +210,32 @@ imageRoutes.post('/process', function (req, res) {
             console.log(req.file);
            // UNIX image = "./tmp/" + req.file.filename;
             //console.log("USER: " + req.user);
-            
+
             imageKey = Date.now();
 
             if(hasAws)
                 aws.uploadImage(image, req.user.username,  imageKey);
 
-            
+
             //aws.uploadImage(image, req.user.username, imageKey );
 
 
             pref = req.body.pref;
             voices = req.body.voices;
-            chaos = req.body.chaos;          
+            chaos = req.body.chaos;
             name = req.body.name;
+
+        }else if(req.body.fblink){
+          image = "./tmp/" + req.body.fblink.id + ".jpg";
+          imageKey = Date.now();
+          download(req.body.fblink.picture, image, function(){
+            if(hasAws)
+              aws.uploadImage(image, req.user.username,  imageKey);
+          });
+          pref = req.body.pref;
+          voices = req.body.voices;
+          chaos = req.body.chaos;
+          name = req.body.name;
         }
     });
     res.status(204).end();
@@ -264,8 +288,8 @@ function getColors(imagePath, numOfColors, callback) {
     console.log("ERRROR GETTING COLORS");
     console.log(err);
     });
-    
-    
+
+
     //req.write(JSON.stringify(params));
     //req.end();
 };
