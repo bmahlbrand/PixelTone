@@ -62,7 +62,14 @@ note.prototype.getStaveNote = function() {
   keys.push(this.getKey());
   var duration = this.getDuration();
   var sn = {keys: keys, duration:duration};
-  return new Vex.Flow.StaveNote(sn);
+  var stavenote = new Vex.Flow.StaveNote(sn);
+  if(this.tone.accidental == "Sharp") {
+    stavenote.addAccidental(0, new Vex.Flow.Accidental("#"));
+  }
+  if(this.tone.accidental == "Flat") {
+    stavenote.addAccidental(0, new Vex.Flow.Accidental("b"));
+  }
+  return stavenote;
 }
 note.prototype.getDuration = function() {
   return getStudpidDurationForNotes(this.duration);
@@ -122,11 +129,31 @@ triad.prototype.getKeysArray = function() {
 triad.prototype.getDuration = function() {
   return getStudpidDurationForNotes(this.duration);
 }
+triad.prototype.getAccidentals = function() {
+  var accidentals = [];
+  for(var i=0; i<this.notes.length; i++) {
+    var accidental = this.notes[i].tone.accidental;
+    accidentals.push(accidental);
+  }
+  return accidentals;
+}
 triad.prototype.getStaveNote = function() {
+  console.log(this);
   var keys = this.getKeysArray();
+  var accidentals = this.getAccidentals();
   var duration = this.getDuration();
   var sn = {keys: keys, duration:duration};
-  return new Vex.Flow.StaveNote(sn);
+  var staveNote =  new Vex.Flow.StaveNote(sn);
+  for(var i=0; i<accidentals.length; i++) {
+    var accidental = accidentals[i];
+    if(accidental == "Sharp") {
+      staveNote.addAccidental(i, new Vex.Flow.Accidental("#"));
+    }
+    if(accidental == "Flat") {
+      staveNote.addAccidental(i, new Vex.Flow.Accidental("b"));
+    }
+  }
+  return staveNote;
 }
 
 function noteMaker(other) {
@@ -153,6 +180,7 @@ var beat = function(other) {
   }else{
     this.notes = [];
   }
+  //console.log(this);
   return this;
 }
 beat.prototype.getStaveNotes = function(){

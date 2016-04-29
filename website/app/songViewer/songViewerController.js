@@ -15,7 +15,7 @@ angular.module("pixelTone")
   }
 
   $scope.displaySongOnCanvas = function () {
-    console.log("triggered");
+    //console.log($scope.song);
     //delete the stupid canvas
     var canvasDiv = document.getElementById("vexflow-canvas-div");
     canvasDiv.innerHTML = "";

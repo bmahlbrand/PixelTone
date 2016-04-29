@@ -1,22 +1,27 @@
 angular.module("pixelTone")
     .controller('uploadController', ['$scope', 'Upload', '$http','facebookFactory', function ($scope, Upload, $http, facebookFactory) {
+      $scope.selectedPhoto =null;
       $scope.facebookPhotos = [];
       $scope.getUsersPhotos = function(){
         facebookFactory.login().then(function(response){
           facebookFactory.getUsersPhotos().then(function(response){
             photos = response.data;
-            console.log(photos);
             $scope.facebookPhotos = photos;
           })
         })
       };
+
+      $scope.selectFBPhoto = function(photo){
+        console.log(photo);
+        selectedPhoto = photo;
+      }
 
       $scope.toggleFacebookModal = function(){
         $("#facebookModal").modal();
         $scope.getUsersPhotos();
       }
         $scope.submit = function() {
-            if ($scope.form.file.$valid && $scope.file) {
+            if (($scope.form.file.$valid || selectedPhoto != null) && $scope.file) {
                 var param1 = $("#parameter1").val();
                 var param2 = $("#parameter2").val();
                 var param3 = $("#parameter3").val();
