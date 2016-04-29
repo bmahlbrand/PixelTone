@@ -13,7 +13,7 @@ angular.module("pixelTone")
 
       $scope.selectFBPhoto = function(photo){
         console.log(photo);
-        selectedPhoto = photo;
+        $scope.selectedPhoto = photo;
       }
 
       $scope.toggleFacebookModal = function(){
@@ -21,21 +21,28 @@ angular.module("pixelTone")
         $scope.getUsersPhotos();
       }
         $scope.submit = function() {
-            if (($scope.form.file.$valid || selectedPhoto != null) && $scope.file) {
+            if ($scope.form.file.$valid && $scope.file) {
                 var param1 = $("#parameter1").val();
                 var param2 = $("#parameter2").val();
                 var param3 = $("#parameter3").val();
                 var nameOfSong  = $("#nameOfSong").val();
-                $scope.upload($scope.file, param1, param2, param3, nameOfSong);
+                $scope.upload($scope.file, param1, param2, param3, nameOfSong, null);
+            }else if($scope.selectedPhoto != null) {
+                var param1 = $("#parameter1").val();
+                var param2 = $("#parameter2").val();
+                var param3 = $("#parameter3").val();
+                var nameOfSong  = $("#nameOfSong").val();
+                var fblink = $scope.facebookPhotos[$scope.selectedPhoto];
+                $scope.upload(null, param1, param2, param3, nameOfSong, fblink);
             }
         };
 
         // upload on file select
-        $scope.upload = function (file, param1, param2, param3, nameOfSong) {
+        $scope.upload = function (file, param1, param2, param3, nameOfSong, fblink) {
 
             Upload.upload({
                 url: '/images/process',
-                data: { image: file, chaos: param2, voices: param3, pref: param1, name: nameOfSong}
+                data: { image: file, chaos: param2, voices: param3, pref: param1, name: nameOfSong, fblink: fblink}
             }).then(function (resp) {
                 console.log('Success ');
                 $scope.name = "Sucessfully uploaded! Ready for Generation, Press Process to Continue";

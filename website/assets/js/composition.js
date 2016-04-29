@@ -138,7 +138,6 @@ triad.prototype.getAccidentals = function() {
   return accidentals;
 }
 triad.prototype.getStaveNote = function() {
-  console.log(this);
   var keys = this.getKeysArray();
   var accidentals = this.getAccidentals();
   var duration = this.getDuration();
